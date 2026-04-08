@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface Service {
   id: number
@@ -48,8 +48,8 @@ const services: Service[] = [
   },
 ]
 
-// Map face index to rotation
-const faceRotations = [
+// Map service index to cube rotation (6 faces of cube)
+const cubeRotations = [
   { rotateX: 0, rotateY: 0 },      // Front (1)
   { rotateX: 0, rotateY: -90 },    // Right (2)
   { rotateX: 0, rotateY: -180 },   // Back (3)
@@ -61,216 +61,184 @@ const faceRotations = [
 export function ServicesSection() {
   const [activeService, setActiveService] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const isLocked = useRef(false)
-  const scrollCount = useRef(0)
-  const lastScrollTime = useRef(0)
-  const isAnimating = useRef(false)
-  const hasCompletedSection = useRef(false)
-
-  const handleWheel = useCallback((e: WheelEvent) => {
-    if (!sectionRef.current || isAnimating.current) return
-
-    const section = sectionRef.current
-    const rect = section.getBoundingClientRect()
-    const viewportHeight = window.innerHeight
-
-    // Check if we're in the sticky zone
-    const stickyVisible = rect.top <= 50 && rect.bottom > viewportHeight + 50
-
-    if (!stickyVisible) {
-      scrollCount.current = 0
-      return
-    }
-
-    const now = Date.now()
-    if (now - lastScrollTime.current > 400) {
-      scrollCount.current = 0
-    }
-    lastScrollTime.current = now
-
-    // Only count meaningful scroll gestures
-    if (Math.abs(e.deltaY) > 10) {
-      scrollCount.current++
-    }
-
-    // Scrolling DOWN
-    if (e.deltaY > 0) {
-      if (activeService < services.length - 1) {
-        e.preventDefault()
-        e.stopPropagation()
-        
-        if (scrollCount.current >= 2) {
-          isAnimating.current = true
-          setActiveService(prev => prev + 1)
-          scrollCount.current = 0
-          setTimeout(() => {
-            isAnimating.current = false
-          }, 800)
-        }
-      } else if (activeService === services.length - 1 && !hasCompletedSection.current) {
-        e.preventDefault()
-        e.stopPropagation()
-        
-        if (scrollCount.current >= 2) {
-          hasCompletedSection.current = true
-          scrollCount.current = 0
-        }
-      }
-      // If completed, allow page scroll
-      return
-    }
-
-    // Scrolling UP
-    if (e.deltaY < 0) {
-      if (hasCompletedSection.current && activeService === services.length - 1) {
-        e.preventDefault()
-        e.stopPropagation()
-        
-        if (scrollCount.current >= 2) {
-          hasCompletedSection.current = false
-          scrollCount.current = 0
-        }
-        return
-      }
-      
-      if (activeService > 0) {
-        e.preventDefault()
-        e.stopPropagation()
-        
-        if (scrollCount.current >= 2) {
-          isAnimating.current = true
-          setActiveService(prev => prev - 1)
-          scrollCount.current = 0
-          hasCompletedSection.current = false
-          setTimeout(() => {
-            isAnimating.current = false
-          }, 800)
-        }
-      }
-    }
-  }, [activeService])
+  const serviceRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
-    const section = sectionRef.current
-    if (!section) return
+    const handleScroll = () => {
+      if (!sectionRef.current) return
 
-    section.addEventListener('wheel', handleWheel, { passive: false })
-    return () => section.removeEventListener('wheel', handleWheel)
-  }, [handleWheel])
+      // Find which service is most visible
+      const viewportCenter = window.innerHeight / 2
 
-  const currentRotation = faceRotations[activeService]
+      let closestIndex = 0
+      let closestDistance = Infinity
+
+      serviceRefs.current.forEach((ref, index) => {
+        if (ref) {
+          const rect = ref.getBoundingClientRect()
+          const elementCenter = rect.top + rect.height / 2
+          const distance = Math.abs(elementCenter - viewportCenter)
+          
+          if (distance < closestDistance) {
+            closestDistance = distance
+            closestIndex = index
+          }
+        }
+      })
+
+      setActiveService(closestIndex)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const currentRotation = cubeRotations[activeService]
 
   return (
-    <section 
-      ref={sectionRef}
-      className="relative min-h-[700vh] bg-black"
-    >
-      {/* Sticky container */}
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Header */}
-        <div className="text-center pt-16 pb-8 px-6">
-          <p className="text-gray-400 text-xs tracking-[0.3em] uppercase mb-4">MY SERVICES</p>
-          <p className="text-gray-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-            Engineering component-driven, full-stack products that help SaaS teams build faster, and grow smarter with complete sets of skills
-          </p>
-        </div>
-
-        {/* Main content */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 px-6 md:px-12 h-[calc(100vh-200px)]">
-          {/* Left side - Service info (odd) or Cube (even) */}
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
-            {activeService % 2 === 0 ? (
-              <ServiceInfo service={services[activeService]} />
-            ) : (
-              <div className="w-64 h-64 md:w-80 md:h-80 perspective-[1000px]">
-                <div
-                  className="w-full h-full relative preserve-3d transition-transform duration-700 ease-out"
-                  style={{
-                    transform: `rotateX(${currentRotation.rotateX}deg) rotateY(${currentRotation.rotateY}deg)`,
-                    transformStyle: 'preserve-3d',
-                  }}
-                >
-                  {services.map((service, index) => (
-                    <CubeFace key={service.id} index={index} image={service.image} />
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Center line */}
-          <div className="hidden lg:block w-px h-64 bg-gradient-to-b from-transparent via-cyan-500/50 to-transparent" />
-
-          {/* Right side - Cube (odd) or Service info (even) */}
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
-            {activeService % 2 === 0 ? (
-              <div className="w-64 h-64 md:w-80 md:h-80 perspective-[1000px]">
-                <div
-                  className="w-full h-full relative preserve-3d transition-transform duration-700 ease-out"
-                  style={{
-                    transform: `rotateX(${currentRotation.rotateX}deg) rotateY(${currentRotation.rotateY}deg)`,
-                    transformStyle: 'preserve-3d',
-                  }}
-                >
-                  {services.map((service, index) => (
-                    <CubeFace key={service.id} index={index} image={service.image} />
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <ServiceInfo service={services[activeService]} />
-            )}
-          </div>
-        </div>
-
-        {/* Progress indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-          {services.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveService(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === activeService 
-                  ? 'bg-cyan-400 w-6' 
-                  : 'bg-gray-600 hover:bg-gray-500'
-              }`}
-            />
-          ))}
-        </div>
+    <section ref={sectionRef} className="relative bg-black py-20">
+      {/* Header */}
+      <div className="text-center px-6 mb-16">
+        <p className="text-gray-400 text-xs tracking-[0.3em] uppercase mb-4">MY SERVICES</p>
+        <p className="text-gray-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+          Engineering component-driven, full-stack products that help SaaS teams build faster, and grow smarter with complete sets of skills
+        </p>
       </div>
 
-      {/* CSS for 3D transforms */}
-      <style jsx>{`
-        .perspective-\\[1000px\\] {
-          perspective: 1000px;
-        }
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
-      `}</style>
+      {/* Line split visual - single line dividing into two */}
+      <div className="relative h-24 mb-8">
+        {/* Center line coming from above */}
+        <div className="absolute left-1/2 top-0 w-px h-8 -translate-x-1/2 bg-cyan-500/70" />
+        
+        {/* Split point */}
+        <div className="absolute left-1/2 top-8 -translate-x-1/2 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+        
+        {/* Left branch curving outward */}
+        <svg className="absolute left-1/2 top-8 -translate-x-full" width="120" height="64" viewBox="0 0 120 64" fill="none">
+          <path 
+            d="M120 0 Q120 32, 60 48 Q0 64, 0 64" 
+            stroke="rgba(34,211,238,0.5)" 
+            strokeWidth="1" 
+            fill="none"
+          />
+        </svg>
+        
+        {/* Right branch curving outward */}
+        <svg className="absolute left-1/2 top-8" width="120" height="64" viewBox="0 0 120 64" fill="none">
+          <path 
+            d="M0 0 Q0 32, 60 48 Q120 64, 120 64" 
+            stroke="rgba(34,211,238,0.5)" 
+            strokeWidth="1" 
+            fill="none"
+          />
+        </svg>
+      </div>
+
+      {/* Services list - scrollable */}
+      <div className="relative max-w-6xl mx-auto px-6">
+        {/* Left vertical line */}
+        <div className="absolute left-6 md:left-[calc(25%-60px)] top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/50 via-cyan-500/30 to-cyan-500/50" />
+        
+        {/* Right vertical line */}
+        <div className="absolute right-6 md:right-[calc(25%-60px)] top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/50 via-cyan-500/30 to-cyan-500/50" />
+
+        {services.map((service, index) => {
+          const isEven = index % 2 === 0
+          const isActive = index === activeService
+
+          return (
+            <div
+              key={service.id}
+              ref={el => { serviceRefs.current[index] = el }}
+              className={`relative py-16 md:py-24 transition-opacity duration-500 ${
+                isActive ? 'opacity-100' : 'opacity-40'
+              }`}
+            >
+              {/* Desktop layout - alternating sides */}
+              <div className={`hidden md:flex items-center gap-8 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}>
+                {/* Text side */}
+                <div className={`w-1/2 ${isEven ? 'text-left pr-12' : 'text-right pl-12'}`}>
+                  <span className="text-cyan-400 text-sm font-mono mb-2 block">
+                    0{service.id}
+                  </span>
+                  <h3 className="text-white text-2xl md:text-3xl font-bold mb-4 tracking-tight">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-400 text-sm md:text-base leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
+
+                {/* Image side - 3D cube that rotates based on scroll */}
+                <div className="w-1/2 flex justify-center">
+                  <div 
+                    className="w-48 h-48 md:w-64 md:h-64"
+                    style={{ perspective: '1000px' }}
+                  >
+                    <div
+                      className="w-full h-full relative transition-transform duration-700 ease-out"
+                      style={{
+                        transformStyle: 'preserve-3d',
+                        transform: `rotateX(${currentRotation.rotateX}deg) rotateY(${currentRotation.rotateY}deg)`,
+                      }}
+                    >
+                      {services.map((s, i) => (
+                        <CubeFace key={s.id} index={i} image={s.image} size={128} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile layout - stacked */}
+              <div className="md:hidden flex flex-col items-center gap-6 text-center px-4">
+                <span className="text-cyan-400 text-sm font-mono">
+                  0{service.id}
+                </span>
+                <h3 className="text-white text-xl font-bold tracking-tight">
+                  {service.title}
+                </h3>
+                
+                {/* Mobile cube */}
+                <div 
+                  className="w-40 h-40"
+                  style={{ perspective: '800px' }}
+                >
+                  <div
+                    className="w-full h-full relative transition-transform duration-700 ease-out"
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      transform: `rotateX(${currentRotation.rotateX}deg) rotateY(${currentRotation.rotateY}deg)`,
+                    }}
+                  >
+                    {services.map((s, i) => (
+                      <CubeFace key={s.id} index={i} image={s.image} size={80} />
+                    ))}
+                  </div>
+                </div>
+                
+                <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+                  {service.description}
+                </p>
+              </div>
+
+              {/* Horizontal connector line to vertical rails */}
+              <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 h-px bg-cyan-500/20 ${
+                isEven 
+                  ? 'left-6 md:left-[calc(25%-60px)] w-[calc(25%-60px)]' 
+                  : 'right-6 md:right-[calc(25%-60px)] w-[calc(25%-60px)]'
+              }`} />
+            </div>
+          )
+        })}
+      </div>
     </section>
   )
 }
 
-function ServiceInfo({ service }: { service: Service }) {
-  return (
-    <div className="max-w-md text-left animate-fadeIn">
-      <span className="text-cyan-400 text-sm font-mono mb-2 block">
-        0{service.id}
-      </span>
-      <h3 className="text-white text-2xl md:text-3xl font-bold mb-4 tracking-tight">
-        {service.title}
-      </h3>
-      <p className="text-gray-400 text-sm md:text-base leading-relaxed">
-        {service.description}
-      </p>
-    </div>
-  )
-}
-
-function CubeFace({ index, image }: { index: number; image: string }) {
-  const size = 160 // Half of the cube width (320/2)
-  
+function CubeFace({ index, image, size }: { index: number; image: string; size: number }) {
   const transforms = [
     `translateZ(${size}px)`,                    // Front
     `rotateY(90deg) translateZ(${size}px)`,     // Right
