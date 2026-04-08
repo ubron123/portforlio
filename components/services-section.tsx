@@ -130,8 +130,8 @@ export function ServicesSection() {
     <section ref={sectionRef} className="relative bg-black">
       {/* Line split area - single line comes down from center, turns at left corner with glow */}
       <div className="relative h-40">
-        {/* Center line coming from above (connects to About section) */}
-        <div className="absolute left-1/2 top-0 w-px h-16 -translate-x-1/2 bg-cyan-500/70" />
+        {/* Center line coming from above - extends up to connect with About section */}
+        <div className="absolute left-1/2 -top-32 w-px h-48 -translate-x-1/2 bg-cyan-500/70" />
         
         {/* Horizontal line from center going to left corner */}
         <div className="absolute top-16 left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
@@ -202,16 +202,16 @@ export function ServicesSection() {
             <div
               key={service.id}
               ref={el => { serviceRefs.current[index] = el }}
-              className={`relative py-20 md:py-28 transition-opacity duration-700 ${
+              className={`relative py-16 md:py-20 transition-opacity duration-700 ${
                 isActive ? 'opacity-100' : 'opacity-40'
               }`}
             >
               {/* Desktop layout - alternating sides: odd services (1,3,5) = text LEFT/image RIGHT, even services (2,4,6) = image LEFT/text RIGHT */}
-              <div className="hidden md:grid grid-cols-2 gap-8 items-center w-full">
+              <div className="hidden md:flex items-center justify-between w-full gap-8">
                 {isEven ? (
                   <>
                     {/* Service 1,3,5: Text on LEFT side */}
-                    <div className="text-left">
+                    <div className="flex-1 text-left max-w-md">
                       <span className="text-cyan-400 text-sm font-mono mb-3 block">
                         0{service.id}
                       </span>
@@ -222,25 +222,21 @@ export function ServicesSection() {
                         {service.description}
                       </p>
                     </div>
-                    {/* Image slot on RIGHT side */}
-                    <div className="flex justify-end">
-                      <div 
-                        ref={el => { imageSlotRefs.current[index] = el }}
-                        className="w-64 h-64"
-                      />
-                    </div>
+                    {/* Image slot on RIGHT side - same horizontal level as text */}
+                    <div 
+                      ref={el => { imageSlotRefs.current[index] = el }}
+                      className="w-64 h-64 flex-shrink-0"
+                    />
                   </>
                 ) : (
                   <>
-                    {/* Service 2,4,6: Image slot on LEFT side */}
-                    <div className="flex justify-start">
-                      <div 
-                        ref={el => { imageSlotRefs.current[index] = el }}
-                        className="w-64 h-64"
-                      />
-                    </div>
+                    {/* Service 2,4,6: Image slot on LEFT side - same horizontal level as text */}
+                    <div 
+                      ref={el => { imageSlotRefs.current[index] = el }}
+                      className="w-64 h-64 flex-shrink-0"
+                    />
                     {/* Text on RIGHT side */}
-                    <div className="text-right">
+                    <div className="flex-1 text-right max-w-md">
                       <span className="text-cyan-400 text-sm font-mono mb-3 block">
                         0{service.id}
                       </span>
