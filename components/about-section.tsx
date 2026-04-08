@@ -189,39 +189,57 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
           <div className="h-full w-full bg-cyan-500/70" />
         </div>
 
-        {/* Shooting star animation */}
+        {/* Shooting star animation - proper comet shape */}
         <div 
           className={`absolute left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-opacity duration-300 ${
             shootingStarActive ? 'opacity-100' : 'opacity-0'
           }`}
           style={{
-            animation: shootingStarActive ? 'shootingStar 3s ease-out forwards' : 'none',
+            animation: shootingStarActive ? 'shootingStar 4s ease-in-out forwards' : 'none',
           }}
         >
-          {/* Shooting star - elongated with bright head and fading tail */}
-          <div className="relative">
-            {/* Outer glow */}
-            <div className="absolute -inset-4 bg-cyan-400/20 blur-xl rounded-full" />
-            {/* Main star body */}
-            <div className="w-2 h-24 rounded-full bg-gradient-to-b from-white via-cyan-300 to-transparent shadow-[0_0_30px_rgba(34,211,238,1),0_0_60px_rgba(34,211,238,0.6)]" />
-            {/* Bright head */}
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-white shadow-[0_0_20px_white,0_0_40px_rgba(34,211,238,1)]" />
-            {/* Inner streak */}
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-16 rounded-full bg-gradient-to-b from-white/80 to-transparent" />
+          {/* Shooting star - larger bright head tapering to sharp tail */}
+          <div className="relative flex flex-col items-center">
+            {/* Bright head - larger glowing orb */}
+            <div className="relative">
+              <div className="absolute -inset-3 bg-white/60 blur-lg rounded-full" />
+              <div className="absolute -inset-2 bg-cyan-400/80 blur-md rounded-full" />
+              <div className="w-4 h-4 rounded-full bg-white shadow-[0_0_15px_white,0_0_30px_rgba(34,211,238,1),0_0_50px_rgba(34,211,238,0.8)]" />
+            </div>
+            {/* Tail - triangular sharp taper */}
+            <div 
+              className="w-0 h-0 mt-[-2px]"
+              style={{
+                borderLeft: '8px solid transparent',
+                borderRight: '8px solid transparent',
+                borderTop: '80px solid',
+                borderImage: 'linear-gradient(to bottom, rgba(34,211,238,0.9), rgba(34,211,238,0.3), transparent) 1',
+              }}
+            />
+            {/* Inner glow trail */}
+            <div 
+              className="absolute top-3 w-0 h-0"
+              style={{
+                borderLeft: '4px solid transparent',
+                borderRight: '4px solid transparent',
+                borderTop: '50px solid',
+                borderImage: 'linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(34,211,238,0.4), transparent) 1',
+              }}
+            />
           </div>
         </div>
 
-        {/* CSS Animation for shooting star */}
+        {/* CSS Animation for shooting star - slow graceful movement */}
         <style jsx>{`
           @keyframes shootingStar {
             0% {
-              top: 0%;
+              top: -5%;
               opacity: 0;
             }
-            5% {
+            3% {
               opacity: 1;
             }
-            90% {
+            95% {
               opacity: 1;
             }
             100% {
@@ -231,8 +249,8 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
           }
         `}</style>
 
-        {/* Main content grid - left side is STATIC */}
-        <div className="relative h-full w-full flex items-center pt-20 md:pt-24">
+        {/* Main content grid - left side is STATIC, content centered vertically */}
+        <div className="relative h-full w-full flex items-center justify-center">
           <div className="max-w-6xl mx-auto px-6 md:px-12 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
               
