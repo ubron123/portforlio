@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { useRouter } from "next/navigation"
 
 interface ProjectDetailProps {
   isOpen: boolean
@@ -15,7 +14,6 @@ export type ProjectSlide = {
   image: string
   /** Full-bleed section background — gradient matched to project imagery */
   sectionGradient: string
-  detailPage: string | null
 }
 
 const projects: ProjectSlide[] = [
@@ -25,7 +23,6 @@ const projects: ProjectSlide[] = [
     image: "/vego.png",
     sectionGradient:
       "linear-gradient(155deg, #6b7a94 0%, #9aa8c4 38%, #c5d0e3 100%)",
-    detailPage: "/projects/vego",
   },
   {
     id: 2,
@@ -33,16 +30,16 @@ const projects: ProjectSlide[] = [
     image: "/scan2dine.png",
     sectionGradient:
       "linear-gradient(145deg, #4a3d55 0%, #7d6b8a 45%, #a898b5 100%)",
-    detailPage: null, // Coming soon
   },
   {
     id: 3,
     title: "NDP",
     image: "/ndp.png",
     sectionGradient: "#847777",
-    detailPage: null, // Coming soon
   },
 ]
+
+const AUTO_SCROLL_MS = 5000
 
 /**
  * Horizontal slide swap — ~4px gap between card edges (see calc on left/right).
@@ -90,9 +87,9 @@ function getSlot(
 
 export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetailProps) {
   const [activeIndex, setActiveIndex] = useState(currentProject - 1)
+  const [progress, setProgress] = useState(0)
   const [scrollPercent, setScrollPercent] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const router = useRouter()
 
   const len = projects.length
 
@@ -100,17 +97,33 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
     (index: number) => {
       const i = ((index % len) + len) % len
       setActiveIndex(i)
+      setProgress(0)
     },
     [len]
   )
 
-  // No auto-scrolling - removed the interval timer
+  const nextSlide = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % len)
+    setProgress(0)
+  }, [len])
 
   useEffect(() => {
     if (!isOpen) return
 
+    setProgress(0)
     setScrollPercent(0)
     setActiveIndex(currentProject - 1)
+
+    // Progress bar update
+    const progressInterval = window.setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) return 0
+        return prev + 100 / (AUTO_SCROLL_MS / 50)
+      })
+    }, 50)
+
+    // Auto-advance slides
+    const slideInterval = window.setInterval(nextSlide, AUTO_SCROLL_MS)
 
     // Setup scroll percentage tracking
     const handleScroll = () => {
@@ -135,20 +148,14 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
     }
 
     return () => {
+      clearInterval(progressInterval)
+      clearInterval(slideInterval)
       const container = scrollContainerRef.current
       if (container) {
         container.removeEventListener("scroll", handleScroll)
       }
     }
-  }, [isOpen, currentProject])
-
-  // Navigate to project detail page when center card is clicked
-  const handleCenterCardClick = (project: ProjectSlide) => {
-    if (project.detailPage) {
-      onClose()
-      router.push(project.detailPage)
-    }
-  }
+  }, [isOpen, currentProject, nextSlide])
 
   if (!isOpen) return null
 
@@ -239,20 +246,26 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                           transitionTimingFunction: "cubic-bezier(0.32, 0.72, 0, 1)",
                         }}
                         onClick={() => {
-                          if (isCenter) {
-                            handleCenterCardClick(project)
-                          } else {
-                            goTo(index)
-                          }
+                          if (isCenter) nextSlide()
+                          else goTo(index)
                         }}
                         aria-label={
-                          isCenter 
-                            ? project.detailPage 
-                              ? `View ${project.title} project` 
-                              : `${project.title} - Coming soon`
-                            : `Show ${project.title}`
+                          isCenter ? `${project.title}, next project` : `Show ${project.title}`
                         }
                       >
+                        {/* Progress bar on center card */}
+                        {isCenter && (
+                          <div
+                            className="absolute left-0 top-0 z-30 h-0.5 bg-white/25"
+                            style={{ width: "100%" }}
+                          >
+                            <div
+                              className="h-full bg-white/90 transition-[width] duration-75 ease-linear"
+                              style={{ width: `${progress}%` }}
+                            />
+                          </div>
+                        )}
+
                         <div className="absolute inset-0 flex items-center justify-center bg-neutral-800/30 p-1.5 sm:p-2">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
@@ -262,24 +275,6 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                             style={{ opacity: isCenter ? 1 : 0.78 }}
                           />
                         </div>
-
-                        {/* Click indicator for center card */}
-                        {isCenter && (
-                          <div className="absolute inset-0 flex items-end justify-center pb-4 opacity-0 hover:opacity-100 transition-opacity bg-gradient-to-t from-black/60 to-transparent">
-                            <span className="text-white text-sm font-medium flex items-center gap-2">
-                              {project.detailPage ? (
-                                <>
-                                  View Project
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                  </svg>
-                                </>
-                              ) : (
-                                "Coming Soon"
-                              )}
-                            </span>
-                          </div>
-                        )}
                       </button>
                     )
                   })}
@@ -293,9 +288,6 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
               {active.title}
             </h2>
-            <p className="text-white/60 text-sm">
-              {active.detailPage ? "Click to view details" : "Coming soon"}
-            </p>
           </div>
         </section>
 
