@@ -490,18 +490,16 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
           <div className="bg-black text-white">
             {/* Overview Section - Left aligned with vertical line on left */}
             <section className="py-20 md:py-32">
-              <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
+              <div className="px-6 md:px-12 lg:px-16">
                 {/* Section Header - Left aligned */}
-                <div className="flex items-center justify-between mb-12">
-                  <div className="flex items-center gap-4">
-                    <span className="text-white/40 text-xs tracking-widest">---</span>
-                    <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">Overview</span>
-                  </div>
-                  <span className="text-white/40 text-sm">33%</span>
+                <div className="flex items-center gap-4 mb-12">
+                  <span className="text-[#3AC2FF] text-xs tracking-widest">---</span>
+                  <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">Overview</span>
+                  <span className="text-white/40 text-sm ml-auto">33%</span>
                 </div>
 
-                {/* Overview Content with left vertical line */}
-                <div className="relative pl-8 md:pl-12 border-l border-white/20">
+                {/* Overview Content with left vertical line - blue color */}
+                <div className="relative pl-8 md:pl-12 border-l-2 border-[#3AC2FF]/50">
                   <div className="max-w-3xl">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
                       {selectedProject.overview?.headline}
@@ -516,53 +514,53 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
 
             {/* My Role Section - Right aligned with vertical line on right */}
             <section className="py-20 md:py-32">
-              <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
+              <div className="px-6 md:px-12 lg:px-16">
                 {/* Section Header - Right aligned */}
-                <div className="flex items-center justify-end mb-12">
-                  <div className="flex items-center gap-4">
-                    <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">My Role</span>
-                    <span className="text-white/40 text-xs tracking-widest">---</span>
-                  </div>
+                <div className="flex items-center justify-end gap-4 mb-12">
+                  <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">My Role</span>
+                  <span className="text-[#3AC2FF] text-xs tracking-widest">---</span>
                 </div>
 
-                {/* Role Content with right vertical line */}
-                <div className="relative pr-8 md:pr-12 border-r border-white/20">
-                  {/* Role Title */}
-                  <div className="max-w-3xl ml-auto text-right mb-12">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8">
-                      {selectedProject.role?.title}
-                      <span className="text-white/40 mx-3">{"•"}</span>
-                      {selectedProject.role?.subtitle}
-                    </h2>
-                  </div>
-                  
-                  {/* Role Description - Left aligned content */}
-                  <div className="max-w-3xl mb-12">
-                    <p className="text-white/60 text-base md:text-lg leading-relaxed">
-                      {selectedProject.role?.description}
-                    </p>
-                  </div>
+                {/* Role Content with right vertical line - blue color */}
+                <div className="flex justify-end">
+                  <div className="relative pr-8 md:pr-12 border-r-2 border-[#3AC2FF]/50 max-w-4xl">
+                    {/* Role Title */}
+                    <div className="mb-12">
+                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8">
+                        {selectedProject.role?.title}
+                        <span className="text-white/40 mx-3">{"•"}</span>
+                        {selectedProject.role?.subtitle}
+                      </h2>
+                    </div>
+                    
+                    {/* Role Description */}
+                    <div className="max-w-3xl mb-12">
+                      <p className="text-white/60 text-base md:text-lg leading-relaxed">
+                        {selectedProject.role?.description}
+                      </p>
+                    </div>
 
-                  {/* Responsibilities */}
-                  <div className="space-y-12 mt-16">
-                    {selectedProject.role?.responsibilities.map((item, idx) => (
-                      <div key={idx} className="grid md:grid-cols-12 gap-6 md:gap-12">
-                        {/* Number */}
-                        <div className="md:col-span-1">
-                          <span className="text-white/30 text-sm font-mono">{item.number}</span>
+                    {/* Responsibilities */}
+                    <div className="space-y-12 mt-16">
+                      {selectedProject.role?.responsibilities.map((item, idx) => (
+                        <div key={idx} className="grid md:grid-cols-12 gap-6 md:gap-12">
+                          {/* Number */}
+                          <div className="md:col-span-1">
+                            <span className="text-white/30 text-sm font-mono">{item.number}</span>
+                          </div>
+                          
+                          {/* Content */}
+                          <div className="md:col-span-11 max-w-2xl">
+                            <h3 className="text-white text-lg md:text-xl font-semibold mb-3">
+                              {item.title}
+                            </h3>
+                            <p className="text-white/50 text-base leading-relaxed">
+                              {item.description}
+                            </p>
+                          </div>
                         </div>
-                        
-                        {/* Content */}
-                        <div className="md:col-span-11 max-w-2xl">
-                          <h3 className="text-white text-lg md:text-xl font-semibold mb-3">
-                            {item.title}
-                          </h3>
-                          <p className="text-white/50 text-base leading-relaxed">
-                            {item.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -570,15 +568,15 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
 
             {/* Result Section - Left aligned with vertical line on left */}
             <section className="py-20 md:py-32">
-              <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
+              <div className="px-6 md:px-12 lg:px-16">
                 {/* Section Header - Left aligned */}
                 <div className="flex items-center gap-4 mb-12">
-                  <span className="text-white/40 text-xs tracking-widest">---</span>
+                  <span className="text-[#3AC2FF] text-xs tracking-widest">---</span>
                   <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">Result</span>
                 </div>
 
-                {/* Result Content with left vertical line */}
-                <div className="relative pl-8 md:pl-12 border-l border-white/20">
+                {/* Result Content with left vertical line - blue color */}
+                <div className="relative pl-8 md:pl-12 border-l-2 border-[#3AC2FF]/50">
                   <div className="max-w-3xl mb-16">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
                       {selectedProject.result?.headline}
@@ -628,8 +626,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   </svg>
                 </button>
                 
-                {/* Horizontal Line */}
-                <div className="mt-16 border-t border-white/20" />
+                {/* Horizontal Line - Blue color */}
+                <div className="mt-16 border-t-2 border-[#3AC2FF]/50" />
               </div>
             </section>
           </div>
