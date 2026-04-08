@@ -128,33 +128,35 @@ export function ServicesSection() {
 
   return (
     <section ref={sectionRef} className="relative bg-black">
-      {/* Line split area - single line splits into frame */}
-      <div className="relative h-32">
+      {/* Line split area - single line comes down from center, turns at left corner with glow */}
+      <div className="relative h-40">
         {/* Center line coming from above (connects to About section) */}
-        <div className="absolute left-1/2 top-0 w-px h-12 -translate-x-1/2 bg-cyan-500/70" />
+        <div className="absolute left-1/2 top-0 w-px h-16 -translate-x-1/2 bg-cyan-500/70" />
         
-        {/* Blue circular gradient glow at split point */}
-        <div className="absolute left-1/2 top-10 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-cyan-500/20 blur-2xl" />
-        <div className="absolute left-1/2 top-10 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-cyan-400/30 blur-xl" />
-        <div className="absolute left-1/2 top-10 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-cyan-400/80 shadow-[0_0_20px_rgba(34,211,238,0.8)]" />
+        {/* Horizontal line from center going to left corner */}
+        <div className="absolute top-16 left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
         
-        {/* Horizontal split lines going to corners */}
-        <div className="absolute top-12 left-1/2 w-[calc(50%-6%)] h-px -translate-x-full bg-gradient-to-l from-cyan-500/70 to-cyan-500/40" />
-        <div className="absolute top-12 left-1/2 w-[calc(50%-6%)] h-px bg-gradient-to-r from-cyan-500/70 to-cyan-500/40" />
+        {/* Blue circular gradient glow at LEFT corner where line turns */}
+        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-cyan-400/20 blur-2xl" />
+        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-cyan-400/30 blur-xl" />
         
-        {/* Corner curves - left */}
-        <svg className="absolute top-12 left-[6%] w-6 h-6" viewBox="0 0 24 24" fill="none">
+        {/* Corner curve at left - line turns down */}
+        <svg className="absolute top-16 left-[6%] w-6 h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
           <path d="M24 0 Q0 0 0 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
         </svg>
         
-        {/* Corner curves - right */}
-        <svg className="absolute top-12 right-[6%] w-6 h-6" viewBox="0 0 24 24" fill="none">
+        {/* Horizontal line from center going to right corner */}
+        <div className="absolute top-16 left-1/2 right-[6%] h-px bg-gradient-to-r from-cyan-500/70 to-cyan-500/50" />
+        
+        {/* Corner curve at right - line turns down */}
+        <svg className="absolute top-16 right-[6%] w-6 h-6 translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
           <path d="M0 0 Q24 0 24 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
         </svg>
         
         {/* Vertical lines going down from corners */}
-        <div className="absolute left-[6%] top-[calc(3rem+24px)] w-px h-20 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
-        <div className="absolute right-[6%] top-[calc(3rem+24px)] w-px h-20 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        <div className="absolute left-[6%] top-[calc(4rem+24px)] w-px h-24 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        <div className="absolute right-[6%] top-[calc(4rem+24px)] w-px h-24 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
       </div>
 
       {/* Header - inside the frame */}
@@ -219,14 +221,12 @@ export function ServicesSection() {
                   </p>
                 </div>
 
-                {/* Image slot - where the cube lands (bigger size) */}
+                {/* Image slot - where the cube lands (no visible placeholder) */}
                 <div 
                   ref={el => { imageSlotRefs.current[index] = el }}
-                  className="w-60 h-60 flex-shrink-0 relative"
-                >
-                  {/* Subtle border to show slot position */}
-                  <div className="absolute inset-0 border border-cyan-500/10 rounded-xl" />
-                </div>
+                  className="w-60 h-60 flex-shrink-0"
+                />
+                
               </div>
 
               {/* Mobile layout - stacked with static images */}
