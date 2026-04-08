@@ -20,10 +20,10 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
   useEffect(() => {
     const runShootingStar = () => {
       setShootingStarActive(true)
-      // Animation takes about 3 seconds
+      // Animation takes about 4 seconds
       setTimeout(() => {
         setShootingStarActive(false)
-      }, 3000)
+      }, 4500)
     }
 
     // First run after 4 seconds
@@ -162,7 +162,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-black min-h-[200vh]"
+      className="relative bg-black min-h-[200vh] pt-32"
     >
       {/* Reflection gradient from projects */}
       <div
@@ -189,43 +189,52 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
           <div className="h-full w-full bg-cyan-500/70" />
         </div>
 
-        {/* Shooting star animation - proper comet shape */}
+        {/* Shooting star animation - comet shape with large head and sharp tail */}
         <div 
-          className={`absolute left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-opacity duration-300 ${
+          className={`absolute left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-opacity duration-500 ${
             shootingStarActive ? 'opacity-100' : 'opacity-0'
           }`}
           style={{
             animation: shootingStarActive ? 'shootingStar 4s ease-in-out forwards' : 'none',
           }}
         >
-          {/* Shooting star - larger bright head tapering to sharp tail */}
+          {/* Shooting star - large glowing head with sharp triangular tail */}
           <div className="relative flex flex-col items-center">
+            {/* Outer glow around head */}
+            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-10 h-10 bg-cyan-400/30 blur-xl rounded-full" />
+            
             {/* Bright head - larger glowing orb */}
-            <div className="relative">
-              <div className="absolute -inset-3 bg-white/60 blur-lg rounded-full" />
-              <div className="absolute -inset-2 bg-cyan-400/80 blur-md rounded-full" />
-              <div className="w-4 h-4 rounded-full bg-white shadow-[0_0_15px_white,0_0_30px_rgba(34,211,238,1),0_0_50px_rgba(34,211,238,0.8)]" />
+            <div className="relative z-10">
+              <div className="absolute -inset-2 bg-white/50 blur-md rounded-full" />
+              <div className="absolute -inset-1 bg-cyan-300/70 blur-sm rounded-full" />
+              <div className="w-5 h-5 rounded-full bg-white shadow-[0_0_20px_white,0_0_40px_rgba(34,211,238,1),0_0_60px_rgba(34,211,238,0.6)]" />
             </div>
-            {/* Tail - triangular sharp taper */}
-            <div 
-              className="w-0 h-0 mt-[-2px]"
-              style={{
-                borderLeft: '8px solid transparent',
-                borderRight: '8px solid transparent',
-                borderTop: '80px solid',
-                borderImage: 'linear-gradient(to bottom, rgba(34,211,238,0.9), rgba(34,211,238,0.3), transparent) 1',
-              }}
-            />
-            {/* Inner glow trail */}
-            <div 
-              className="absolute top-3 w-0 h-0"
-              style={{
-                borderLeft: '4px solid transparent',
-                borderRight: '4px solid transparent',
-                borderTop: '50px solid',
-                borderImage: 'linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(34,211,238,0.4), transparent) 1',
-              }}
-            />
+            
+            {/* Sharp triangular tail */}
+            <svg 
+              className="mt-[-4px]" 
+              width="20" 
+              height="100" 
+              viewBox="0 0 20 100"
+              fill="none"
+            >
+              <defs>
+                <linearGradient id="tailGradient" x1="10" y1="0" x2="10" y2="100" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="rgba(34,211,238,0.9)" />
+                  <stop offset="40%" stopColor="rgba(34,211,238,0.5)" />
+                  <stop offset="100%" stopColor="rgba(34,211,238,0)" />
+                </linearGradient>
+                <linearGradient id="innerTailGradient" x1="10" y1="0" x2="10" y2="70" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="rgba(255,255,255,0.8)" />
+                  <stop offset="50%" stopColor="rgba(34,211,238,0.3)" />
+                  <stop offset="100%" stopColor="rgba(34,211,238,0)" />
+                </linearGradient>
+              </defs>
+              {/* Outer tail - wider at top, sharp point at bottom */}
+              <path d="M10 0 L18 0 L10 100 L2 0 Z" fill="url(#tailGradient)" />
+              {/* Inner bright core */}
+              <path d="M10 0 L14 0 L10 70 L6 0 Z" fill="url(#innerTailGradient)" />
+            </svg>
           </div>
         </div>
 
@@ -233,13 +242,13 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
         <style jsx>{`
           @keyframes shootingStar {
             0% {
-              top: -5%;
+              top: -10%;
               opacity: 0;
             }
-            3% {
+            5% {
               opacity: 1;
             }
-            95% {
+            90% {
               opacity: 1;
             }
             100% {
@@ -249,13 +258,13 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
           }
         `}</style>
 
-        {/* Main content grid - left side is STATIC, content centered vertically */}
-        <div className="relative h-full w-full flex items-center justify-center">
+        {/* Main content grid - left side is STATIC, stays vertically centered */}
+        <div className="relative h-full w-full flex items-center">
           <div className="max-w-6xl mx-auto px-6 md:px-12 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
               
-              {/* LEFT SIDE - Always visible, static content */}
-              <div className="space-y-6 md:pr-8">
+              {/* LEFT SIDE - Always visible, static content, vertically centered */}
+              <div className="space-y-6 md:pr-8 flex flex-col justify-center">
                 <p className="text-cyan-400 text-xs tracking-[0.3em] uppercase">
                   A Snapshot of Me
                 </p>
@@ -293,17 +302,17 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
                 </div>
               </div>
 
-              {/* RIGHT SIDE - Sliding content area */}
-              <div className="relative md:pl-8 h-[450px] overflow-hidden">
+              {/* RIGHT SIDE - Sliding content area, also vertically centered */}
+              <div className="relative md:pl-8 h-[400px] overflow-hidden flex items-center">
                 {/* WHO AM I Content */}
                 <div
-                  className={`absolute inset-0 transition-all duration-700 ease-out ${
+                  className={`absolute inset-0 flex items-center transition-all duration-700 ease-out ${
                     activeSlide === "whoami"
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 -translate-y-full pointer-events-none"
                   }`}
                 >
-                  <div className="space-y-8">
+                  <div className="space-y-8 w-full">
                     <p className="text-cyan-400 text-xs tracking-[0.3em] uppercase font-bold">
                       Who Am I
                     </p>
@@ -336,13 +345,13 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
 
                 {/* CERTIFICATIONS Content */}
                 <div
-                  className={`absolute inset-0 transition-all duration-700 ease-out ${
+                  className={`absolute inset-0 flex items-center transition-all duration-700 ease-out ${
                     activeSlide === "certifications"
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-full pointer-events-none"
                   }`}
                 >
-                  <div className="space-y-6">
+                  <div className="space-y-6 w-full">
                     <p className="text-cyan-400 text-xs tracking-[0.3em] uppercase font-bold">
                       My Certifications
                     </p>
