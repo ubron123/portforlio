@@ -7,6 +7,8 @@ import { RotatingScrollText } from "@/components/rotating-scroll-text"
 import { CursorFollower } from "@/components/cursor-follower"
 import { ProjectDetail } from "@/components/project-detail"
 import { AboutSection } from "@/components/about-section"
+import { ServicesSection } from "@/components/services-section"
+import { CTAFooter } from "@/components/cta-footer"
 
 // Map project IDs to their gradients (matching project-carousel.tsx)
 const projectGradients: Record<number, string> = {
@@ -91,6 +93,12 @@ export default function Home() {
 
       {/* About Section with Timeline */}
       <AboutSection sectionGradient={currentGradient} />
+
+      {/* Services Section with 3D Cube */}
+      <ServicesSection />
+
+      {/* CTA Footer */}
+      <CTAFooter />
 
       {/* Project Detail Modal */}
       <ProjectDetail
