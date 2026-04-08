@@ -280,11 +280,6 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
     const container = detailScrollRef.current
     if (!container) return
 
-    let isInStickyMode = false
-    let stickyStartScroll = 0
-    const responsibilityCount = selectedProject.role?.responsibilities.length || 3
-    const scrollPerResponsibility = 150 // pixels of scroll per responsibility change
-
     const handleDetailScroll = () => {
       // Calculate overall scroll progress
       const scrollTop = container.scrollTop
@@ -352,31 +347,22 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
         }
       }
 
-      // Handle sticky responsibility scrolling
-      if (!myRoleSection) return
-
-      const sectionRect = myRoleSection.getBoundingClientRect()
-      
-      // Check if My Role section is in the viewport center area
-      const sectionTopInView = sectionRect.top - containerRect.top
-      const viewportHeight = container.clientHeight
-      const sectionCenterTrigger = viewportHeight * 0.3 // Trigger when section is 30% from top
-
-      if (sectionTopInView <= sectionCenterTrigger && sectionTopInView > -myRoleSection.offsetHeight + viewportHeight) {
-        if (!isInStickyMode) {
-          isInStickyMode = true
-          stickyStartScroll = scrollTop
+      // Handle responsibility highlighting based on scroll position
+      const responsibilitiesContainer = responsibilitiesContainerRef.current
+      if (responsibilitiesContainer && myRoleSection) {
+        const containerTop = myRoleSection.getBoundingClientRect().top
+        const viewportHeight = container.clientHeight
+        const responsibilityCount = selectedProject.role?.responsibilities.length || 3
+        
+        // Calculate which responsibility should be highlighted based on section scroll
+        if (containerTop < viewportHeight * 0.5 && containerTop > -myRoleSection.offsetHeight + viewportHeight * 0.5) {
+          const scrollProgress = (viewportHeight * 0.5 - containerTop) / myRoleSection.offsetHeight
+          const newIndex = Math.min(
+            Math.max(0, Math.floor(scrollProgress * responsibilityCount)),
+            responsibilityCount - 1
+          )
+          setActiveResponsibilityIndex(newIndex)
         }
-
-        // Calculate which responsibility should be active based on scroll within sticky mode
-        const scrollInStickyMode = scrollTop - stickyStartScroll
-        const newIndex = Math.min(
-          Math.max(0, Math.floor(scrollInStickyMode / scrollPerResponsibility)),
-          responsibilityCount - 1
-        )
-        setActiveResponsibilityIndex(newIndex)
-      } else {
-        isInStickyMode = false
       }
     }
 
@@ -641,112 +627,52 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
 
           {/* Content Section */}
           <div className="bg-black text-white relative">
-            {/* Animated Line - Sticky within content section, not over hero */}
+            {/* Animated Line - Single continuous line that travels across the screen */}
             <div className="sticky top-0 pointer-events-none z-40 h-0">
-              <div className="relative h-screen">
-                {/* Overview line - left side vertical */}
+              <div className="relative h-screen overflow-hidden">
+                {/* Single moving line element */}
                 <div 
-                  className={`absolute left-6 md:left-12 lg:left-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
-                    linePhase === 'overview' 
-                      ? 'opacity-100 scale-y-100' 
+                  className="absolute w-0.5 bg-[#3AC2FF] transition-all duration-500 ease-out"
+                  style={{
+                    // Vertical line height
+                    height: linePhase === 'transition-to-bottom' || linePhase === 'bottom' 
+                      ? '0%' 
+                      : '50%',
+                    // Position based on phase
+                    left: linePhase === 'overview' 
+                      ? '1.5rem'
                       : linePhase === 'transition-to-role'
-                        ? 'opacity-100 scale-y-100'
-                        : 'opacity-0 scale-y-0'
-                  }`}
-                  style={{
-                    transformOrigin: linePhase === 'transition-to-role' ? 'bottom' : 'top',
-                    transform: linePhase === 'transition-to-role' 
-                      ? `scaleY(${1 - lineProgress}) translateY(0)` 
-                      : undefined,
+                        ? `calc(1.5rem + ${lineProgress * (100 - 3)}%)`
+                        : linePhase === 'role'
+                          ? 'calc(100% - 1.5rem)'
+                          : linePhase === 'transition-to-result'
+                            ? `calc(${(1 - lineProgress) * (100 - 3)}% + 1.5rem)`
+                            : linePhase === 'result' || linePhase === 'transition-to-bottom'
+                              ? '1.5rem'
+                              : '1.5rem',
+                    top: '25%',
+                    transform: (linePhase === 'role' || linePhase === 'transition-to-role') 
+                      ? 'translateX(-100%)' 
+                      : 'translateX(0)',
                   }}
                 />
                 
-                {/* Connecting diagonal line - overview to role */}
+                {/* Horizontal line at bottom - grows from center */}
                 <div 
-                  className={`absolute bg-[#3AC2FF] transition-all duration-300 ${
-                    linePhase === 'transition-to-role' ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  style={{
-                    left: `calc(1.5rem + ${lineProgress * 80}%)`,
-                    top: '50%',
-                    width: '2px',
-                    height: linePhase === 'transition-to-role' ? `${lineProgress * 30}%` : '0%',
-                    transformOrigin: 'top',
-                  }}
-                />
-                
-                {/* My Role line - right side vertical */}
-                <div 
-                  className={`absolute right-6 md:right-12 lg:right-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
-                    linePhase === 'role' 
-                      ? 'opacity-100 scale-y-100' 
-                      : linePhase === 'transition-to-role'
-                        ? 'opacity-100'
-                        : linePhase === 'transition-to-result'
-                          ? 'opacity-100'
-                          : 'opacity-0 scale-y-0'
-                  }`}
-                  style={{
-                    transformOrigin: 'top',
-                    transform: linePhase === 'transition-to-role' 
-                      ? `scaleY(${lineProgress})` 
-                      : linePhase === 'transition-to-result'
-                        ? `scaleY(${1 - lineProgress})`
-                        : undefined,
-                  }}
-                />
-                
-                {/* Connecting diagonal line - role to result */}
-                <div 
-                  className={`absolute bg-[#3AC2FF] transition-all duration-300 ${
-                    linePhase === 'transition-to-result' ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  style={{
-                    right: `calc(1.5rem + ${lineProgress * 80}%)`,
-                    top: '50%',
-                    width: '2px',
-                    height: linePhase === 'transition-to-result' ? `${lineProgress * 30}%` : '0%',
-                    transformOrigin: 'top',
-                  }}
-                />
-                
-                {/* Result line - left side vertical */}
-                <div 
-                  className={`absolute left-6 md:left-12 lg:left-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
-                    linePhase === 'result' 
-                      ? 'opacity-100 scale-y-100' 
-                      : linePhase === 'transition-to-result'
-                        ? 'opacity-100'
-                        : linePhase === 'transition-to-bottom'
-                          ? 'opacity-100'
-                          : 'opacity-0 scale-y-0'
-                  }`}
-                  style={{
-                    transformOrigin: 'top',
-                    transform: linePhase === 'transition-to-result' 
-                      ? `scaleY(${lineProgress})` 
-                      : linePhase === 'transition-to-bottom'
-                        ? `scaleY(${1 - lineProgress})`
-                        : undefined,
-                  }}
-                />
-                
-                {/* Bottom horizontal line - centered */}
-                <div 
-                  className={`absolute left-1/2 -translate-x-1/2 bottom-[15%] h-0.5 bg-[#3AC2FF] transition-all duration-700 ease-out ${
-                    linePhase === 'bottom' 
+                  className={`absolute h-0.5 bg-[#3AC2FF] transition-all duration-500 ease-out ${
+                    linePhase === 'transition-to-bottom' || linePhase === 'bottom' 
                       ? 'opacity-100' 
-                      : linePhase === 'transition-to-bottom'
-                        ? 'opacity-100'
-                        : 'opacity-0'
+                      : 'opacity-0'
                   }`}
                   style={{
+                    bottom: '15%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
                     width: linePhase === 'transition-to-bottom' 
                       ? `${lineProgress * 400}px` 
                       : linePhase === 'bottom' 
                         ? '400px'
                         : '0px',
-                    maxWidth: '400px',
                   }}
                 />
               </div>
@@ -776,82 +702,70 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
               </div>
             </section>
 
-            {/* My Role Section - Right aligned with vertical line on right */}
-            {/* This section has sticky scroll behavior for responsibilities */}
+            {/* My Role Section - Right aligned */}
             <section 
               ref={myRoleSectionRef}
-              className="min-h-[300vh] relative"
+              className="py-20 md:py-32"
             >
-              {/* Sticky container that stays in view while scrolling through responsibilities */}
-              <div className="sticky top-0 h-screen flex items-center">
-                <div className="w-full px-6 md:px-12 lg:px-16 py-20">
-                  {/* Section Header - Right aligned */}
-                  <div className="flex items-center justify-end gap-4 mb-12">
-                    <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">My Role</span>
-                    <span className="text-[#3AC2FF] text-xs tracking-widest">---</span>
-                  </div>
+              <div className="px-6 md:px-12 lg:px-16">
+                {/* Section Header - Right aligned */}
+                <div className="flex items-center justify-end gap-4 mb-12">
+                  <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">My Role</span>
+                  <span className="text-[#3AC2FF] text-xs tracking-widest">---</span>
+                </div>
 
-                  {/* Role Content - line handled by SVG now */}
-                  <div className="flex justify-end">
-                    <div className="relative pr-8 md:pr-12 max-w-4xl">
-                      {/* Role Title */}
-                      <div className="mb-8">
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight">
-                          {selectedProject.role?.title}
-                          <span className="text-white/40 mx-3">{"•"}</span>
-                          {selectedProject.role?.subtitle}
-                        </h2>
-                      </div>
-                      
-                      {/* Role Description */}
-                      <div className="max-w-3xl mb-12">
-                        <p className="text-white/60 text-base md:text-lg leading-relaxed">
-                          {selectedProject.role?.description}
-                        </p>
-                      </div>
+                {/* Role Content */}
+                <div className="flex justify-end">
+                  <div className="relative pr-8 md:pr-12 max-w-4xl">
+                    {/* Role Title */}
+                    <div className="mb-8">
+                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight">
+                        {selectedProject.role?.title}
+                        <span className="text-white/40 mx-3">{"•"}</span>
+                        {selectedProject.role?.subtitle}
+                      </h2>
+                    </div>
+                    
+                    {/* Role Description */}
+                    <div className="max-w-3xl mb-12">
+                      <p className="text-white/60 text-base md:text-lg leading-relaxed">
+                        {selectedProject.role?.description}
+                      </p>
+                    </div>
 
-                      {/* Single Responsibility - Only shows active one with transition */}
-                      <div ref={responsibilitiesContainerRef} className="mt-12 relative min-h-[180px]">
-                        {selectedProject.role?.responsibilities.map((item, idx) => (
-                          <div 
-                            key={idx} 
-                            className={`grid md:grid-cols-12 gap-6 md:gap-12 transition-all duration-500 ease-out ${
-                              idx === activeResponsibilityIndex 
-                                ? 'opacity-100 translate-y-0' 
-                                : 'opacity-0 absolute inset-0 translate-y-8 pointer-events-none'
-                            }`}
-                          >
-                            {/* Number */}
-                            <div className="md:col-span-1">
-                              <span className="text-white/30 text-sm font-mono">{item.number}</span>
-                            </div>
-                            
-                            {/* Content */}
-                            <div className="md:col-span-11 max-w-2xl">
-                              <h3 className="text-white text-lg md:text-xl font-semibold mb-3">
-                                {item.title}
-                              </h3>
-                              <p className="text-white/50 text-base leading-relaxed">
-                                {item.description}
-                              </p>
-                            </div>
+                    {/* All Responsibilities - Smooth scroll reveal */}
+                    <div ref={responsibilitiesContainerRef} className="mt-12 space-y-16">
+                      {selectedProject.role?.responsibilities.map((item, idx) => (
+                        <div 
+                          key={idx} 
+                          className="grid md:grid-cols-12 gap-6 md:gap-12 transition-all duration-700 ease-out"
+                          style={{
+                            opacity: Math.max(0.3, 1 - Math.abs(idx - activeResponsibilityIndex) * 0.35),
+                            transform: `translateY(${Math.abs(idx - activeResponsibilityIndex) * 5}px)`,
+                          }}
+                        >
+                          {/* Number */}
+                          <div className="md:col-span-1">
+                            <span className={`text-sm font-mono transition-colors duration-500 ${
+                              idx === activeResponsibilityIndex ? 'text-[#3AC2FF]' : 'text-white/30'
+                            }`}>{item.number}</span>
                           </div>
-                        ))}
-                        
-                        {/* Progress indicators */}
-                        <div className="flex gap-2 mt-8">
-                          {selectedProject.role?.responsibilities.map((_, idx) => (
-                            <div 
-                              key={idx}
-                              className={`h-1 w-8 rounded-full transition-all duration-300 ${
-                                idx === activeResponsibilityIndex 
-                                  ? 'bg-[#3AC2FF]' 
-                                  : 'bg-white/20'
-                              }`}
-                            />
-                          ))}
+                          
+                          {/* Content */}
+                          <div className="md:col-span-11 max-w-2xl">
+                            <h3 className={`text-lg md:text-xl font-semibold mb-3 transition-colors duration-500 ${
+                              idx === activeResponsibilityIndex ? 'text-white' : 'text-white/60'
+                            }`}>
+                              {item.title}
+                            </h3>
+                            <p className={`text-base leading-relaxed transition-colors duration-500 ${
+                              idx === activeResponsibilityIndex ? 'text-white/70' : 'text-white/40'
+                            }`}>
+                              {item.description}
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>
