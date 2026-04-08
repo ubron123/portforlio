@@ -20,10 +20,19 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
     const rect = section.getBoundingClientRect()
     const viewportHeight = window.innerHeight
 
-    // Check if section is in locked position (fills viewport)
-    const isInLockedPosition = rect.top <= 10 && rect.top >= -10 && rect.bottom >= viewportHeight - 10
+    // Check if the sticky inner content is visible (section top is at or above 0, and bottom still below viewport)
+    const stickyVisible = rect.top <= 50 && rect.bottom > viewportHeight + 50
 
-    if (!isInLockedPosition) {
+    console.log("[v0] Scroll detected", { 
+      deltaY: e.deltaY, 
+      activeSlide, 
+      rectTop: rect.top, 
+      rectBottom: rect.bottom,
+      viewportHeight,
+      stickyVisible 
+    })
+
+    if (!stickyVisible) {
       accumulatedDelta.current = 0
       return
     }
@@ -36,8 +45,11 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       e.preventDefault()
       e.stopPropagation()
       
+      console.log("[v0] Blocking scroll - need to show certifications first", { accumulated: accumulatedDelta.current })
+      
       if (accumulatedDelta.current > threshold) {
         isAnimating.current = true
+        console.log("[v0] Transitioning to certifications")
         setActiveSlide("certifications")
         accumulatedDelta.current = 0
         setTimeout(() => {
@@ -52,8 +64,11 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       e.preventDefault()
       e.stopPropagation()
       
+      console.log("[v0] Blocking scroll - need to show whoami first", { accumulated: accumulatedDelta.current })
+      
       if (accumulatedDelta.current < -threshold) {
         isAnimating.current = true
+        console.log("[v0] Transitioning to whoami")
         setActiveSlide("whoami")
         accumulatedDelta.current = 0
         setTimeout(() => {
@@ -64,7 +79,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
     }
 
     // On whoami scrolling up OR on certifications scrolling down - allow page scroll
-    // Don't prevent default, let page scroll naturally
+    console.log("[v0] Allowing page scroll", { activeSlide, deltaY: e.deltaY })
   }, [activeSlide])
 
   // Reset slide when scrolling back above section
