@@ -45,6 +45,15 @@ const projects = [
           description: "aligning naming conventions with engineering implementation, making it easier for developers to map design decisions directly to code. Introducing a contribution process allowing designers across squads to propose improvements while maintaining accessibility and consistency standards."
         }
       ]
+    },
+    result: {
+      headline: "Clarity and Components That Scale",
+      description: "There was an approximate 20% reduction in design-to-development clarification cycles following the introduction of clear component documentation. The interface achieved consistency across all devices, while development and prototyping became three times faster through the use of reusable components and modular code blocks.",
+      stats: [
+        { value: "04+", label: "Product teams aligned around a shared design system structure" },
+        { value: "~20%", label: "Estimated reduction in design-to-development clarification cycles after clearer component documentation" },
+        { value: "03x", label: "Faster development and prototyping cycles enabled through reusable code blocks and components" }
+      ]
     }
   },
   {
@@ -83,6 +92,15 @@ const projects = [
           description: "Developing the QR code generation and scanning system that enables customers to access menus and place orders directly from their smartphones without downloading any application."
         }
       ]
+    },
+    result: {
+      headline: "Seamless Ordering Experience Delivered",
+      description: "The implementation resulted in significant improvements in restaurant operational efficiency. Order accuracy increased while wait times decreased, creating a better experience for both customers and staff.",
+      stats: [
+        { value: "40%", label: "Reduction in order processing time from table to kitchen" },
+        { value: "95%", label: "Order accuracy rate achieved through digital menu system" },
+        { value: "2x", label: "Increase in table turnover during peak hours" }
+      ]
     }
   },
   {
@@ -120,6 +138,15 @@ const projects = [
           title: "Notification and reminder system",
           description: "Developing push notification capabilities to keep students informed about loan approvals, upcoming due dates, and new book availability based on their interests."
         }
+      ]
+    },
+    result: {
+      headline: "Paperless Library Management Achieved",
+      description: "The NDP application successfully transformed the college library operations, eliminating paper-based processes entirely while improving student satisfaction with the book borrowing experience.",
+      stats: [
+        { value: "100%", label: "Paperless book lending process achieved for the college" },
+        { value: "60%", label: "Reduction in administrative workload for library staff" },
+        { value: "85%", label: "Student adoption rate within the first semester" }
       ]
     }
   },
@@ -461,10 +488,10 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
 
           {/* Content Section */}
           <div className="bg-black text-white">
-            {/* Overview Section */}
-            <section className="py-20 md:py-32 border-b border-white/10">
+            {/* Overview Section - Left aligned with vertical line on left */}
+            <section className="py-20 md:py-32">
               <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
-                {/* Section Header */}
+                {/* Section Header - Left aligned */}
                 <div className="flex items-center justify-between mb-12">
                   <div className="flex items-center gap-4">
                     <span className="text-white/40 text-xs tracking-widest">---</span>
@@ -473,22 +500,24 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   <span className="text-white/40 text-sm">33%</span>
                 </div>
 
-                {/* Overview Content */}
-                <div className="max-w-3xl">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
-                    {selectedProject.overview?.headline}
-                  </h2>
-                  <p className="text-white/60 text-base md:text-lg leading-relaxed">
-                    {selectedProject.overview?.description}
-                  </p>
+                {/* Overview Content with left vertical line */}
+                <div className="relative pl-8 md:pl-12 border-l border-white/20">
+                  <div className="max-w-3xl">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
+                      {selectedProject.overview?.headline}
+                    </h2>
+                    <p className="text-white/60 text-base md:text-lg leading-relaxed">
+                      {selectedProject.overview?.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             </section>
 
-            {/* My Role Section */}
+            {/* My Role Section - Right aligned with vertical line on right */}
             <section className="py-20 md:py-32">
               <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
-                {/* Section Header */}
+                {/* Section Header - Right aligned */}
                 <div className="flex items-center justify-end mb-12">
                   <div className="flex items-center gap-4">
                     <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">My Role</span>
@@ -496,54 +525,111 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   </div>
                 </div>
 
-                {/* Role Title */}
-                <div className="max-w-3xl mb-12">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8">
-                    {selectedProject.role?.title}
-                    <span className="text-white/40 mx-3">{"•"}</span>
-                    {selectedProject.role?.subtitle}
-                  </h2>
-                  <p className="text-white/60 text-base md:text-lg leading-relaxed">
-                    {selectedProject.role?.description}
-                  </p>
-                </div>
+                {/* Role Content with right vertical line */}
+                <div className="relative pr-8 md:pr-12 border-r border-white/20">
+                  {/* Role Title */}
+                  <div className="max-w-3xl ml-auto text-right mb-12">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8">
+                      {selectedProject.role?.title}
+                      <span className="text-white/40 mx-3">{"•"}</span>
+                      {selectedProject.role?.subtitle}
+                    </h2>
+                  </div>
+                  
+                  {/* Role Description - Left aligned content */}
+                  <div className="max-w-3xl mb-12">
+                    <p className="text-white/60 text-base md:text-lg leading-relaxed">
+                      {selectedProject.role?.description}
+                    </p>
+                  </div>
 
-                {/* Responsibilities */}
-                <div className="space-y-12 mt-16">
-                  {selectedProject.role?.responsibilities.map((item, idx) => (
-                    <div key={idx} className="grid md:grid-cols-12 gap-6 md:gap-12">
-                      {/* Number */}
-                      <div className="md:col-span-1">
-                        <span className="text-white/30 text-sm font-mono">{item.number}</span>
+                  {/* Responsibilities */}
+                  <div className="space-y-12 mt-16">
+                    {selectedProject.role?.responsibilities.map((item, idx) => (
+                      <div key={idx} className="grid md:grid-cols-12 gap-6 md:gap-12">
+                        {/* Number */}
+                        <div className="md:col-span-1">
+                          <span className="text-white/30 text-sm font-mono">{item.number}</span>
+                        </div>
+                        
+                        {/* Content */}
+                        <div className="md:col-span-11 max-w-2xl">
+                          <h3 className="text-white text-lg md:text-xl font-semibold mb-3">
+                            {item.title}
+                          </h3>
+                          <p className="text-white/50 text-base leading-relaxed">
+                            {item.description}
+                          </p>
+                        </div>
                       </div>
-                      
-                      {/* Content */}
-                      <div className="md:col-span-11 max-w-2xl">
-                        <h3 className="text-white text-lg md:text-xl font-semibold mb-3">
-                          {item.title}
-                        </h3>
-                        <p className="text-white/50 text-base leading-relaxed">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </section>
 
-            {/* View Project Button Section */}
+            {/* Result Section - Left aligned with vertical line on left */}
+            <section className="py-20 md:py-32">
+              <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
+                {/* Section Header - Left aligned */}
+                <div className="flex items-center gap-4 mb-12">
+                  <span className="text-white/40 text-xs tracking-widest">---</span>
+                  <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">Result</span>
+                </div>
+
+                {/* Result Content with left vertical line */}
+                <div className="relative pl-8 md:pl-12 border-l border-white/20">
+                  <div className="max-w-3xl mb-16">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
+                      {selectedProject.result?.headline}
+                    </h2>
+                    <p className="text-white/60 text-base md:text-lg leading-relaxed">
+                      {selectedProject.result?.description}
+                    </p>
+                  </div>
+
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                    {selectedProject.result?.stats.map((stat, idx) => (
+                      <div 
+                        key={idx} 
+                        className="bg-white/5 border border-white/10 rounded-lg p-6"
+                      >
+                        <span className="text-[#3AC2FF] text-4xl md:text-5xl font-light block mb-4">
+                          {stat.value}
+                        </span>
+                        <p className="text-white/50 text-sm leading-relaxed">
+                          {stat.label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Next Project Section */}
             <section className="py-16 md:py-24">
               <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24 text-center">
+                <span className="text-white/40 text-xs tracking-widest uppercase block mb-4">Next Project</span>
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-8">
+                  {projects[(projects.findIndex(p => p.id === selectedProject.id) + 1) % projects.length].title}
+                </h3>
                 <button
-                  onClick={() => setSelectedProject(null)}
-                  className="inline-flex items-center px-16 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors text-lg tracking-wide"
+                  onClick={() => {
+                    const nextIndex = (projects.findIndex(p => p.id === selectedProject.id) + 1) % projects.length
+                    setSelectedProject(projects[nextIndex])
+                  }}
+                  className="inline-flex items-center px-8 py-3 border border-white/30 text-white text-sm tracking-widest uppercase hover:bg-white/10 transition-colors"
                 >
-                  VIEW PROJECT
-                  <svg className="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  View Project
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </button>
+                
+                {/* Horizontal Line */}
+                <div className="mt-16 border-t border-white/20" />
               </div>
             </section>
           </div>
