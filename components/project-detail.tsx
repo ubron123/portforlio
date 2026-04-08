@@ -182,11 +182,16 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
   const [detailScrollProgress, setDetailScrollProgress] = useState(0)
   const [activeResponsibilityIndex, setActiveResponsibilityIndex] = useState(0)
+  const [linePhase, setLinePhase] = useState<'overview' | 'transition-to-role' | 'role' | 'transition-to-result' | 'result' | 'transition-to-bottom' | 'bottom'>('overview')
+  const [lineProgress, setLineProgress] = useState(0)
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const detailScrollRef = useRef<HTMLDivElement>(null)
   const myRoleSectionRef = useRef<HTMLDivElement>(null)
   const responsibilitiesContainerRef = useRef<HTMLDivElement>(null)
+  const overviewSectionRef = useRef<HTMLDivElement>(null)
+  const resultSectionRef = useRef<HTMLDivElement>(null)
+  const bottomSectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!isOpen) return
@@ -267,6 +272,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
     if (!selectedProject) {
       setDetailScrollProgress(0)
       setActiveResponsibilityIndex(0)
+      setLinePhase('overview')
+      setLineProgress(0)
       return
     }
 
@@ -285,12 +292,70 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
       const progress = scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0
       setDetailScrollProgress(Math.min(Math.max(progress, 0), 100))
 
-      // Handle sticky responsibility scrolling
+      // Get section positions for line animation
+      const overviewSection = overviewSectionRef.current
       const myRoleSection = myRoleSectionRef.current
+      const resultSection = resultSectionRef.current
+      const bottomSection = bottomSectionRef.current
+      const containerRect = container.getBoundingClientRect()
+
+      if (overviewSection && myRoleSection && resultSection && bottomSection) {
+        const overviewRect = overviewSection.getBoundingClientRect()
+        const myRoleRect = myRoleSection.getBoundingClientRect()
+        const resultRect = resultSection.getBoundingClientRect()
+        const bottomRect = bottomSection.getBoundingClientRect()
+        
+        const viewportCenter = containerRect.top + containerRect.height / 2
+        
+        // Calculate transition zones
+        const overviewBottom = overviewRect.bottom
+        const myRoleTop = myRoleRect.top
+        const myRoleBottom = myRoleRect.bottom
+        const resultTop = resultRect.top
+        const resultBottom = resultRect.bottom
+        const bottomTop = bottomRect.top
+
+        // Determine line phase based on scroll position
+        if (overviewRect.top > containerRect.top - 100) {
+          // Still in overview
+          setLinePhase('overview')
+          setLineProgress(0)
+        } else if (myRoleTop > viewportCenter) {
+          // Transitioning from overview to my role
+          const transitionStart = overviewBottom - containerRect.height
+          const transitionEnd = myRoleTop - containerRect.height / 2
+          const transitionProgress = Math.min(1, Math.max(0, (viewportCenter - overviewBottom) / (myRoleTop - overviewBottom)))
+          setLinePhase('transition-to-role')
+          setLineProgress(transitionProgress)
+        } else if (myRoleBottom > viewportCenter + 200) {
+          // In my role section
+          setLinePhase('role')
+          setLineProgress(1)
+        } else if (resultTop > viewportCenter) {
+          // Transitioning from my role to result
+          const transitionProgress = Math.min(1, Math.max(0, (viewportCenter - myRoleBottom + 200) / (resultTop - myRoleBottom + 200)))
+          setLinePhase('transition-to-result')
+          setLineProgress(transitionProgress)
+        } else if (bottomTop > viewportCenter) {
+          // In result section
+          setLinePhase('result')
+          setLineProgress(1)
+        } else if (bottomRect.bottom > containerRect.bottom) {
+          // Transitioning from result to bottom
+          const transitionProgress = Math.min(1, Math.max(0, (viewportCenter - resultBottom) / (bottomTop - resultBottom)))
+          setLinePhase('transition-to-bottom')
+          setLineProgress(transitionProgress)
+        } else {
+          // At bottom
+          setLinePhase('bottom')
+          setLineProgress(1)
+        }
+      }
+
+      // Handle sticky responsibility scrolling
       if (!myRoleSection) return
 
       const sectionRect = myRoleSection.getBoundingClientRect()
-      const containerRect = container.getBoundingClientRect()
       
       // Check if My Role section is in the viewport center area
       const sectionTopInView = sectionRect.top - containerRect.top
@@ -575,9 +640,118 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
           </div>
 
           {/* Content Section */}
-          <div className="bg-black text-white">
-            {/* Overview Section - Left aligned with vertical line on left */}
-            <section className="py-20 md:py-32">
+          <div className="bg-black text-white relative">
+            {/* Animated Line - CSS-based approach */}
+            <div className="fixed pointer-events-none z-50 inset-0">
+              {/* Overview line - left side vertical */}
+              <div 
+                className={`absolute left-6 md:left-12 lg:left-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
+                  linePhase === 'overview' 
+                    ? 'opacity-100 scale-y-100' 
+                    : linePhase === 'transition-to-role'
+                      ? 'opacity-100 scale-y-100'
+                      : 'opacity-0 scale-y-0'
+                }`}
+                style={{
+                  transformOrigin: linePhase === 'transition-to-role' ? 'bottom' : 'top',
+                  transform: linePhase === 'transition-to-role' 
+                    ? `scaleY(${1 - lineProgress}) translateY(0)` 
+                    : undefined,
+                }}
+              />
+              
+              {/* Connecting diagonal line - overview to role */}
+              <div 
+                className={`absolute bg-[#3AC2FF] transition-all duration-300 ${
+                  linePhase === 'transition-to-role' ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{
+                  left: `calc(1.5rem + ${lineProgress * 80}%)`,
+                  top: '50%',
+                  width: '2px',
+                  height: linePhase === 'transition-to-role' ? `${lineProgress * 30}%` : '0%',
+                  transformOrigin: 'top',
+                }}
+              />
+              
+              {/* My Role line - right side vertical */}
+              <div 
+                className={`absolute right-6 md:right-12 lg:right-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
+                  linePhase === 'role' 
+                    ? 'opacity-100 scale-y-100' 
+                    : linePhase === 'transition-to-role'
+                      ? 'opacity-100'
+                      : linePhase === 'transition-to-result'
+                        ? 'opacity-100'
+                        : 'opacity-0 scale-y-0'
+                }`}
+                style={{
+                  transformOrigin: 'top',
+                  transform: linePhase === 'transition-to-role' 
+                    ? `scaleY(${lineProgress})` 
+                    : linePhase === 'transition-to-result'
+                      ? `scaleY(${1 - lineProgress})`
+                      : undefined,
+                }}
+              />
+              
+              {/* Connecting diagonal line - role to result */}
+              <div 
+                className={`absolute bg-[#3AC2FF] transition-all duration-300 ${
+                  linePhase === 'transition-to-result' ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{
+                  right: `calc(1.5rem + ${lineProgress * 80}%)`,
+                  top: '50%',
+                  width: '2px',
+                  height: linePhase === 'transition-to-result' ? `${lineProgress * 30}%` : '0%',
+                  transformOrigin: 'top',
+                }}
+              />
+              
+              {/* Result line - left side vertical */}
+              <div 
+                className={`absolute left-6 md:left-12 lg:left-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
+                  linePhase === 'result' 
+                    ? 'opacity-100 scale-y-100' 
+                    : linePhase === 'transition-to-result'
+                      ? 'opacity-100'
+                      : linePhase === 'transition-to-bottom'
+                        ? 'opacity-100'
+                        : 'opacity-0 scale-y-0'
+                }`}
+                style={{
+                  transformOrigin: 'top',
+                  transform: linePhase === 'transition-to-result' 
+                    ? `scaleY(${lineProgress})` 
+                    : linePhase === 'transition-to-bottom'
+                      ? `scaleY(${1 - lineProgress})`
+                      : undefined,
+                }}
+              />
+              
+              {/* Bottom horizontal line */}
+              <div 
+                className={`absolute left-6 md:left-12 lg:left-16 bottom-[15%] h-0.5 bg-[#3AC2FF] transition-all duration-700 ease-out ${
+                  linePhase === 'bottom' 
+                    ? 'opacity-100' 
+                    : linePhase === 'transition-to-bottom'
+                      ? 'opacity-100'
+                      : 'opacity-0'
+                }`}
+                style={{
+                  width: linePhase === 'transition-to-bottom' 
+                    ? `calc(${lineProgress * 100}% - 3rem)` 
+                    : linePhase === 'bottom' 
+                      ? 'calc(100% - 3rem)'
+                      : '0%',
+                  transformOrigin: 'left',
+                }}
+              />
+            </div>
+
+            {/* Overview Section - Left aligned */}
+            <section ref={overviewSectionRef} className="py-20 md:py-32">
               <div className="px-6 md:px-12 lg:px-16">
                 {/* Section Header - Left aligned */}
                 <div className="flex items-center gap-4 mb-12">
@@ -586,8 +760,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   <span className="text-white/40 text-sm ml-auto">{detailScrollProgress}%</span>
                 </div>
 
-                {/* Overview Content with left vertical line - blue color */}
-                <div className="relative pl-8 md:pl-12 border-l-2 border-[#3AC2FF]/50">
+                {/* Overview Content - line handled by SVG now */}
+                <div className="relative pl-8 md:pl-12">
                   <div className="max-w-3xl">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
                       {selectedProject.overview?.headline}
@@ -615,9 +789,9 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                     <span className="text-[#3AC2FF] text-xs tracking-widest">---</span>
                   </div>
 
-                  {/* Role Content with right vertical line - blue color */}
+                  {/* Role Content - line handled by SVG now */}
                   <div className="flex justify-end">
-                    <div className="relative pr-8 md:pr-12 border-r-2 border-[#3AC2FF]/50 max-w-4xl">
+                    <div className="relative pr-8 md:pr-12 max-w-4xl">
                       {/* Role Title */}
                       <div className="mb-8">
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight">
@@ -682,8 +856,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
               </div>
             </section>
 
-            {/* Result Section - Left aligned with vertical line on left */}
-            <section className="py-20 md:py-32">
+            {/* Result Section - Left aligned */}
+            <section ref={resultSectionRef} className="py-20 md:py-32">
               <div className="px-6 md:px-12 lg:px-16">
                 {/* Section Header - Left aligned */}
                 <div className="flex items-center gap-4 mb-12">
@@ -691,8 +865,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">Result</span>
                 </div>
 
-                {/* Result Content with left vertical line - blue color */}
-                <div className="relative pl-8 md:pl-12 border-l-2 border-[#3AC2FF]/50">
+                {/* Result Content - line handled by SVG now */}
+                <div className="relative pl-8 md:pl-12">
                   <div className="max-w-3xl mb-16">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
                       {selectedProject.result?.headline}
@@ -723,7 +897,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             </section>
 
             {/* Next Project Section */}
-            <section className="py-16 md:py-24">
+            <section ref={bottomSectionRef} className="py-16 md:py-24">
               <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24 text-center">
                 <span className="text-white/40 text-xs tracking-widest uppercase block mb-4">Next Project</span>
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-8">
@@ -733,6 +907,13 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   onClick={() => {
                     const nextIndex = (projects.findIndex(p => p.id === selectedProject.id) + 1) % projects.length
                     setSelectedProject(projects[nextIndex])
+                    // Reset scroll position and line state
+                    if (detailScrollRef.current) {
+                      detailScrollRef.current.scrollTop = 0
+                    }
+                    setActiveResponsibilityIndex(0)
+                    setLinePhase('overview')
+                    setLineProgress(0)
                   }}
                   className="inline-flex items-center px-8 py-3 border border-white/30 text-white text-sm tracking-widest uppercase hover:bg-white/10 transition-colors"
                 >
@@ -742,8 +923,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   </svg>
                 </button>
                 
-                {/* Horizontal Line - Blue color */}
-                <div className="mt-16 border-t-2 border-[#3AC2FF]/50" />
+                {/* Horizontal Line - now handled by SVG animation */}
+                <div className="mt-16 h-8" />
               </div>
             </section>
           </div>
