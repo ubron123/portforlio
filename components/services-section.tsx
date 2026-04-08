@@ -130,9 +130,7 @@ export function ServicesSection() {
     <section ref={sectionRef} className="relative bg-black">
       {/* Line split area - single line comes down from center, turns at left corner with glow */}
       <div className="relative h-16 md:h-20">
-        {/* Center line coming from above - extends far up to connect with About section (no gap) */}
-        <div className="absolute left-1/2 -top-[200vh] w-px h-[200vh] -translate-x-1/2 bg-cyan-500/70" />
-        {/* Line continues down to the split point */}
+        {/* Line comes down from the shooting star (About section) and continues to the split point */}
         <div className="absolute left-1/2 top-0 w-px h-6 md:h-8 -translate-x-1/2 bg-cyan-500/70" />
         
         {/* Horizontal line from center going to left corner */}
