@@ -209,7 +209,8 @@ export function ServicesSection() {
               }`}
             >
               {/* Desktop layout - alternating sides: odd services (1,3,5) = text LEFT/image RIGHT, even services (2,4,6) = image LEFT/text RIGHT */}
-              <div className="hidden md:flex items-start justify-between w-full gap-8">
+              {/* Using items-end so cube bottom aligns with text bottom (last line of description) */}
+              <div className="hidden md:flex items-end justify-between w-full gap-8">
                 {isEven ? (
                   <>
                     {/* Service 1,3,5: Text on LEFT side */}
@@ -224,7 +225,7 @@ export function ServicesSection() {
                         {service.description}
                       </p>
                     </div>
-                    {/* Image slot on RIGHT side - same horizontal level as text */}
+                    {/* Image slot on RIGHT side - bottom aligned with text */}
                     <div 
                       ref={el => { imageSlotRefs.current[index] = el }}
                       className="w-64 h-64 flex-shrink-0"
@@ -232,7 +233,7 @@ export function ServicesSection() {
                   </>
                 ) : (
                   <>
-                    {/* Service 2,4,6: Image slot on LEFT side - same horizontal level as text */}
+                    {/* Service 2,4,6: Image slot on LEFT side - bottom aligned with text */}
                     <div 
                       ref={el => { imageSlotRefs.current[index] = el }}
                       className="w-64 h-64 flex-shrink-0"
