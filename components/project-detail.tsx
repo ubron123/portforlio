@@ -641,113 +641,116 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
 
           {/* Content Section */}
           <div className="bg-black text-white relative">
-            {/* Animated Line - CSS-based approach */}
-            <div className="fixed pointer-events-none z-50 inset-0">
-              {/* Overview line - left side vertical */}
-              <div 
-                className={`absolute left-6 md:left-12 lg:left-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
-                  linePhase === 'overview' 
-                    ? 'opacity-100 scale-y-100' 
-                    : linePhase === 'transition-to-role'
-                      ? 'opacity-100 scale-y-100'
-                      : 'opacity-0 scale-y-0'
-                }`}
-                style={{
-                  transformOrigin: linePhase === 'transition-to-role' ? 'bottom' : 'top',
-                  transform: linePhase === 'transition-to-role' 
-                    ? `scaleY(${1 - lineProgress}) translateY(0)` 
-                    : undefined,
-                }}
-              />
-              
-              {/* Connecting diagonal line - overview to role */}
-              <div 
-                className={`absolute bg-[#3AC2FF] transition-all duration-300 ${
-                  linePhase === 'transition-to-role' ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{
-                  left: `calc(1.5rem + ${lineProgress * 80}%)`,
-                  top: '50%',
-                  width: '2px',
-                  height: linePhase === 'transition-to-role' ? `${lineProgress * 30}%` : '0%',
-                  transformOrigin: 'top',
-                }}
-              />
-              
-              {/* My Role line - right side vertical */}
-              <div 
-                className={`absolute right-6 md:right-12 lg:right-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
-                  linePhase === 'role' 
-                    ? 'opacity-100 scale-y-100' 
-                    : linePhase === 'transition-to-role'
-                      ? 'opacity-100'
+            {/* Animated Line - Sticky within content section, not over hero */}
+            <div className="sticky top-0 pointer-events-none z-40 h-0">
+              <div className="relative h-screen">
+                {/* Overview line - left side vertical */}
+                <div 
+                  className={`absolute left-6 md:left-12 lg:left-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
+                    linePhase === 'overview' 
+                      ? 'opacity-100 scale-y-100' 
+                      : linePhase === 'transition-to-role'
+                        ? 'opacity-100 scale-y-100'
+                        : 'opacity-0 scale-y-0'
+                  }`}
+                  style={{
+                    transformOrigin: linePhase === 'transition-to-role' ? 'bottom' : 'top',
+                    transform: linePhase === 'transition-to-role' 
+                      ? `scaleY(${1 - lineProgress}) translateY(0)` 
+                      : undefined,
+                  }}
+                />
+                
+                {/* Connecting diagonal line - overview to role */}
+                <div 
+                  className={`absolute bg-[#3AC2FF] transition-all duration-300 ${
+                    linePhase === 'transition-to-role' ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  style={{
+                    left: `calc(1.5rem + ${lineProgress * 80}%)`,
+                    top: '50%',
+                    width: '2px',
+                    height: linePhase === 'transition-to-role' ? `${lineProgress * 30}%` : '0%',
+                    transformOrigin: 'top',
+                  }}
+                />
+                
+                {/* My Role line - right side vertical */}
+                <div 
+                  className={`absolute right-6 md:right-12 lg:right-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
+                    linePhase === 'role' 
+                      ? 'opacity-100 scale-y-100' 
+                      : linePhase === 'transition-to-role'
+                        ? 'opacity-100'
+                        : linePhase === 'transition-to-result'
+                          ? 'opacity-100'
+                          : 'opacity-0 scale-y-0'
+                  }`}
+                  style={{
+                    transformOrigin: 'top',
+                    transform: linePhase === 'transition-to-role' 
+                      ? `scaleY(${lineProgress})` 
+                      : linePhase === 'transition-to-result'
+                        ? `scaleY(${1 - lineProgress})`
+                        : undefined,
+                  }}
+                />
+                
+                {/* Connecting diagonal line - role to result */}
+                <div 
+                  className={`absolute bg-[#3AC2FF] transition-all duration-300 ${
+                    linePhase === 'transition-to-result' ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  style={{
+                    right: `calc(1.5rem + ${lineProgress * 80}%)`,
+                    top: '50%',
+                    width: '2px',
+                    height: linePhase === 'transition-to-result' ? `${lineProgress * 30}%` : '0%',
+                    transformOrigin: 'top',
+                  }}
+                />
+                
+                {/* Result line - left side vertical */}
+                <div 
+                  className={`absolute left-6 md:left-12 lg:left-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
+                    linePhase === 'result' 
+                      ? 'opacity-100 scale-y-100' 
                       : linePhase === 'transition-to-result'
                         ? 'opacity-100'
-                        : 'opacity-0 scale-y-0'
-                }`}
-                style={{
-                  transformOrigin: 'top',
-                  transform: linePhase === 'transition-to-role' 
-                    ? `scaleY(${lineProgress})` 
-                    : linePhase === 'transition-to-result'
-                      ? `scaleY(${1 - lineProgress})`
-                      : undefined,
-                }}
-              />
-              
-              {/* Connecting diagonal line - role to result */}
-              <div 
-                className={`absolute bg-[#3AC2FF] transition-all duration-300 ${
-                  linePhase === 'transition-to-result' ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{
-                  right: `calc(1.5rem + ${lineProgress * 80}%)`,
-                  top: '50%',
-                  width: '2px',
-                  height: linePhase === 'transition-to-result' ? `${lineProgress * 30}%` : '0%',
-                  transformOrigin: 'top',
-                }}
-              />
-              
-              {/* Result line - left side vertical */}
-              <div 
-                className={`absolute left-6 md:left-12 lg:left-16 top-1/4 w-0.5 h-1/2 bg-[#3AC2FF] transition-all duration-700 ease-out ${
-                  linePhase === 'result' 
-                    ? 'opacity-100 scale-y-100' 
-                    : linePhase === 'transition-to-result'
-                      ? 'opacity-100'
+                        : linePhase === 'transition-to-bottom'
+                          ? 'opacity-100'
+                          : 'opacity-0 scale-y-0'
+                  }`}
+                  style={{
+                    transformOrigin: 'top',
+                    transform: linePhase === 'transition-to-result' 
+                      ? `scaleY(${lineProgress})` 
+                      : linePhase === 'transition-to-bottom'
+                        ? `scaleY(${1 - lineProgress})`
+                        : undefined,
+                  }}
+                />
+                
+                {/* Bottom horizontal line - shorter width */}
+                <div 
+                  className={`absolute left-6 md:left-12 lg:left-16 bottom-[15%] h-0.5 bg-[#3AC2FF] transition-all duration-700 ease-out ${
+                    linePhase === 'bottom' 
+                      ? 'opacity-100' 
                       : linePhase === 'transition-to-bottom'
                         ? 'opacity-100'
-                        : 'opacity-0 scale-y-0'
-                }`}
-                style={{
-                  transformOrigin: 'top',
-                  transform: linePhase === 'transition-to-result' 
-                    ? `scaleY(${lineProgress})` 
-                    : linePhase === 'transition-to-bottom'
-                      ? `scaleY(${1 - lineProgress})`
-                      : undefined,
-                }}
-              />
-              
-              {/* Bottom horizontal line */}
-              <div 
-                className={`absolute left-6 md:left-12 lg:left-16 bottom-[15%] h-0.5 bg-[#3AC2FF] transition-all duration-700 ease-out ${
-                  linePhase === 'bottom' 
-                    ? 'opacity-100' 
-                    : linePhase === 'transition-to-bottom'
-                      ? 'opacity-100'
-                      : 'opacity-0'
-                }`}
-                style={{
-                  width: linePhase === 'transition-to-bottom' 
-                    ? `calc(${lineProgress * 100}% - 3rem)` 
-                    : linePhase === 'bottom' 
-                      ? 'calc(100% - 3rem)'
-                      : '0%',
-                  transformOrigin: 'left',
-                }}
-              />
+                        : 'opacity-0'
+                  }`}
+                  style={{
+                    width: linePhase === 'transition-to-bottom' 
+                      ? `${lineProgress * 200}px` 
+                      : linePhase === 'bottom' 
+                        ? '200px'
+                        : '0px',
+                    maxWidth: '200px',
+                    transformOrigin: 'left',
+                  }}
+                />
+              </div>
             </div>
 
             {/* Overview Section - Left aligned */}
