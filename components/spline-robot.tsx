@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Script from "next/script"
 
 export function SplineRobot() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -13,19 +14,22 @@ export function SplineRobot() {
           <div className="w-16 h-16 border-2 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
         </div>
       )}
-      <iframe
-        src="https://my.spline.design/robotfollowcursorforlandingpage-cba18fb1c5979e4467f0c3cdb73ea79d/"
-        frameBorder="0"
-        width="100%"
-        height="100%"
-        className="w-full h-full"
-        style={{ 
+      
+      {/* Spline Viewer using the official embed script */}
+      <Script 
+        type="module" 
+        src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js"
+        onLoad={() => setIsLoaded(true)}
+      />
+      
+      <spline-viewer 
+        url="https://prod.spline.design/jD8BWozwPhxDEScS/scene.splinecode"
+        style={{
+          width: "100%",
+          height: "100%",
           opacity: isLoaded ? 1 : 0,
           transition: "opacity 0.5s ease-in-out",
-          border: "none"
         }}
-        onLoad={() => setIsLoaded(true)}
-        allow="autoplay; fullscreen"
       />
     </div>
   )
