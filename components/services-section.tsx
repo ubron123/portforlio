@@ -204,7 +204,7 @@ export function ServicesSection() {
             <div
               key={service.id}
               ref={el => { serviceRefs.current[index] = el }}
-              className={`relative py-16 md:py-20 transition-opacity duration-700 ${
+              className={`relative py-24 md:py-36 transition-opacity duration-700 ${
                 isActive ? 'opacity-100' : 'opacity-40'
               }`}
             >
