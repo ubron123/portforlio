@@ -184,8 +184,8 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
 
       {/* Sticky container - fills viewport when in view */}
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Central vertical blue line - continuous from top to bottom */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 z-10">
+        {/* Central vertical blue line - starts after some space from top */}
+        <div className="absolute left-1/2 top-24 bottom-0 w-px -translate-x-1/2 z-10">
           <div className="h-full w-full bg-cyan-500/70" />
         </div>
 

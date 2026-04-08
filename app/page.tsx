@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { InteractiveCubes } from "@/components/interactive-cubes"
+import { SplineRobot } from "@/components/spline-robot"
 import { ProjectCarousel } from "@/components/project-carousel"
 import { CursorFollower } from "@/components/cursor-follower"
 import { ProjectDetail } from "@/components/project-detail"
@@ -35,8 +35,8 @@ export default function Home() {
           <span className="text-white text-xs sm:text-sm">© 2025</span>
         </header>
 
-        {/* Interactive Cubes - Full coverage for click detection */}
-        <InteractiveCubes />
+        {/* Spline 3D Robot */}
+        <SplineRobot />
 
         {/* Main Headline */}
         <div className="absolute inset-0 flex items-center justify-center px-2 sm:px-4 z-20 pointer-events-none">
