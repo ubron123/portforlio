@@ -52,17 +52,17 @@ export function CTAFooter() {
   }
 
   return (
-    <footer className="relative bg-black py-20 px-6 md:px-12">
+    <footer className="relative bg-black py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12">
       <div className="max-w-4xl mx-auto text-center">
         {/* Main headline */}
-        <h2 className="text-white text-2xl md:text-3xl lg:text-4xl mb-2">
+        <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2">
           <span className="font-bold">Ready to scale</span>
           <span className="font-light"> your product with </span>
           <span className="font-bold">precision?</span>
         </h2>
         
         {/* Subtitle */}
-        <p className="text-white text-lg md:text-xl mb-12">
+        <p className="text-white text-base sm:text-lg md:text-xl mb-8 sm:mb-10 md:mb-12">
           <span className="font-bold">I&apos;m</span>
           <span className="font-light"> here to help</span>
         </p>
@@ -70,14 +70,14 @@ export function CTAFooter() {
         {/* Draggable WhatsApp button */}
         <div 
           ref={containerRef}
-          className="relative inline-flex items-center bg-transparent border border-white/30 rounded-full px-2 py-2 w-full max-w-md mx-auto"
+          className="relative inline-flex items-center bg-transparent border border-white/30 rounded-full px-2 py-2 w-full max-w-xs sm:max-w-md mx-auto"
         >
           {/* Draggable button */}
           <button
             ref={buttonRef}
             onMouseDown={handleDragStart}
             onTouchStart={handleDragStart}
-            className="relative z-10 flex items-center justify-center w-12 h-12 rounded-full bg-white text-black transition-transform cursor-grab active:cursor-grabbing"
+            className="relative z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white text-black transition-transform cursor-grab active:cursor-grabbing"
             style={{ transform: `translateX(${dragX}px)` }}
           >
             <svg 
@@ -96,7 +96,7 @@ export function CTAFooter() {
           
           {/* Text */}
           <span 
-            className="flex-1 text-white text-sm md:text-base ml-4 transition-opacity"
+            className="flex-1 text-white text-xs sm:text-sm md:text-base ml-2 sm:ml-4 transition-opacity"
             style={{ opacity: Math.max(0.3, 1 - dragX / maxDrag) }}
           >
             Whatsapp me: +975- 77682154

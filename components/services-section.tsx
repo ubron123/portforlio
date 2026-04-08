@@ -129,51 +129,51 @@ export function ServicesSection() {
   return (
     <section ref={sectionRef} className="relative bg-black">
       {/* Line split area - single line comes down from center, turns at left corner with glow */}
-      <div className="relative h-20">
+      <div className="relative h-16 md:h-20">
         {/* Center line coming from above - extends far up to connect with About section (no gap) */}
         <div className="absolute left-1/2 -top-[200vh] w-px h-[200vh] -translate-x-1/2 bg-cyan-500/70" />
         {/* Line continues down to the split point */}
-        <div className="absolute left-1/2 top-0 w-px h-8 -translate-x-1/2 bg-cyan-500/70" />
+        <div className="absolute left-1/2 top-0 w-px h-6 md:h-8 -translate-x-1/2 bg-cyan-500/70" />
         
         {/* Horizontal line from center going to left corner */}
-        <div className="absolute top-8 left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
+        <div className="absolute top-6 md:top-8 left-[4%] md:left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
         
         {/* Blue circular gradient glow at LEFT corner where line turns - doubled size */}
-        <div className="absolute left-[6%] top-8 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-cyan-500/15 blur-3xl" />
-        <div className="absolute left-[6%] top-8 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-cyan-400/20 blur-2xl" />
-        <div className="absolute left-[6%] top-8 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-cyan-400/30 blur-xl" />
+        <div className="absolute left-[4%] md:left-[6%] top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-40 md:w-80 h-40 md:h-80 rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="absolute left-[4%] md:left-[6%] top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-24 md:w-48 h-24 md:h-48 rounded-full bg-cyan-400/20 blur-2xl" />
+        <div className="absolute left-[4%] md:left-[6%] top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-10 md:w-20 h-10 md:h-20 rounded-full bg-cyan-400/30 blur-xl" />
         
         {/* Corner curve at left - line turns down */}
-        <svg className="absolute top-8 left-[6%] w-6 h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
+        <svg className="absolute top-6 md:top-8 left-[4%] md:left-[6%] w-4 md:w-6 h-4 md:h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
           <path d="M24 0 Q0 0 0 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
         </svg>
         
         {/* Horizontal line from center going to right corner */}
-        <div className="absolute top-8 left-1/2 right-[6%] h-px bg-gradient-to-r from-cyan-500/70 to-cyan-500/50" />
+        <div className="absolute top-6 md:top-8 left-1/2 right-[4%] md:right-[6%] h-px bg-gradient-to-r from-cyan-500/70 to-cyan-500/50" />
         
         {/* Corner curve at right - line turns down */}
-        <svg className="absolute top-8 right-[6%] w-6 h-6 translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
+        <svg className="absolute top-6 md:top-8 right-[4%] md:right-[6%] w-4 md:w-6 h-4 md:h-6 translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
           <path d="M0 0 Q24 0 24 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
         </svg>
         
         {/* Vertical lines going down from corners */}
-        <div className="absolute left-[6%] top-[calc(2rem+24px)] w-px h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
-        <div className="absolute right-[6%] top-[calc(2rem+24px)] w-px h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        <div className="absolute left-[4%] md:left-[6%] top-[calc(1.5rem+16px)] md:top-[calc(2rem+24px)] w-px h-8 md:h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        <div className="absolute right-[4%] md:right-[6%] top-[calc(1.5rem+16px)] md:top-[calc(2rem+24px)] w-px h-8 md:h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
       </div>
 
       {/* Header - inside the frame */}
-      <div className="relative text-center px-6 pb-8 mx-[6%] border-l border-r border-cyan-500/30">
-        <p className="text-cyan-400 text-xs tracking-[0.3em] uppercase mb-6">MY SERVICES</p>
-        <p className="text-gray-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+      <div className="relative text-center px-4 md:px-6 pb-6 md:pb-8 mx-[4%] md:mx-[6%] border-l border-r border-cyan-500/30">
+        <p className="text-cyan-400 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 md:mb-6">MY SERVICES</p>
+        <p className="text-gray-300 text-xs md:text-sm lg:text-base max-w-2xl mx-auto leading-relaxed">
           Engineering component-driven, full-stack products that help SaaS teams build faster, and grow smarter with complete sets of skills
         </p>
       </div>
 
       {/* Services list container - inside the frame */}
-      <div className="relative mx-[6%] border-l border-r border-cyan-500/30 px-6 md:px-12">
+      <div className="relative mx-[4%] md:mx-[6%] border-l border-r border-cyan-500/30 px-4 md:px-6 lg:px-12">
         {/* Floating 3D Cube that travels down the page */}
         <div 
-          className="absolute z-20 w-64 h-64 pointer-events-none hidden md:block"
+          className="absolute z-20 w-48 lg:w-64 h-48 lg:h-64 pointer-events-none hidden md:block"
           style={{
             top: cubePosition.top,
             left: cubePosition.left,
@@ -204,7 +204,7 @@ export function ServicesSection() {
             <div
               key={service.id}
               ref={el => { serviceRefs.current[index] = el }}
-              className={`relative py-24 md:py-36 transition-opacity duration-700 ${
+              className={`relative py-12 sm:py-16 md:py-24 lg:py-36 transition-opacity duration-700 ${
                 isActive ? 'opacity-100' : 'opacity-40'
               }`}
             >
@@ -228,7 +228,7 @@ export function ServicesSection() {
                     {/* Image slot on RIGHT side - bottom aligned with text */}
                     <div 
                       ref={el => { imageSlotRefs.current[index] = el }}
-                      className="w-64 h-64 flex-shrink-0"
+                      className="w-48 lg:w-64 h-48 lg:h-64 flex-shrink-0"
                     />
                   </>
                 ) : (
@@ -236,7 +236,7 @@ export function ServicesSection() {
                     {/* Service 2,4,6: Image slot on LEFT side - bottom aligned with text */}
                     <div 
                       ref={el => { imageSlotRefs.current[index] = el }}
-                      className="w-64 h-64 flex-shrink-0"
+                      className="w-48 lg:w-64 h-48 lg:h-64 flex-shrink-0"
                     />
                     {/* Text on RIGHT side */}
                     <div className="flex-1 text-right max-w-md">
@@ -283,7 +283,7 @@ export function ServicesSection() {
       </div>
 
       {/* Bottom of frame - lines continue down then fade */}
-      <div className="relative h-20 mx-[6%]">
+      <div className="relative h-12 md:h-20 mx-[4%] md:mx-[6%]">
         <div className="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-cyan-500/30 to-transparent" />
         <div className="absolute right-0 top-0 w-px h-full bg-gradient-to-b from-cyan-500/30 to-transparent" />
       </div>
