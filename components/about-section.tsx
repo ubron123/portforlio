@@ -9,9 +9,11 @@ type AboutSectionProps = {
 export function AboutSection({ sectionGradient }: AboutSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [activeSlide, setActiveSlide] = useState<"whoami" | "certifications">("whoami")
+  const [wormProgress, setWormProgress] = useState(0) // 0 = top, 100 = bottom
   const isAnimating = useRef(false)
-  const accumulatedDelta = useRef(0)
-  const threshold = 80
+  const scrollCount = useRef(0)
+  const lastScrollTime = useRef(0)
+  const scrollsNeeded = 2 // Number of scroll gestures needed to change slide
 
   const handleWheel = useCallback((e: WheelEvent) => {
     if (!sectionRef.current || isAnimating.current) return
@@ -20,38 +22,36 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
     const rect = section.getBoundingClientRect()
     const viewportHeight = window.innerHeight
 
-    // Check if the sticky inner content is visible (section top is at or above 0, and bottom still below viewport)
+    // Check if the sticky inner content is visible
     const stickyVisible = rect.top <= 50 && rect.bottom > viewportHeight + 50
 
-    console.log("[v0] Scroll detected", { 
-      deltaY: e.deltaY, 
-      activeSlide, 
-      rectTop: rect.top, 
-      rectBottom: rect.bottom,
-      viewportHeight,
-      stickyVisible 
-    })
-
     if (!stickyVisible) {
-      accumulatedDelta.current = 0
+      scrollCount.current = 0
       return
     }
 
-    // Accumulate scroll delta
-    accumulatedDelta.current += e.deltaY
+    const now = Date.now()
+    // Reset scroll count if more than 500ms since last scroll
+    if (now - lastScrollTime.current > 500) {
+      scrollCount.current = 0
+    }
+    lastScrollTime.current = now
 
-    // Scrolling DOWN while on "whoami" slide - MUST go to certifications first
+    // Only count significant scroll gestures
+    if (Math.abs(e.deltaY) < 10) return
+
+    // Scrolling DOWN while on "whoami" slide
     if (e.deltaY > 0 && activeSlide === "whoami") {
       e.preventDefault()
       e.stopPropagation()
       
-      console.log("[v0] Blocking scroll - need to show certifications first", { accumulated: accumulatedDelta.current })
+      scrollCount.current += 1
       
-      if (accumulatedDelta.current > threshold) {
+      if (scrollCount.current >= scrollsNeeded) {
         isAnimating.current = true
-        console.log("[v0] Transitioning to certifications")
         setActiveSlide("certifications")
-        accumulatedDelta.current = 0
+        setWormProgress(100) // Move worm to bottom
+        scrollCount.current = 0
         setTimeout(() => {
           isAnimating.current = false
         }, 700)
@@ -59,18 +59,18 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       return
     }
 
-    // Scrolling UP while on "certifications" slide - MUST go back to whoami first
+    // Scrolling UP while on "certifications" slide
     if (e.deltaY < 0 && activeSlide === "certifications") {
       e.preventDefault()
       e.stopPropagation()
       
-      console.log("[v0] Blocking scroll - need to show whoami first", { accumulated: accumulatedDelta.current })
+      scrollCount.current += 1
       
-      if (accumulatedDelta.current < -threshold) {
+      if (scrollCount.current >= scrollsNeeded) {
         isAnimating.current = true
-        console.log("[v0] Transitioning to whoami")
         setActiveSlide("whoami")
-        accumulatedDelta.current = 0
+        setWormProgress(0) // Move worm to top
+        scrollCount.current = 0
         setTimeout(() => {
           isAnimating.current = false
         }, 700)
@@ -79,7 +79,6 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
     }
 
     // On whoami scrolling up OR on certifications scrolling down - allow page scroll
-    console.log("[v0] Allowing page scroll", { activeSlide, deltaY: e.deltaY })
   }, [activeSlide])
 
   // Reset slide when scrolling back above section
@@ -92,7 +91,8 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
     // If we've scrolled past the section going up, reset to whoami
     if (rect.top > viewportHeight * 0.3 && activeSlide === "certifications") {
       setActiveSlide("whoami")
-      accumulatedDelta.current = 0
+      setWormProgress(0)
+      scrollCount.current = 0
     }
   }, [activeSlide])
 
@@ -131,14 +131,27 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
 
       {/* Sticky container - fills viewport when in view */}
       <div className="sticky top-0 h-screen overflow-hidden pt-32 md:pt-40">
-        {/* Central vertical blue line - starts from very top */}
+        {/* Central vertical blue line - continuous from top to bottom */}
         <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 z-10">
-          <div className="h-full w-full bg-gradient-to-b from-cyan-500/0 via-cyan-500 to-cyan-500/50" />
+          <div className="h-full w-full bg-cyan-500/70" />
         </div>
 
-        {/* Blue dot marker on timeline - positioned lower with content */}
-        <div className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 z-30">
-          <div className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.6)]" />
+        {/* Animated worm/capsule that moves along the line */}
+        <div 
+          className="absolute left-1/2 -translate-x-1/2 z-30 transition-all duration-700 ease-out"
+          style={{
+            top: `${20 + (wormProgress * 0.5)}%`, // Moves from 20% to 70%
+          }}
+        >
+          {/* Worm shape - elongated capsule with glow */}
+          <div className="relative">
+            {/* Glow effect */}
+            <div className="absolute -inset-2 bg-cyan-400/30 blur-lg rounded-full" />
+            {/* Main worm body */}
+            <div className="w-2 h-12 rounded-full bg-gradient-to-b from-cyan-300 via-cyan-400 to-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.8)]" />
+            {/* Inner highlight */}
+            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-4 rounded-full bg-white/60" />
+          </div>
         </div>
 
         {/* Main content grid - left side is STATIC */}
@@ -301,12 +314,6 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 text-xs">
-          <span>{activeSlide === "whoami" ? "Scroll to see certifications" : "Scroll to continue"}</span>
-          <div className="w-px h-6 bg-gradient-to-b from-white/40 to-transparent animate-pulse" />
         </div>
       </div>
     </section>
