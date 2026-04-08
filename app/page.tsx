@@ -6,10 +6,19 @@ import { ProjectCarousel } from "@/components/project-carousel"
 import { RotatingScrollText } from "@/components/rotating-scroll-text"
 import { CursorFollower } from "@/components/cursor-follower"
 import { ProjectDetail } from "@/components/project-detail"
+import { AboutSection } from "@/components/about-section"
+
+// Map project IDs to their gradients (matching project-carousel.tsx)
+const projectGradients: Record<number, string> = {
+  1: "linear-gradient(155deg, #6b7a94 0%, #9aa8c4 38%, #c5d0e3 100%)",
+  2: "linear-gradient(145deg, #4a3d55 0%, #7d6b8a 45%, #a898b5 100%)",
+  3: "#847777",
+}
 
 export default function Home() {
   const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false)
   const [currentProject, setCurrentProject] = useState(1)
+  const [currentGradient, setCurrentGradient] = useState(projectGradients[1])
 
   const handleWorkClick = () => {
     setIsProjectDetailOpen(true)
@@ -44,7 +53,10 @@ export default function Home() {
 
       {/* Bottom Section — project carousel + dynamic tint */}
       <section className="relative min-h-[50vh] sm:min-h-[55vh] md:min-h-[50vh] lg:min-h-[48vh] overflow-hidden pb-24 sm:pb-28">
-        <ProjectCarousel onActiveProjectChange={setCurrentProject} />
+        <ProjectCarousel onActiveProjectChange={(id) => {
+          setCurrentProject(id)
+          setCurrentGradient(projectGradients[id] || projectGradients[1])
+        }} />
 
         {/* Glass nav: WORK · menu · ABOUT */}
         <nav className="absolute bottom-5 sm:bottom-7 md:bottom-9 left-1/2 z-30 -translate-x-1/2">
@@ -76,6 +88,9 @@ export default function Home() {
 
         <RotatingScrollText variant="on-tint" />
       </section>
+
+      {/* About Section with Timeline */}
+      <AboutSection sectionGradient={currentGradient} />
 
       {/* Project Detail Modal */}
       <ProjectDetail
