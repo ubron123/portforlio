@@ -189,7 +189,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
           <div className="h-full w-full bg-cyan-500/70" />
         </div>
 
-        {/* Shooting star animation - head first (at top), sharp tail trailing behind */}
+        {/* Shooting star animation - unified head and tail as one seamless piece */}
         <div 
           className={`absolute left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-opacity duration-500 ${
             shootingStarActive ? 'opacity-100' : 'opacity-0'
@@ -198,43 +198,36 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
             animation: shootingStarActive ? 'shootingStar 4s ease-in-out forwards' : 'none',
           }}
         >
-          {/* Shooting star - flipped: sharp tail on TOP, large head at BOTTOM (head leads when moving down) */}
-          <div className="relative flex flex-col items-center">
-            {/* Sharp triangular tail pointing UP (trails behind the head) */}
-            <svg 
-              width="12" 
-              height="50" 
-              viewBox="0 0 12 50"
-              fill="none"
-            >
-              <defs>
-                <linearGradient id="tailGradient" x1="6" y1="0" x2="6" y2="50" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="rgba(34,211,238,0)" />
-                  <stop offset="60%" stopColor="rgba(34,211,238,0.5)" />
-                  <stop offset="100%" stopColor="rgba(34,211,238,0.9)" />
-                </linearGradient>
-                <linearGradient id="innerTailGradient" x1="6" y1="0" x2="6" y2="50" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="rgba(34,211,238,0)" />
-                  <stop offset="50%" stopColor="rgba(34,211,238,0.3)" />
-                  <stop offset="100%" stopColor="rgba(255,255,255,0.8)" />
-                </linearGradient>
-              </defs>
-              {/* Outer tail - sharp point at top, wider at bottom connecting to head */}
-              <path d="M6 0 L11 50 L1 50 Z" fill="url(#tailGradient)" />
-              {/* Inner bright core */}
-              <path d="M6 15 L8 50 L4 50 Z" fill="url(#innerTailGradient)" />
-            </svg>
-            
-            {/* Outer glow around head */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-6 bg-cyan-400/30 blur-lg rounded-full" />
-            
-            {/* Bright head - glowing orb at bottom (leads the movement) */}
-            <div className="relative z-10 mt-[-4px]">
-              <div className="absolute -inset-1.5 bg-white/50 blur-md rounded-full" />
-              <div className="absolute -inset-1 bg-cyan-300/70 blur-sm rounded-full" />
-              <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_12px_white,0_0_24px_rgba(34,211,238,1),0_0_36px_rgba(34,211,238,0.6)]" />
-            </div>
-          </div>
+          {/* Shooting star - single unified shape: larger head at bottom, sharp tail trailing up */}
+          <svg 
+            width="10" 
+            height="36" 
+            viewBox="0 0 10 36"
+            fill="none"
+            className="drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]"
+          >
+            <defs>
+              <linearGradient id="starGradient" x1="5" y1="0" x2="5" y2="36" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="rgba(34,211,238,0)" />
+                <stop offset="30%" stopColor="rgba(34,211,238,0.6)" />
+                <stop offset="70%" stopColor="rgba(255,255,255,0.9)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,1)" />
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            {/* Single teardrop/comet shape - sharp point at top, rounded head at bottom */}
+            <path 
+              d="M5 0 C5 0, 9 28, 9 32 C9 34.2 7.2 36 5 36 C2.8 36 1 34.2 1 32 C1 28, 5 0, 5 0 Z" 
+              fill="url(#starGradient)" 
+              filter="url(#glow)"
+            />
+          </svg>
         </div>
 
         {/* CSS Animation for shooting star - slow graceful movement */}
