@@ -61,6 +61,7 @@ const cubeRotations = [
 export function ServicesSection() {
   const [activeService, setActiveService] = useState(0)
   const [cubePosition, setCubePosition] = useState({ top: 0, left: 0 })
+  const [scrollProgress, setScrollProgress] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([])
   const imageSlotRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -71,6 +72,12 @@ export function ServicesSection() {
 
       const sectionRect = sectionRef.current.getBoundingClientRect()
       const viewportCenter = window.innerHeight / 2
+
+      // Calculate overall scroll progress through the section
+      const sectionTop = sectionRect.top
+      const sectionHeight = sectionRect.height
+      const progress = Math.max(0, Math.min(1, (-sectionTop + viewportCenter) / sectionHeight))
+      setScrollProgress(progress)
 
       // Find which service is most visible
       let closestIndex = 0
@@ -91,15 +98,16 @@ export function ServicesSection() {
 
       setActiveService(closestIndex)
 
-      // Position the cube at the active service's image slot
+      // Position the cube at the active service's image slot - smooth interpolation
       const activeSlot = imageSlotRefs.current[closestIndex]
       if (activeSlot && sectionRef.current) {
         const slotRect = activeSlot.getBoundingClientRect()
         const sectionRect = sectionRef.current.getBoundingClientRect()
         
+        const cubeSize = 120 // half of 240
         setCubePosition({
-          top: slotRect.top - sectionRect.top + slotRect.height / 2 - 80, // center the cube
-          left: slotRect.left - sectionRect.left + slotRect.width / 2 - 80,
+          top: slotRect.top - sectionRect.top + slotRect.height / 2 - cubeSize,
+          left: slotRect.left - sectionRect.left + slotRect.width / 2 - cubeSize,
         })
       }
     }
@@ -119,56 +127,66 @@ export function ServicesSection() {
   const currentRotation = cubeRotations[activeService]
 
   return (
-    <section ref={sectionRef} className="relative bg-black py-20">
-      {/* Header */}
-      <div className="text-center px-6 mb-8">
-        <p className="text-gray-400 text-xs tracking-[0.3em] uppercase mb-4">MY SERVICES</p>
+    <section ref={sectionRef} className="relative bg-black">
+      {/* Line split area - single line splits into frame */}
+      <div className="relative h-32">
+        {/* Center line coming from above (connects to About section) */}
+        <div className="absolute left-1/2 top-0 w-px h-12 -translate-x-1/2 bg-cyan-500/70" />
+        
+        {/* Blue circular gradient glow at split point */}
+        <div className="absolute left-1/2 top-10 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-cyan-500/20 blur-2xl" />
+        <div className="absolute left-1/2 top-10 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-cyan-400/30 blur-xl" />
+        <div className="absolute left-1/2 top-10 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-cyan-400/80 shadow-[0_0_20px_rgba(34,211,238,0.8)]" />
+        
+        {/* Horizontal split lines going to corners */}
+        <div className="absolute top-12 left-1/2 w-[calc(50%-6%)] h-px -translate-x-full bg-gradient-to-l from-cyan-500/70 to-cyan-500/40" />
+        <div className="absolute top-12 left-1/2 w-[calc(50%-6%)] h-px bg-gradient-to-r from-cyan-500/70 to-cyan-500/40" />
+        
+        {/* Corner curves - left */}
+        <svg className="absolute top-12 left-[6%] w-6 h-6" viewBox="0 0 24 24" fill="none">
+          <path d="M24 0 Q0 0 0 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
+        </svg>
+        
+        {/* Corner curves - right */}
+        <svg className="absolute top-12 right-[6%] w-6 h-6" viewBox="0 0 24 24" fill="none">
+          <path d="M0 0 Q24 0 24 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
+        </svg>
+        
+        {/* Vertical lines going down from corners */}
+        <div className="absolute left-[6%] top-[calc(3rem+24px)] w-px h-20 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        <div className="absolute right-[6%] top-[calc(3rem+24px)] w-px h-20 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+      </div>
+
+      {/* Header - inside the frame */}
+      <div className="relative text-center px-6 pb-16 mx-[6%] border-l border-r border-cyan-500/30">
+        <p className="text-cyan-400 text-xs tracking-[0.3em] uppercase mb-6">MY SERVICES</p>
         <p className="text-gray-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
           Engineering component-driven, full-stack products that help SaaS teams build faster, and grow smarter with complete sets of skills
         </p>
       </div>
 
-      {/* Line split - center line splits into rectangle shape (no bottom stroke) */}
-      <div className="relative h-16 mb-8 max-w-5xl mx-auto px-6">
-        {/* Center line coming from above */}
-        <div className="absolute left-1/2 top-0 w-px h-4 -translate-x-1/2 bg-cyan-500/70" />
-        
-        {/* Horizontal line at top of rectangle */}
-        <div className="absolute top-4 left-[15%] right-[15%] h-px bg-cyan-500/50" />
-        
-        {/* Left vertical line going down (near corner, not middle) */}
-        <div className="absolute left-[15%] top-4 w-px h-12 bg-cyan-500/50" />
-        
-        {/* Right vertical line going down (near corner, not middle) */}
-        <div className="absolute right-[15%] top-4 w-px h-12 bg-cyan-500/50" />
-      </div>
-
-      {/* Services list container */}
-      <div className="relative max-w-5xl mx-auto px-6">
-        {/* Left vertical line running down the side */}
-        <div className="absolute left-[15%] top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/50 via-cyan-500/30 to-cyan-500/10" />
-        
-        {/* Right vertical line running down the side */}
-        <div className="absolute right-[15%] top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/50 via-cyan-500/30 to-cyan-500/10" />
-
+      {/* Services list container - inside the frame */}
+      <div className="relative mx-[6%] border-l border-r border-cyan-500/30 px-6 md:px-12">
         {/* Floating 3D Cube that travels down the page */}
         <div 
-          className="absolute z-20 w-40 h-40 pointer-events-none transition-all duration-700 ease-out hidden md:block"
+          className="absolute z-20 w-60 h-60 pointer-events-none hidden md:block"
           style={{
             top: cubePosition.top,
             left: cubePosition.left,
-            perspective: '800px',
+            perspective: '1000px',
+            transition: 'top 1s ease-out, left 0.8s ease-out',
           }}
         >
           <div
-            className="w-full h-full relative transition-transform duration-700 ease-out"
+            className="w-full h-full relative"
             style={{
               transformStyle: 'preserve-3d',
               transform: `rotateX(${currentRotation.rotateX}deg) rotateY(${currentRotation.rotateY}deg)`,
+              transition: 'transform 1.2s ease-out',
             }}
           >
             {services.map((s, i) => (
-              <CubeFace key={s.id} index={i} image={s.image} size={80} />
+              <CubeFace key={s.id} index={i} image={s.image} size={120} />
             ))}
           </div>
         </div>
@@ -182,36 +200,37 @@ export function ServicesSection() {
             <div
               key={service.id}
               ref={el => { serviceRefs.current[index] = el }}
-              className={`relative py-16 md:py-20 transition-opacity duration-500 ${
-                isActive ? 'opacity-100' : 'opacity-50'
+              className={`relative py-20 md:py-28 transition-opacity duration-700 ${
+                isActive ? 'opacity-100' : 'opacity-40'
               }`}
             >
               {/* Desktop layout - alternating sides */}
-              <div className={`hidden md:flex items-center gap-12 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}>
+              <div className={`hidden md:flex items-center gap-16 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}>
                 {/* Text side */}
                 <div className={`flex-1 ${isEven ? 'text-left pr-8' : 'text-right pl-8'}`}>
-                  <span className="text-cyan-400 text-sm font-mono mb-2 block">
+                  <span className="text-cyan-400 text-sm font-mono mb-3 block">
                     0{service.id}
                   </span>
-                  <h3 className="text-white text-xl md:text-2xl font-bold mb-4 tracking-tight">
+                  <h3 className="text-white text-2xl md:text-3xl font-bold mb-5 tracking-tight">
                     {service.title}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed max-w-md">
+                  <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-lg">
                     {service.description}
                   </p>
                 </div>
 
-                {/* Image slot - where the cube lands */}
+                {/* Image slot - where the cube lands (bigger size) */}
                 <div 
                   ref={el => { imageSlotRefs.current[index] = el }}
-                  className="w-40 h-40 flex-shrink-0"
+                  className="w-60 h-60 flex-shrink-0 relative"
                 >
-                  {/* Empty slot - cube fills this space */}
+                  {/* Subtle border to show slot position */}
+                  <div className="absolute inset-0 border border-cyan-500/10 rounded-xl" />
                 </div>
               </div>
 
               {/* Mobile layout - stacked with static images */}
-              <div className="md:hidden flex flex-col items-center gap-6 text-center px-4">
+              <div className="md:hidden flex flex-col items-center gap-6 text-center">
                 <span className="text-cyan-400 text-sm font-mono">
                   0{service.id}
                 </span>
@@ -220,7 +239,7 @@ export function ServicesSection() {
                 </h3>
                 
                 {/* Mobile - show static image */}
-                <div className="w-32 h-32 rounded-xl overflow-hidden border border-cyan-500/20">
+                <div className="w-48 h-48 rounded-xl overflow-hidden border border-cyan-500/20">
                   <img
                     src={service.image}
                     alt={service.title}
@@ -236,6 +255,12 @@ export function ServicesSection() {
             </div>
           )
         })}
+      </div>
+
+      {/* Bottom of frame - lines continue down then fade */}
+      <div className="relative h-20 mx-[6%]">
+        <div className="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-cyan-500/30 to-transparent" />
+        <div className="absolute right-0 top-0 w-px h-full bg-gradient-to-b from-cyan-500/30 to-transparent" />
       </div>
     </section>
   )
@@ -253,7 +278,7 @@ function CubeFace({ index, image, size }: { index: number; image: string; size: 
 
   return (
     <div
-      className="absolute inset-0 w-full h-full rounded-xl overflow-hidden border border-cyan-500/30 shadow-[0_0_20px_rgba(34,211,238,0.2)]"
+      className="absolute inset-0 w-full h-full rounded-xl overflow-hidden border border-cyan-500/30 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
       style={{
         transform: transforms[index],
         backfaceVisibility: 'hidden',
