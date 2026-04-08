@@ -9,11 +9,34 @@ type AboutSectionProps = {
 export function AboutSection({ sectionGradient }: AboutSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [activeSlide, setActiveSlide] = useState<"whoami" | "certifications">("whoami")
-  const [wormProgress, setWormProgress] = useState(0) // 0 = top, 100 = bottom
+  const [shootingStarActive, setShootingStarActive] = useState(false)
+  const [canScrollPage, setCanScrollPage] = useState(false)
   const isAnimating = useRef(false)
   const scrollCount = useRef(0)
   const lastScrollTime = useRef(0)
-  const scrollsNeeded = 2 // Number of scroll gestures needed to change slide
+  const scrollsNeeded = 2
+
+  // Shooting star animation - runs after 4 seconds, then loops every 30 seconds
+  useEffect(() => {
+    const runShootingStar = () => {
+      setShootingStarActive(true)
+      // Animation takes about 3 seconds
+      setTimeout(() => {
+        setShootingStarActive(false)
+      }, 3000)
+    }
+
+    // First run after 4 seconds
+    const initialTimeout = setTimeout(runShootingStar, 4000)
+    
+    // Then loop every 30 seconds
+    const interval = setInterval(runShootingStar, 30000)
+
+    return () => {
+      clearTimeout(initialTimeout)
+      clearInterval(interval)
+    }
+  }, [])
 
   const handleWheel = useCallback((e: WheelEvent) => {
     if (!sectionRef.current || isAnimating.current) return
@@ -40,7 +63,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
     // Only count significant scroll gestures
     if (Math.abs(e.deltaY) < 10) return
 
-    // Scrolling DOWN while on "whoami" slide
+    // Scrolling DOWN while on "whoami" slide - MUST go to certifications first
     if (e.deltaY > 0 && activeSlide === "whoami") {
       e.preventDefault()
       e.stopPropagation()
@@ -50,7 +73,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       if (scrollCount.current >= scrollsNeeded) {
         isAnimating.current = true
         setActiveSlide("certifications")
-        setWormProgress(100) // Move worm to bottom
+        setCanScrollPage(false)
         scrollCount.current = 0
         setTimeout(() => {
           isAnimating.current = false
@@ -59,8 +82,35 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       return
     }
 
+    // Scrolling DOWN while on "certifications" slide - need 2 more scrolls to allow page scroll
+    if (e.deltaY > 0 && activeSlide === "certifications") {
+      if (!canScrollPage) {
+        e.preventDefault()
+        e.stopPropagation()
+        
+        scrollCount.current += 1
+        
+        if (scrollCount.current >= scrollsNeeded) {
+          setCanScrollPage(true)
+          scrollCount.current = 0
+        }
+        return
+      }
+      // canScrollPage is true, allow natural page scroll
+      return
+    }
+
     // Scrolling UP while on "certifications" slide
     if (e.deltaY < 0 && activeSlide === "certifications") {
+      // If we had enabled page scroll, first disable it
+      if (canScrollPage) {
+        e.preventDefault()
+        e.stopPropagation()
+        setCanScrollPage(false)
+        scrollCount.current = 0
+        return
+      }
+      
       e.preventDefault()
       e.stopPropagation()
       
@@ -69,7 +119,6 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       if (scrollCount.current >= scrollsNeeded) {
         isAnimating.current = true
         setActiveSlide("whoami")
-        setWormProgress(0) // Move worm to top
         scrollCount.current = 0
         setTimeout(() => {
           isAnimating.current = false
@@ -78,8 +127,12 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       return
     }
 
-    // On whoami scrolling up OR on certifications scrolling down - allow page scroll
-  }, [activeSlide])
+    // Scrolling UP while on "whoami" slide - allow page scroll (to go back up)
+    if (e.deltaY < 0 && activeSlide === "whoami") {
+      // Allow natural page scroll
+      return
+    }
+  }, [activeSlide, canScrollPage])
 
   // Reset slide when scrolling back above section
   const handleScroll = useCallback(() => {
@@ -91,7 +144,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
     // If we've scrolled past the section going up, reset to whoami
     if (rect.top > viewportHeight * 0.3 && activeSlide === "certifications") {
       setActiveSlide("whoami")
-      setWormProgress(0)
+      setCanScrollPage(false)
       scrollCount.current = 0
     }
   }, [activeSlide])
@@ -130,32 +183,56 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       />
 
       {/* Sticky container - fills viewport when in view */}
-      <div className="sticky top-0 h-screen overflow-hidden pt-32 md:pt-40">
+      <div className="sticky top-0 h-screen overflow-hidden">
         {/* Central vertical blue line - continuous from top to bottom */}
         <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 z-10">
           <div className="h-full w-full bg-cyan-500/70" />
         </div>
 
-        {/* Animated worm/capsule that moves along the line */}
+        {/* Shooting star animation */}
         <div 
-          className="absolute left-1/2 -translate-x-1/2 z-30 transition-all duration-700 ease-out"
+          className={`absolute left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-opacity duration-300 ${
+            shootingStarActive ? 'opacity-100' : 'opacity-0'
+          }`}
           style={{
-            top: `${20 + (wormProgress * 0.5)}%`, // Moves from 20% to 70%
+            animation: shootingStarActive ? 'shootingStar 3s ease-out forwards' : 'none',
           }}
         >
-          {/* Worm shape - elongated capsule with glow */}
+          {/* Shooting star - elongated with bright head and fading tail */}
           <div className="relative">
-            {/* Glow effect */}
-            <div className="absolute -inset-2 bg-cyan-400/30 blur-lg rounded-full" />
-            {/* Main worm body */}
-            <div className="w-2 h-12 rounded-full bg-gradient-to-b from-cyan-300 via-cyan-400 to-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.8)]" />
-            {/* Inner highlight */}
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-4 rounded-full bg-white/60" />
+            {/* Outer glow */}
+            <div className="absolute -inset-4 bg-cyan-400/20 blur-xl rounded-full" />
+            {/* Main star body */}
+            <div className="w-2 h-24 rounded-full bg-gradient-to-b from-white via-cyan-300 to-transparent shadow-[0_0_30px_rgba(34,211,238,1),0_0_60px_rgba(34,211,238,0.6)]" />
+            {/* Bright head */}
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-white shadow-[0_0_20px_white,0_0_40px_rgba(34,211,238,1)]" />
+            {/* Inner streak */}
+            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-16 rounded-full bg-gradient-to-b from-white/80 to-transparent" />
           </div>
         </div>
 
+        {/* CSS Animation for shooting star */}
+        <style jsx>{`
+          @keyframes shootingStar {
+            0% {
+              top: 0%;
+              opacity: 0;
+            }
+            5% {
+              opacity: 1;
+            }
+            90% {
+              opacity: 1;
+            }
+            100% {
+              top: 100%;
+              opacity: 0;
+            }
+          }
+        `}</style>
+
         {/* Main content grid - left side is STATIC */}
-        <div className="relative h-full w-full flex items-start">
+        <div className="relative h-full w-full flex items-center pt-20 md:pt-24">
           <div className="max-w-6xl mx-auto px-6 md:px-12 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
               
@@ -199,7 +276,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
               </div>
 
               {/* RIGHT SIDE - Sliding content area */}
-              <div className="relative md:pl-8 h-[400px] overflow-hidden">
+              <div className="relative md:pl-8 h-[450px] overflow-hidden">
                 {/* WHO AM I Content */}
                 <div
                   className={`absolute inset-0 transition-all duration-700 ease-out ${
