@@ -6,6 +6,7 @@ export function CursorFollower() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isVisible, setIsVisible] = useState(true)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
+  const [isOverHeroSection, setIsOverHeroSection] = useState(false)
 
   useEffect(() => {
     // Check if device is touch-based
@@ -20,6 +21,15 @@ export function CursorFollower() {
     const updateMousePosition = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY })
       if (!isVisible) setIsVisible(true)
+      
+      // Check if cursor is over the hero section (top 50vh with black background)
+      const heroSection = document.querySelector('section.bg-black')
+      if (heroSection) {
+        const rect = heroSection.getBoundingClientRect()
+        const isInHero = e.clientY >= rect.top && e.clientY <= rect.bottom && 
+                         e.clientX >= rect.left && e.clientX <= rect.right
+        setIsOverHeroSection(isInHero)
+      }
     }
 
     const handleMouseEnter = () => setIsVisible(true)
@@ -39,16 +49,19 @@ export function CursorFollower() {
   // Don't render on touch devices
   if (isTouchDevice) return null
 
+  // Hide all ripple effects when over hero section
+  const showRipples = isVisible && !isOverHeroSection
+
   return (
     <>
-      {/* Water wave ripples - multiple layers */}
+      {/* Water wave ripples - multiple layers (hidden over hero section) */}
       <div
-        className="fixed pointer-events-none z-40 transition-all duration-800 ease-out"
+        className="fixed pointer-events-none z-40 transition-all duration-300 ease-out"
         style={{
           left: position.x,
           top: position.y,
           transform: "translate(-50%, -50%)",
-          opacity: isVisible ? 0.8 : 0,
+          opacity: showRipples ? 0.8 : 0,
         }}
       >
         <div
@@ -66,12 +79,12 @@ export function CursorFollower() {
       </div>
 
       <div
-        className="fixed pointer-events-none z-39 transition-all duration-900 ease-out"
+        className="fixed pointer-events-none z-39 transition-all duration-300 ease-out"
         style={{
           left: position.x,
           top: position.y,
           transform: "translate(-50%, -50%)",
-          opacity: isVisible ? 0.6 : 0,
+          opacity: showRipples ? 0.6 : 0,
         }}
       >
         <div
@@ -89,12 +102,12 @@ export function CursorFollower() {
       </div>
 
       <div
-        className="fixed pointer-events-none z-38 transition-all duration-1000 ease-out"
+        className="fixed pointer-events-none z-38 transition-all duration-300 ease-out"
         style={{
           left: position.x,
           top: position.y,
           transform: "translate(-50%, -50%)",
-          opacity: isVisible ? 0.4 : 0,
+          opacity: showRipples ? 0.4 : 0,
         }}
       >
         <div
@@ -111,7 +124,7 @@ export function CursorFollower() {
         />
       </div>
 
-      {/* Main cursor point */}
+      {/* Main cursor point - always visible */}
       <div
         className="fixed pointer-events-none z-50 transition-all duration-150 ease-out"
         style={{
@@ -133,28 +146,29 @@ export function CursorFollower() {
               boxShadow: "0 0 20px rgba(34, 211, 238, 0.8), 0 0 40px rgba(34, 211, 238, 0.4)",
             }}
           />
-          {/* Small water drop effect */}
+          {/* Small water drop effect - hidden over hero */}
           <div
-            className="absolute w-4 h-4 bg-cyan-300/20 blur-sm"
+            className="absolute w-4 h-4 bg-cyan-300/20 blur-sm transition-opacity duration-300"
             style={{
               transform: "translate(-50%, -50%)",
               left: "50%",
               top: "50%",
               borderRadius: "40% 60% 50% 50% / 60% 40% 60% 40%",
               animation: "water-pulse 1.5s ease-in-out infinite, wave-shape 2s ease-in-out infinite",
+              opacity: isOverHeroSection ? 0 : 1,
             }}
           />
         </div>
       </div>
 
-      {/* Water drop trail */}
+      {/* Water drop trail - hidden over hero */}
       <div
-        className="fixed pointer-events-none z-35 transition-all duration-800 ease-out"
+        className="fixed pointer-events-none z-35 transition-all duration-300 ease-out"
         style={{
           left: position.x,
           top: position.y,
           transform: "translate(-50%, -50%)",
-          opacity: isVisible ? 0.5 : 0,
+          opacity: showRipples ? 0.5 : 0,
         }}
       >
         <div
