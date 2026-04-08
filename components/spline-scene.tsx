@@ -40,7 +40,7 @@ export function SplineScene() {
       
       {/* Spline embed using the viewer URL */}
       <iframe
-        src="https://my.spline.design/jD8BWozwPhxDEScS/"
+        src="https://my.spline.design/W9LyRtDWreepDC74/"
         frameBorder="0"
         width="100%"
         height="100%"
