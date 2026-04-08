@@ -104,7 +104,7 @@ export function ServicesSection() {
         const slotRect = activeSlot.getBoundingClientRect()
         const sectionRect = sectionRef.current.getBoundingClientRect()
         
-        const cubeSize = 120 // half of 240
+        const cubeSize = 128 // half of 256px (w-64)
         setCubePosition({
           top: slotRect.top - sectionRect.top + slotRect.height / 2 - cubeSize,
           left: slotRect.left - sectionRect.left + slotRect.width / 2 - cubeSize,
@@ -171,7 +171,7 @@ export function ServicesSection() {
       <div className="relative mx-[6%] border-l border-r border-cyan-500/30 px-6 md:px-12">
         {/* Floating 3D Cube that travels down the page */}
         <div 
-          className="absolute z-20 w-60 h-60 pointer-events-none hidden md:block"
+          className="absolute z-20 w-64 h-64 pointer-events-none hidden md:block"
           style={{
             top: cubePosition.top,
             left: cubePosition.left,
@@ -187,8 +187,8 @@ export function ServicesSection() {
               transition: 'transform 1.2s ease-out',
             }}
           >
-            {services.map((s, i) => (
-              <CubeFace key={s.id} index={i} image={s.image} size={120} />
+              {services.map((s, i) => (
+              <CubeFace key={s.id} index={i} image={s.image} size={128} />
             ))}
           </div>
         </div>
@@ -206,44 +206,48 @@ export function ServicesSection() {
                 isActive ? 'opacity-100' : 'opacity-40'
               }`}
             >
-              {/* Desktop layout - alternating sides: even = text left/cube right, odd = cube left/text right */}
-              <div className="hidden md:flex items-center justify-between w-full">
+              {/* Desktop layout - alternating sides: odd services (1,3,5) = text LEFT/image RIGHT, even services (2,4,6) = image LEFT/text RIGHT */}
+              <div className="hidden md:grid grid-cols-2 gap-8 items-center w-full">
                 {isEven ? (
                   <>
-                    {/* Text on LEFT */}
-                    <div className="flex-1 text-left pr-12">
+                    {/* Service 1,3,5: Text on LEFT side */}
+                    <div className="text-left">
                       <span className="text-cyan-400 text-sm font-mono mb-3 block">
                         0{service.id}
                       </span>
-                      <h3 className="text-white text-2xl md:text-3xl font-bold mb-5 tracking-tight">
+                      <h3 className="text-white text-2xl md:text-3xl font-bold mb-5 tracking-tight uppercase">
                         {service.title}
                       </h3>
-                      <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-lg">
+                      <p className="text-gray-400 text-sm md:text-base leading-relaxed">
                         {service.description}
                       </p>
                     </div>
-                    {/* Image slot on RIGHT */}
-                    <div 
-                      ref={el => { imageSlotRefs.current[index] = el }}
-                      className="w-60 h-60 flex-shrink-0"
-                    />
+                    {/* Image slot on RIGHT side */}
+                    <div className="flex justify-end">
+                      <div 
+                        ref={el => { imageSlotRefs.current[index] = el }}
+                        className="w-64 h-64"
+                      />
+                    </div>
                   </>
                 ) : (
                   <>
-                    {/* Image slot on LEFT */}
-                    <div 
-                      ref={el => { imageSlotRefs.current[index] = el }}
-                      className="w-60 h-60 flex-shrink-0"
-                    />
-                    {/* Text on RIGHT */}
-                    <div className="flex-1 text-right pl-12">
+                    {/* Service 2,4,6: Image slot on LEFT side */}
+                    <div className="flex justify-start">
+                      <div 
+                        ref={el => { imageSlotRefs.current[index] = el }}
+                        className="w-64 h-64"
+                      />
+                    </div>
+                    {/* Text on RIGHT side */}
+                    <div className="text-right">
                       <span className="text-cyan-400 text-sm font-mono mb-3 block">
                         0{service.id}
                       </span>
-                      <h3 className="text-white text-2xl md:text-3xl font-bold mb-5 tracking-tight">
+                      <h3 className="text-white text-2xl md:text-3xl font-bold mb-5 tracking-tight uppercase">
                         {service.title}
                       </h3>
-                      <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-lg ml-auto">
+                      <p className="text-gray-400 text-sm md:text-base leading-relaxed">
                         {service.description}
                       </p>
                     </div>
