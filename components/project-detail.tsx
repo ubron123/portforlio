@@ -8,443 +8,513 @@ interface ProjectDetailProps {
   currentProject: number
 }
 
-const projects = [
+interface ProjectSection {
+  id: string
+  label: string
+  title: string
+  content: string[]
+}
+
+interface ProjectData {
+  id: number
+  number: string
+  title: string
+  subtitle: string
+  year: string
+  tags: string[]
+  description: string
+  mockupImage: string
+  role: string
+  overview: string
+  sections: ProjectSection[]
+}
+
+const projects: ProjectData[] = [
   {
     id: 1,
     number: "01",
     title: "VEGO",
+    subtitle: "Idle No More",
     year: "2024",
-    tags: ["DESIGNING", "FRONTEND DEV", "BACKEND DEV"],
+    tags: ["Rental Platform", "#READ", "#ToDriving"],
     description:
-      "VEGO is an innovative car rental platform that optimizes the use of idle vehicles, with a focus especially on the Moroccan market.",
-    backgroundImage: "/vego.png",
-    mockupType: "laptop" as const,
+      "VeGo, a car rental and peer-to-peer vehicle lending platform focused on optimizing underutilized vehicles, faced challenges stemming from high user interaction and an inconsistent user interface. Additionally, strict time constraints demanded the rapid development of a cohesive and user-friendly design, making the situation both complex and time-sensitive.",
     mockupImage: "/vego.png",
+    role: "Frontend Developer + Core Interface Designing",
+    overview: "Turning Visual Ideas Into Powerful Interfaces",
+    sections: [
+      {
+        id: "role",
+        label: "MY ROLE",
+        title: "Frontend Developer + Core Interface Designing",
+        content: [
+          "I served as a Frontend Developer for Team VeGo. Throughout the development process, I collaborated closely with designers and other developers to ensure a consistent and cohesive user interface. This collaborative effort led to the consolidation of existing systems and ultimately contributed to the formation of a unified core development team.",
+        ],
+      },
+      {
+        id: "systems",
+        label: "CONSOLIDATING",
+        title: "Consolidating fragmented component systems",
+        content: [
+          "Auditing components across internal tools and customer-facing products, identifying duplicated patterns and inconsistencies, and merging the two existing design systems into a unified foundation.",
+        ],
+      },
+      {
+        id: "tokens",
+        label: "DESIGN TOKENS",
+        title: "Establishing design token architecture",
+        content: [
+          "Creating a comprehensive token system for colors, typography, spacing, and elevation that scales across products while maintaining visual consistency.",
+        ],
+      },
+      {
+        id: "components",
+        label: "COMPONENTS",
+        title: "Building accessible component library",
+        content: [
+          "Developing a robust set of reusable React components with full accessibility support, comprehensive documentation, and thorough testing coverage.",
+        ],
+      },
+    ],
   },
   {
     id: 2,
     number: "02",
     title: "SCAN2DINE",
+    subtitle: "Digital Dining",
     year: "2024",
-    tags: ["DESIGNING", "FRONTEND DEV", "BACKEND DEV"],
+    tags: ["Restaurant Tech", "#QRMenu", "#Ordering"],
     description:
-      "Scan2Dine is a restaurant digital menu application that allows cafe/Restaurant to customers to place orders and track them in real-time.",
-    backgroundImage: "/scan2dine.png",
-    mockupType: "laptop" as const,
+      "Scan2Dine is a restaurant digital menu application that allows cafe/Restaurant customers to place orders and track them in real-time, revolutionizing the traditional dining experience.",
     mockupImage: "/scan2dine.png",
+    role: "Full Stack Developer + UX Designer",
+    overview: "Revolutionizing Restaurant Ordering Experience",
+    sections: [
+      {
+        id: "role",
+        label: "MY ROLE",
+        title: "Full Stack Developer + UX Designer",
+        content: [
+          "Led the complete development cycle from concept to deployment, designing intuitive user flows for both customers and restaurant staff while building a scalable backend infrastructure.",
+        ],
+      },
+      {
+        id: "challenge",
+        label: "CHALLENGE",
+        title: "Creating seamless ordering flow",
+        content: [
+          "Developed a frictionless QR-based ordering system that reduces wait times and improves order accuracy while maintaining the personal touch of traditional dining.",
+        ],
+      },
+      {
+        id: "realtime",
+        label: "REAL-TIME",
+        title: "Live order tracking system",
+        content: [
+          "Implemented WebSocket-based real-time updates for order status, kitchen management, and customer notifications.",
+        ],
+      },
+      {
+        id: "analytics",
+        label: "ANALYTICS",
+        title: "Restaurant analytics dashboard",
+        content: [
+          "Built comprehensive analytics tools for restaurant owners to track sales, popular items, and customer behavior patterns.",
+        ],
+      },
+    ],
   },
   {
     id: 3,
     number: "03",
     title: "NDP",
+    subtitle: "Book Sharing",
     year: "2025",
-    tags: ["DESIGNING", "FRONTEND DEV", "BACKEND DEV"],
+    tags: ["Education", "#Mobile", "#Sharing"],
     description:
       "NDP is a mobile application specifically developed for GGT College to streamline the book-sharing process, eliminating the need for students to handle paperwork manually.",
-    backgroundImage: "/ndp.png",
-    mockupType: "phone" as const,
     mockupImage: "/ndp.png",
+    role: "Mobile Developer + Backend Engineer",
+    overview: "Simplifying Campus Book Exchange",
+    sections: [
+      {
+        id: "role",
+        label: "MY ROLE",
+        title: "Mobile Developer + Backend Engineer",
+        content: [
+          "Designed and developed the complete mobile application using React Native, along with building a robust backend API to handle book listings, user authentication, and transaction management.",
+        ],
+      },
+      {
+        id: "ux",
+        label: "USER EXPERIENCE",
+        title: "Student-first mobile design",
+        content: [
+          "Created an intuitive mobile experience optimized for quick book searches, listings, and peer-to-peer communication between students.",
+        ],
+      },
+      {
+        id: "matching",
+        label: "MATCHING",
+        title: "Smart book matching algorithm",
+        content: [
+          "Developed an intelligent system that matches book seekers with available listings based on course requirements, location, and pricing preferences.",
+        ],
+      },
+      {
+        id: "trust",
+        label: "TRUST & SAFETY",
+        title: "Building campus trust",
+        content: [
+          "Implemented verification systems using college credentials and a rating system to ensure safe transactions between students.",
+        ],
+      },
+    ],
   },
 ]
 
 export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetailProps) {
-  const [scrollPercent, setScrollPercent] = useState(0)
-  const [projectNumber, setProjectNumber] = useState(1)
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
+  const [activeSection, setActiveSection] = useState(0)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
+  const [linePositions, setLinePositions] = useState<{ progress: number; direction: "ltr" | "rtl" }[]>([])
+
+  const projectData = projects.find((p) => p.id === currentProject) || projects[0]
 
   useEffect(() => {
     if (!isOpen) return
 
-    setProjectNumber(currentProject)
-    setScrollPercent(0)
-    window.scrollTo(0, 0)
-
-    // Setup Intersection Observer for project sections
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const projectId = parseInt(entry.target.getAttribute('data-project-id') || '1')
-            setProjectNumber(projectId)
-          }
-        })
-      },
-      {
-        threshold: 0.5, // Trigger when 50% of section is visible
-        rootMargin: '0px'
-      }
-    )
-
-    // Observe all project sections
-    sectionRefs.current.forEach((section: HTMLDivElement | null) => {
-      if (section) {
-        observer.observe(section)
-      }
-    })
-
-    // Setup scroll percentage tracking
-    const handleScroll = () => {
-      const container = scrollContainerRef.current
-      if (!container) return
-      
-      const scrollTop = container.scrollTop
-      const scrollHeight = container.scrollHeight - container.clientHeight
-      const currentScroll = Math.max(0, scrollTop)
-      
-      const percent = scrollHeight > 0 ? Math.round((currentScroll / scrollHeight) * 100) : 0
-      const clampedPercent = Math.min(Math.max(percent, 0), 100)
-      
-      setScrollPercent(clampedPercent)
-    }
-
-    // Add scroll listener to the container
     const container = scrollContainerRef.current
-    if (container) {
-      container.addEventListener("scroll", handleScroll, { passive: true })
-      handleScroll() // Initial call
+    if (!container) return
+
+    const handleScroll = () => {
+      const scrollTop = container.scrollTop
+      const windowHeight = container.clientHeight
+
+      // Calculate line positions for each section
+      const newPositions = sectionRefs.current.map((ref, index) => {
+        if (!ref) return { progress: 0, direction: (index % 2 === 0 ? "ltr" : "rtl") as "ltr" | "rtl" }
+
+        const rect = ref.getBoundingClientRect()
+        const containerRect = container.getBoundingClientRect()
+        const relativeTop = rect.top - containerRect.top
+        const sectionMiddle = relativeTop + rect.height / 2
+        const viewportMiddle = windowHeight / 2
+
+        // Calculate progress based on section position relative to viewport
+        let progress = 0
+        if (sectionMiddle < viewportMiddle + 200) {
+          progress = Math.min(1, Math.max(0, 1 - (sectionMiddle - viewportMiddle + 200) / 400))
+        }
+        if (relativeTop < windowHeight * 0.3) {
+          progress = 1
+        }
+
+        return {
+          progress,
+          direction: (index % 2 === 0 ? "ltr" : "rtl") as "ltr" | "rtl",
+        }
+      })
+
+      setLinePositions(newPositions)
+
+      // Update active section
+      sectionRefs.current.forEach((ref, index) => {
+        if (!ref) return
+        const rect = ref.getBoundingClientRect()
+        const containerRect = container.getBoundingClientRect()
+        if (rect.top - containerRect.top < windowHeight * 0.5) {
+          setActiveSection(index)
+        }
+      })
     }
+
+    container.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll()
 
     return () => {
-      observer.disconnect()
-      const container = scrollContainerRef.current
-      if (container) {
-        container.removeEventListener("scroll", handleScroll)
-      }
+      container.removeEventListener("scroll", handleScroll)
     }
-  }, [isOpen, currentProject])
+  }, [isOpen, projectData])
 
   useEffect(() => {
-    if (!isOpen) return
-    const id = Math.min(Math.max(currentProject, 1), projects.length)
-    const t = window.setTimeout(() => {
-      const container = scrollContainerRef.current
-      const section = sectionRefs.current[id - 1]
-      if (container && section) {
-        container.scrollTop = section.offsetTop
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+      // Reset scroll position when opening
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = 0
       }
-    }, 0)
-    return () => clearTimeout(t)
-  }, [isOpen, currentProject])
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
 
   if (!isOpen) return null
 
-  const currentData = projects[projectNumber - 1]
-
   return (
-    <>
-      <style>{`
-        @keyframes squeeze {
-          0%, 100% {
-            transform: scaleX(1) scaleY(1);
-            border-radius: 50%;
-          }
-          25% {
-            transform: scaleX(0.9) scaleY(1.1) skewX(5deg);
-            border-radius: 45% 55% 55% 45%;
-          }
-          50% {
-            transform: scaleX(1.1) scaleY(0.9) skewX(-5deg);
-            border-radius: 55% 45% 45% 55%;
-          }
-          75% {
-            transform: scaleX(0.95) scaleY(1.05) skewY(5deg);
-            border-radius: 40% 60% 60% 40%;
-          }
-        }
-      `}</style>
-      <div ref={scrollContainerRef} className="fixed inset-0 bg-black z-50 overflow-y-auto">
-      {/* Fixed UI Overlay */}
-      <div className="fixed inset-0 z-50 pointer-events-none">
-        {/* Top Left - Project Number */}
-        <div className="absolute top-8 left-8 md:top-12 md:left-12 lg:top-16 lg:left-16">
-          <div className="relative w-[120px] h-[80px] md:w-[160px] md:h-[100px] lg:w-[200px] lg:h-[120px] flex items-center justify-center">
-            {/* Fixed "0" - Completely static */}
-            <span
-              className="absolute font-bold text-transparent leading-none"
-              style={{
-                WebkitTextStroke: "2px rgba(255,255,255,0.3)",
-                fontSize: "clamp(100px, 12vw, 140px)",
-                left: "50%",
-                transform: "translateX(-90%)",
-              }}
-            >
-              0
-            </span>
-            
-            {/* Animated changing digit */}
-            {projects.map((project, index) => (
-              <span
-                key={project.id}
-                className={`absolute font-bold text-transparent leading-none transition-all duration-500 ease-out ${
-                  projectNumber === index + 1
-                    ? 'opacity-100 translate-y-0'
-                    : projectNumber > index + 1
-                    ? 'opacity-0 -translate-y-6'
-                    : 'opacity-0 translate-y-6'
-                }`}
-                style={{
-                  WebkitTextStroke: "2px rgba(255,255,255,0.3)",
-                  fontSize: "clamp(100px, 12vw, 140px)",
-                  left: "50%",
-                  transform: "translateX(10%)",
-                }}
-              >
-                {project.number.charAt(1)}
-              </span>
-            ))}
+    <div
+      ref={scrollContainerRef}
+      className="fixed inset-0 z-50 overflow-y-auto bg-black"
+      style={{ scrollBehavior: "smooth" }}
+    >
+      {/* Close Button */}
+      <button
+        onClick={onClose}
+        className="fixed top-6 right-6 z-[60] w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors border border-white/20"
+        aria-label="Close project details"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      {/* Hero Section with Laptop Mockup */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center">
+        {/* Background Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-900 via-neutral-900/95 to-black" />
+
+        {/* Laptop Mockup Container */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 pt-16 pb-8">
+          {/* Laptop Frame */}
+          <div className="relative mx-auto" style={{ maxWidth: "900px" }}>
+            {/* Screen */}
+            <div className="relative bg-black rounded-t-xl overflow-hidden border-[8px] border-neutral-800 shadow-2xl">
+              <div className="aspect-[16/10] relative overflow-hidden">
+                {/* Screen Content */}
+                <img
+                  src={projectData.mockupImage}
+                  alt={`${projectData.title} interface`}
+                  className="w-full h-full object-cover object-top"
+                  crossOrigin="anonymous"
+                />
+                {/* Screen Reflection */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+              </div>
+              {/* Webcam Notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-neutral-700 rounded-full" />
+            </div>
+
+            {/* Laptop Base */}
+            <div className="relative h-4 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded-b-xl">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-neutral-600 rounded-b-lg" />
+            </div>
+
+            {/* Laptop Stand/Shadow */}
+            <div className="relative h-2 mx-auto w-[60%] bg-gradient-to-b from-neutral-800 to-transparent rounded-b-xl" />
+          </div>
+
+          {/* Project Label Badge */}
+          <div className="absolute bottom-12 right-8 md:right-16 flex items-center gap-3 bg-neutral-900/80 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/10">
+            <div className="w-8 h-8 bg-white/10 rounded flex items-center justify-center">
+              <span className="text-white/60 text-xs font-mono">{projectData.number}</span>
+            </div>
+            <span className="text-white font-medium tracking-wide">{projectData.title}</span>
+            <div className="w-6 h-6 bg-cyan-400 rounded-full flex items-center justify-center">
+              <svg className="w-3 h-3 text-black" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
           </div>
         </div>
 
-        {/* Top Right - Project Details */}
-        <div className="absolute top-8 right-8 md:top-12 md:right-12 lg:top-16 lg:right-16 max-w-md text-right">
-          {/* Title and Year Row */}
-          <div className="flex items-baseline justify-end gap-6 mb-4">
-            <h2 className="text-[22px] md:text-[33px] lg:text-[44px] font-bold text-white tracking-wider transition-all duration-500">
-              {currentData.title}
-            </h2>
-            <span className="text-white/40 text-[11px] md:text-[14px] transition-all duration-500">
-              {currentData.year}
-            </span>
-          </div>
-
-          {/* Tags */}
-          <div className="flex flex-wrap justify-end gap-2 mb-4">
-            {currentData.tags.map((tag, idx) => (
+        {/* Project Title Overlay */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 md:px-12 pb-16">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-light text-white/90 italic tracking-tight">
+            {projectData.subtitle}
+          </h1>
+          <div className="flex flex-wrap items-center gap-2 mt-4">
+            <span className="text-white/40 text-sm">Thursday</span>
+            <span className="text-white/20">|</span>
+            <span className="text-white/40 text-sm">Eifajar</span>
+            {projectData.tags.map((tag, idx) => (
               <span
                 key={idx}
-                className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-[9px] md:text-[10px] font-medium text-white/70 border border-white/20 transition-all duration-500"
+                className="px-3 py-1 bg-white/10 rounded-full text-xs text-white/60 border border-white/10"
               >
                 {tag}
               </span>
             ))}
           </div>
-
-          {/* Description */}
-          <p className="text-white/50 text-[11px] md:text-[14px] leading-relaxed transition-all duration-500 max-w-sm ml-auto">
-            {currentData.description}
-          </p>
         </div>
 
-        {/* Bottom Right - Scroll Percentage */}
-        <div className={`absolute bottom-8 right-8 md:bottom-12 md:right-12 lg:bottom-16 lg:right-16`}>
-          <span className={`font-medium ${
-            scrollPercent > 66 ? 'text-black' : 'text-white/60'
-          } text-xs md:text-sm transition-colors duration-300`}>
-            {scrollPercent}%
-          </span>
-        </div>
-      </div>
-
-      {/* Project Sections with Full Screen Background Images */}
-      {projects.map((project, index) => (
-        <section
-          key={project.id}
-          ref={(el) => {
-            sectionRefs.current[index] = el as HTMLDivElement
-          }}
-          data-project-id={project.id}
-          className="h-screen relative overflow-hidden cursor-pointer"
-          style={{
-            backgroundImage: `url(${project.backgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat"
-          }}
-          onClick={() => setSelectedProject(project)}
-        >
-          {/* Dark Overlay for readability */}
-          <div className="absolute inset-0 bg-black/50" />
-
-          {/* Purple/Gradient Tint for cinematic feel */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-transparent to-indigo-900/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
-        </section>
-      ))}
-      {/* Extended Page Section */}
-      <section className="h-[50vh] bg-white flex items-start justify-center pt-12 md:pt-16 lg:pt-20">
-        <div className="flex items-center justify-between mb-8 w-full max-w-6xl px-8">
-            <div className="text-left ml-12 md:ml-20 lg:ml-32">
-              <div className="flex items-baseline gap-4 mb-2">
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal text-black">
-                  Have a project in mind?
-                </h2>
-                <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-black">
-                  REACH
-                </p>
-              </div>
-              <div className="flex items-baseline gap-4 mb-0">
-                <div style={{width: '380px'}}></div>
-                <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-black">
-                  OUT
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 ml-auto relative">
-              {/* Curved Arrow */}
-              <svg 
-                className="absolute -left-32 md:-left-40 lg:-left-48 w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 transform rotate-12"
-                viewBox="0 0 100 100"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <defs>
-                  <marker
-                    id="arrowhead"
-                    markerWidth="4"
-                    markerHeight="4"
-                    refX="3"
-                    refY="2"
-                    orient="auto"
-                  >
-                    <polygon
-                      points="0 0, 4 2, 0 4"
-                      fill="black"
-                    />
-                  </marker>
-                </defs>
-                <path 
-                  d="M 25 45 Q 50 75, 85 45" 
-                  stroke="black" 
-                  strokeWidth="3" 
-                  fill="none"
-                  markerEnd="url(#arrowhead)"
-                />
-              </svg>
-              <a
-                href="https://wa.me/97577682154"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-[#3AC2FF] hover:bg-[#2BA3E6] text-white font-medium rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-                style={{
-                  animation: 'squeeze 8s ease-in-out infinite'
-                }}
-              >
-                <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-gray-300 whitespace-nowrap">
-                  click me
-                </span>
-                <svg
-                  className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 opacity-50"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M17.472 14.382c-.297-.149-.464-.297-.636-.075-.438-.172-.612-.187-.467-.229-.717-.229-.313 0-.615.09-.955.263l.35 2.432c.043.281.18.525.373.696.064.565.142.964.286.418.474l1.34 1.53c.218.379.465.717.465 1.393 0 .626-.116 1.13-.299 1.636-.517.398.198.815.488 1.512-.488.345 0 .684-.072.965-.206l2.999 3.948c.11.651.655 1.168 1.595 1.168.94 0 1.602-.298 2.157-.918 2.157-1.864 0-.345-.069-.636-.206-.955-.299l-1.531-1.997c-.5-.453-1.156-.754-1.972-.754-.823 0-1.538.521-1.878 1.514-.845-.015-1.539-.015-2.384 0-.123-.41-.299-.809-.299-1.723 0-.626.116-1.13.299-1.636.517.398.198.815.488 1.512-.488.345 0 .684-.072.965-.206l2.999 3.948c.11.651.655 1.168 1.595 1.168.94 0 1.602-.298 2.157-.918 2.157-1.864 0-.345-.069-.636-.206-.955-.299l-1.531-1.997c-.5-.453-1.156-.754-1.972-.754-.823 0-1.538.521-1.878 1.514-.845-.015-1.539-.015-2.384 0-.123-.41-.299-.809-.299-1.723 0-.626.116-1.13.299-1.636.517.398.198.815.488 1.512-.488.345 0 .684-.072.965-.206l2.999 3.948.11.651.655 1.168 1.595 1.168.94 0 1.602-.298 2.157-.918 2.157-1.864 0-.345-.069-.636-.206-.955-.299l-1.531-1.997c-.5-.453-1.156-.754-1.972-.754-.823 0-1.538.521-1.878 1.514-.845-.015-1.539-.015-2.384 0-.123-.41-.299-.809-.299-1.723 0-.626.116-1.13.299-1.636.517.398.198.815.488 1.512-.488.345 0 .684-.072.965-.206l2.999 3.948z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
+        {/* Gradient Fade to Black */}
+        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
       </section>
-    </div>
 
-      {/* Project Details Full Page */}
-      {selectedProject && (
-        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
-          {/* Header Section */}
-          <div className="relative h-screen">
-            <img 
-              src={selectedProject.mockupImage} 
-              alt={selectedProject.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
-            
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedProject(null)}
-              className="fixed top-6 right-6 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            
-            {/* Project Title Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-              <div className="max-w-6xl mx-auto">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">{selectedProject.title}</h1>
-                <p className="text-xl md:text-2xl text-white/80 mb-6">{selectedProject.year}</p>
-                
-                {/* Tags */}
-                <div className="flex flex-wrap gap-3">
-                  {selectedProject.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium"
-                    >
-                      {tag}
-                    </span>
+      {/* Overview Section */}
+      <section className="relative bg-black py-20 md:py-32">
+        <div className="max-w-5xl mx-auto px-6 md:px-12">
+          {/* Section Label */}
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-white/30 text-xs tracking-[0.3em] uppercase">Overview</span>
+            <div className="flex-1 h-px bg-white/10" />
+            <span className="text-white/30 text-xs">33%</span>
+          </div>
+
+          {/* Overview Title */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-8 leading-tight">
+            {projectData.overview}
+          </h2>
+
+          {/* Overview Description */}
+          <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-3xl">{projectData.description}</p>
+        </div>
+      </section>
+
+      {/* Content Sections with Animated Line */}
+      <section className="relative bg-black pb-32">
+        <div className="max-w-5xl mx-auto px-6 md:px-12">
+          {projectData.sections.map((section, index) => {
+            const linePos = linePositions[index] || { progress: 0, direction: "ltr" }
+            const isLTR = linePos.direction === "ltr"
+
+            return (
+              <div
+                key={section.id}
+                ref={(el) => {
+                  sectionRefs.current[index] = el
+                }}
+                className="relative py-16 md:py-24"
+              >
+                {/* Animated Horizontal Line */}
+                <div className="relative h-px w-full mb-12 overflow-hidden">
+                  {/* Background Line */}
+                  <div className="absolute inset-0 bg-white/10" />
+
+                  {/* Animated Progress Line */}
+                  <div
+                    className="absolute top-0 h-full bg-white/60 transition-all duration-300 ease-out"
+                    style={{
+                      width: `${linePos.progress * 100}%`,
+                      left: isLTR ? 0 : "auto",
+                      right: isLTR ? "auto" : 0,
+                    }}
+                  />
+
+                  {/* Line Endpoint Indicator */}
+                  <div
+                    className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full transition-all duration-300 ease-out"
+                    style={{
+                      left: isLTR ? `calc(${linePos.progress * 100}% - 4px)` : "auto",
+                      right: isLTR ? "auto" : `calc(${linePos.progress * 100}% - 4px)`,
+                      opacity: linePos.progress > 0.1 ? 1 : 0,
+                    }}
+                  />
+                </div>
+
+                {/* Section Label */}
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="text-white/30 text-xs tracking-[0.3em] uppercase">{section.label}</span>
+                </div>
+
+                {/* Section Title */}
+                <h3 className="text-2xl md:text-3xl font-medium text-white mb-6">{section.title}</h3>
+
+                {/* Section Content */}
+                <div className="space-y-4">
+                  {section.content.map((paragraph, pIdx) => (
+                    <p key={pIdx} className="text-white/50 text-base leading-relaxed max-w-3xl">
+                      {paragraph}
+                    </p>
                   ))}
                 </div>
+
+                {/* Vertical Connector Line */}
+                {index < projectData.sections.length - 1 && (
+                  <div
+                    className="absolute w-px h-16 bg-gradient-to-b from-white/20 to-transparent transition-all duration-500"
+                    style={{
+                      bottom: 0,
+                      left: isLTR ? "100%" : 0,
+                      transform: "translateX(-50%)",
+                    }}
+                  />
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="relative bg-white py-20 md:py-32">
+        <div className="max-w-5xl mx-auto px-6 md:px-12">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div>
+              <div className="flex items-baseline gap-3 mb-2">
+                <h2 className="text-2xl md:text-4xl font-light text-black">Have a project in mind?</h2>
+                <span className="text-2xl md:text-4xl font-bold text-black">REACH</span>
+              </div>
+              <div className="flex items-baseline gap-3">
+                <div className="w-48 md:w-64" />
+                <span className="text-2xl md:text-4xl font-bold text-black">OUT</span>
               </div>
             </div>
-          </div>
 
-          {/* Content Section */}
-          <div className="bg-black text-white py-20 md:py-32">
-            <div className="max-w-7xl mx-auto px-8 md:px-16">
-              {/* Project Details Layout */}
-              <div className="grid md:grid-cols-3 gap-8 mb-12">
-                {/* Left Column - Title */}
-                <div className="md:col-span-2">
-                  <h2 className="text-4xl md:text-5xl font-bold mb-4">{selectedProject.title}</h2>
-                  <p className="text-lg md:text-xl text-gray-400 leading-relaxed mb-8">
-                    {selectedProject.description}
-                  </p>
-                </div>
-                
-                {/* Right Column - Details */}
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 mb-2">YEAR</h3>
-                    <p className="text-2xl font-bold">{selectedProject.year}</p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 mb-2">TYPE</h3>
-                    <p className="text-2xl font-bold capitalize">{selectedProject.mockupType}</p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 mb-2">TECHNOLOGIES</h3>
-                    <div className="space-y-1">
-                      {selectedProject.tags.map((tag, idx) => (
-                        <p key={idx} className="text-lg">{tag}</p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Contact Button */}
+            <a
+              href="https://wa.me/97577682154"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative group"
+            >
+              {/* Curved Arrow */}
+              <svg
+                className="absolute -left-24 md:-left-32 top-1/2 -translate-y-1/2 w-20 h-20 md:w-28 md:h-28 text-black rotate-12"
+                viewBox="0 0 100 100"
+                fill="none"
+              >
+                <path
+                  d="M 20 50 Q 50 80, 85 50"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+                <path d="M 80 45 L 85 50 L 78 53" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
 
-              {/* Bottom Section - Role and Duration */}
-              <div className="grid md:grid-cols-2 gap-12 mb-16">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-2">ROLE</h3>
-                  <p className="text-lg text-gray-300">Frontend Developer, UI/UX Designer, Backend Developer</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-2">DURATION</h3>
-                  <p className="text-lg text-gray-300">3 Months</p>
-                </div>
+              <div
+                className="w-24 h-24 md:w-32 md:h-32 bg-cyan-400 rounded-full flex items-center justify-center text-black font-medium text-sm transition-transform duration-300 group-hover:scale-105 shadow-lg"
+                style={{
+                  animation: "squeeze 6s ease-in-out infinite",
+                }}
+              >
+                <span className="text-xs md:text-sm opacity-70">click me</span>
               </div>
-
-              {/* View Project Button */}
-              <div className="text-center">
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className="inline-flex items-center px-16 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors text-lg tracking-wide"
-                >
-                  VIEW PROJECT
-                  <svg className="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
-      )}
-    </>
+      </section>
+
+      {/* Animation Keyframes */}
+      <style>{`
+        @keyframes squeeze {
+          0%, 100% {
+            transform: scale(1);
+            border-radius: 50%;
+          }
+          25% {
+            transform: scaleX(0.95) scaleY(1.05);
+            border-radius: 45% 55% 55% 45%;
+          }
+          50% {
+            transform: scaleX(1.05) scaleY(0.95);
+            border-radius: 55% 45% 45% 55%;
+          }
+          75% {
+            transform: scaleX(0.97) scaleY(1.03);
+            border-radius: 48% 52% 52% 48%;
+          }
+        }
+      `}</style>
+    </div>
   )
 }
