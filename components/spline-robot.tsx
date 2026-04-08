@@ -23,7 +23,7 @@ export function SplineRobot() {
       />
       
       <spline-viewer 
-        url="https://prod.spline.design/jD8BWozwPhxDEScS/scene.splinecode"
+        url="https://prod.spline.design/W9LyRtDWreepDC74/scene.splinecode"
         style={{
           width: "100%",
           height: "100%",
