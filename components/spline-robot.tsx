@@ -14,18 +14,21 @@ export function SplineRobot() {
         </div>
       )}
       
-      {/* Spline Viewer using iframe embed */}
+      {/* R4X Bot from Spline */}
       <iframe 
+        key="r4xbot-spline"
         src="https://my.spline.design/r4xbot-NRCEXUNr8zrkpjdETf9z83hR/"
         frameBorder="0"
         width="100%"
         height="100%"
         onLoad={() => setIsLoaded(true)}
+        className="border-0"
         style={{
           opacity: isLoaded ? 1 : 0,
           transition: "opacity 0.5s ease-in-out",
         }}
-        title="3D Robot"
+        title="R4X Bot 3D Model"
+        allow="autoplay"
       />
     </div>
   )
