@@ -129,36 +129,36 @@ export function ServicesSection() {
   return (
     <section ref={sectionRef} className="relative bg-black">
       {/* Line split area - single line comes down from center, turns at left corner with glow */}
-      <div className="relative h-40">
+      <div className="relative h-20">
         {/* Center line coming from above - extends far up to connect with About section (no gap) */}
         <div className="absolute left-1/2 -top-[200vh] w-px h-[200vh] -translate-x-1/2 bg-cyan-500/70" />
         {/* Line continues down to the split point */}
-        <div className="absolute left-1/2 top-0 w-px h-16 -translate-x-1/2 bg-cyan-500/70" />
+        <div className="absolute left-1/2 top-0 w-px h-8 -translate-x-1/2 bg-cyan-500/70" />
         
         {/* Horizontal line from center going to left corner */}
-        <div className="absolute top-16 left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
+        <div className="absolute top-8 left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
         
         {/* Blue circular gradient glow at LEFT corner where line turns - doubled size */}
-        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-cyan-500/15 blur-3xl" />
-        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-cyan-400/20 blur-2xl" />
-        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-cyan-400/30 blur-xl" />
+        <div className="absolute left-[6%] top-8 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="absolute left-[6%] top-8 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-cyan-400/20 blur-2xl" />
+        <div className="absolute left-[6%] top-8 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-cyan-400/30 blur-xl" />
         
         {/* Corner curve at left - line turns down */}
-        <svg className="absolute top-16 left-[6%] w-6 h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
+        <svg className="absolute top-8 left-[6%] w-6 h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
           <path d="M24 0 Q0 0 0 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
         </svg>
         
         {/* Horizontal line from center going to right corner */}
-        <div className="absolute top-16 left-1/2 right-[6%] h-px bg-gradient-to-r from-cyan-500/70 to-cyan-500/50" />
+        <div className="absolute top-8 left-1/2 right-[6%] h-px bg-gradient-to-r from-cyan-500/70 to-cyan-500/50" />
         
         {/* Corner curve at right - line turns down */}
-        <svg className="absolute top-16 right-[6%] w-6 h-6 translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
+        <svg className="absolute top-8 right-[6%] w-6 h-6 translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
           <path d="M0 0 Q24 0 24 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
         </svg>
         
         {/* Vertical lines going down from corners */}
-        <div className="absolute left-[6%] top-[calc(4rem+24px)] w-px h-24 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
-        <div className="absolute right-[6%] top-[calc(4rem+24px)] w-px h-24 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        <div className="absolute left-[6%] top-[calc(2rem+24px)] w-px h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        <div className="absolute right-[6%] top-[calc(2rem+24px)] w-px h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
       </div>
 
       {/* Header - inside the frame */}
