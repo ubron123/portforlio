@@ -138,10 +138,10 @@ export function ServicesSection() {
         {/* Horizontal line from center going to left corner */}
         <div className="absolute top-16 left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
         
-        {/* Blue circular gradient glow at LEFT corner where line turns */}
-        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-cyan-500/15 blur-3xl" />
-        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-cyan-400/20 blur-2xl" />
-        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-cyan-400/30 blur-xl" />
+        {/* Blue circular gradient glow at LEFT corner where line turns - doubled size */}
+        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-cyan-400/20 blur-2xl" />
+        <div className="absolute left-[6%] top-16 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-cyan-400/30 blur-xl" />
         
         {/* Corner curve at left - line turns down */}
         <svg className="absolute top-16 left-[6%] w-6 h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
@@ -162,7 +162,7 @@ export function ServicesSection() {
       </div>
 
       {/* Header - inside the frame */}
-      <div className="relative text-center px-6 pb-16 mx-[6%] border-l border-r border-cyan-500/30">
+      <div className="relative text-center px-6 pb-8 mx-[6%] border-l border-r border-cyan-500/30">
         <p className="text-cyan-400 text-xs tracking-[0.3em] uppercase mb-6">MY SERVICES</p>
         <p className="text-gray-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
           Engineering component-driven, full-stack products that help SaaS teams build faster, and grow smarter with complete sets of skills

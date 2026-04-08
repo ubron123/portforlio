@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { InteractiveCubes } from "@/components/interactive-cubes"
 import { ProjectCarousel } from "@/components/project-carousel"
-import { RotatingScrollText } from "@/components/rotating-scroll-text"
 import { CursorFollower } from "@/components/cursor-follower"
 import { ProjectDetail } from "@/components/project-detail"
 import { AboutSection } from "@/components/about-section"
@@ -88,7 +87,8 @@ export default function Home() {
           </div>
         </nav>
 
-        <RotatingScrollText variant="on-tint" />
+        {/* Spacing below project carousel */}
+        <div className="h-16 md:h-24" />
       </section>
 
       {/* About Section with Timeline */}
