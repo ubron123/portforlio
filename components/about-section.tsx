@@ -189,7 +189,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
           <div className="h-full w-full bg-cyan-500/70" />
         </div>
 
-        {/* Shooting star animation - comet shape with large head and sharp tail */}
+        {/* Shooting star animation - head first (at top), sharp tail trailing behind */}
         <div 
           className={`absolute left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-opacity duration-500 ${
             shootingStarActive ? 'opacity-100' : 'opacity-0'
@@ -198,43 +198,42 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
             animation: shootingStarActive ? 'shootingStar 4s ease-in-out forwards' : 'none',
           }}
         >
-          {/* Shooting star - large glowing head with sharp triangular tail */}
+          {/* Shooting star - flipped: sharp tail on TOP, large head at BOTTOM (head leads when moving down) */}
           <div className="relative flex flex-col items-center">
-            {/* Outer glow around head */}
-            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-10 h-10 bg-cyan-400/30 blur-xl rounded-full" />
-            
-            {/* Bright head - larger glowing orb */}
-            <div className="relative z-10">
-              <div className="absolute -inset-2 bg-white/50 blur-md rounded-full" />
-              <div className="absolute -inset-1 bg-cyan-300/70 blur-sm rounded-full" />
-              <div className="w-5 h-5 rounded-full bg-white shadow-[0_0_20px_white,0_0_40px_rgba(34,211,238,1),0_0_60px_rgba(34,211,238,0.6)]" />
-            </div>
-            
-            {/* Sharp triangular tail */}
+            {/* Sharp triangular tail pointing UP (trails behind the head) */}
             <svg 
-              className="mt-[-4px]" 
-              width="20" 
-              height="100" 
-              viewBox="0 0 20 100"
+              width="12" 
+              height="50" 
+              viewBox="0 0 12 50"
               fill="none"
             >
               <defs>
-                <linearGradient id="tailGradient" x1="10" y1="0" x2="10" y2="100" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="rgba(34,211,238,0.9)" />
-                  <stop offset="40%" stopColor="rgba(34,211,238,0.5)" />
-                  <stop offset="100%" stopColor="rgba(34,211,238,0)" />
+                <linearGradient id="tailGradient" x1="6" y1="0" x2="6" y2="50" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="rgba(34,211,238,0)" />
+                  <stop offset="60%" stopColor="rgba(34,211,238,0.5)" />
+                  <stop offset="100%" stopColor="rgba(34,211,238,0.9)" />
                 </linearGradient>
-                <linearGradient id="innerTailGradient" x1="10" y1="0" x2="10" y2="70" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="rgba(255,255,255,0.8)" />
+                <linearGradient id="innerTailGradient" x1="6" y1="0" x2="6" y2="50" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="rgba(34,211,238,0)" />
                   <stop offset="50%" stopColor="rgba(34,211,238,0.3)" />
-                  <stop offset="100%" stopColor="rgba(34,211,238,0)" />
+                  <stop offset="100%" stopColor="rgba(255,255,255,0.8)" />
                 </linearGradient>
               </defs>
-              {/* Outer tail - wider at top, sharp point at bottom */}
-              <path d="M10 0 L18 0 L10 100 L2 0 Z" fill="url(#tailGradient)" />
+              {/* Outer tail - sharp point at top, wider at bottom connecting to head */}
+              <path d="M6 0 L11 50 L1 50 Z" fill="url(#tailGradient)" />
               {/* Inner bright core */}
-              <path d="M10 0 L14 0 L10 70 L6 0 Z" fill="url(#innerTailGradient)" />
+              <path d="M6 15 L8 50 L4 50 Z" fill="url(#innerTailGradient)" />
             </svg>
+            
+            {/* Outer glow around head */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-6 bg-cyan-400/30 blur-lg rounded-full" />
+            
+            {/* Bright head - glowing orb at bottom (leads the movement) */}
+            <div className="relative z-10 mt-[-4px]">
+              <div className="absolute -inset-1.5 bg-white/50 blur-md rounded-full" />
+              <div className="absolute -inset-1 bg-cyan-300/70 blur-sm rounded-full" />
+              <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_12px_white,0_0_24px_rgba(34,211,238,1),0_0_36px_rgba(34,211,238,0.6)]" />
+            </div>
           </div>
         </div>
 
