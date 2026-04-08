@@ -98,16 +98,16 @@ export function ServicesSection() {
 
       setActiveService(closestIndex)
 
-      // Position the cube at the active service's image slot - smooth interpolation
+      // Position the cube at the active service's image slot - align vertically with text
       const activeSlot = imageSlotRefs.current[closestIndex]
       if (activeSlot && sectionRef.current) {
         const slotRect = activeSlot.getBoundingClientRect()
         const sectionRect = sectionRef.current.getBoundingClientRect()
         
-        const cubeSize = 128 // half of 256px (w-64)
+        // Position cube at the top-left of the slot (same level as text)
         setCubePosition({
-          top: slotRect.top - sectionRect.top + slotRect.height / 2 - cubeSize,
-          left: slotRect.left - sectionRect.left + slotRect.width / 2 - cubeSize,
+          top: slotRect.top - sectionRect.top,
+          left: slotRect.left - sectionRect.left,
         })
       }
     }
@@ -130,8 +130,10 @@ export function ServicesSection() {
     <section ref={sectionRef} className="relative bg-black">
       {/* Line split area - single line comes down from center, turns at left corner with glow */}
       <div className="relative h-40">
-        {/* Center line coming from above - extends up to connect with About section */}
-        <div className="absolute left-1/2 -top-32 w-px h-48 -translate-x-1/2 bg-cyan-500/70" />
+        {/* Center line coming from above - extends far up to connect with About section (no gap) */}
+        <div className="absolute left-1/2 -top-[200vh] w-px h-[200vh] -translate-x-1/2 bg-cyan-500/70" />
+        {/* Line continues down to the split point */}
+        <div className="absolute left-1/2 top-0 w-px h-16 -translate-x-1/2 bg-cyan-500/70" />
         
         {/* Horizontal line from center going to left corner */}
         <div className="absolute top-16 left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
