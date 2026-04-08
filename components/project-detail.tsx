@@ -20,6 +20,32 @@ const projects = [
     backgroundImage: "/vego.png",
     mockupType: "laptop" as const,
     mockupImage: "/vego.png",
+    overview: {
+      headline: "Turning Visual Ideas Into Powerful Interfaces",
+      description: "VeGo, a car rental and peer-to-peer vehicle lending platform focused on optimizing underutilized vehicles, faced challenges stemming from high user interaction and an inconsistent user interface. Additionally, strict time constraints demanded the rapid development of a cohesive and user-friendly design, making the situation both complex and time-sensitive",
+    },
+    role: {
+      title: "Frontend Developer",
+      subtitle: "Core Interface Designing",
+      description: "I served as a Frontend Developer for Team VeGo. Throughout the development process, I collaborated closely with designers and other developers to ensure a consistent and cohesive user interface. This collaboration led to the consolidation of existing systems and ultimately contributed to the formation of a unified core development team.",
+      responsibilities: [
+        {
+          number: "01",
+          title: "Consolidating fragmented component systems",
+          description: "Auditing components across internal tools and customer-facing products, identifying duplicated patterns and inconsistencies, and merging the two existing design systems into a unified foundation."
+        },
+        {
+          number: "02",
+          title: "Supporting cross-team adoption",
+          description: "Running internal training sessions, workshops on component usage and accessibility standards, improved documentation and examples, and close collaboration with developers on implementation details."
+        },
+        {
+          number: "03",
+          title: "Aligning the architecture",
+          description: "aligning naming conventions with engineering implementation, making it easier for developers to map design decisions directly to code. Introducing a contribution process allowing designers across squads to propose improvements while maintaining accessibility and consistency standards."
+        }
+      ]
+    }
   },
   {
     id: 2,
@@ -32,6 +58,32 @@ const projects = [
     backgroundImage: "/scan2dine.png",
     mockupType: "laptop" as const,
     mockupImage: "/scan2dine.png",
+    overview: {
+      headline: "Streamlining Restaurant Operations Through Digital Innovation",
+      description: "Scan2Dine aimed to revolutionize the traditional restaurant ordering experience by eliminating paper menus and manual order-taking. The challenge was creating an intuitive interface that both customers and restaurant staff could adopt quickly while ensuring real-time synchronization between orders and kitchen operations.",
+    },
+    role: {
+      title: "Full Stack Developer",
+      subtitle: "End-to-End System Design",
+      description: "I led the full stack development of Scan2Dine, from conceptualizing the user experience to implementing the backend infrastructure. My focus was on creating a seamless flow between customer ordering and kitchen management systems.",
+      responsibilities: [
+        {
+          number: "01",
+          title: "Building the digital menu system",
+          description: "Designing and implementing a flexible menu management system that allows restaurants to easily update items, prices, and availability in real-time across all customer-facing interfaces."
+        },
+        {
+          number: "02",
+          title: "Real-time order tracking",
+          description: "Implementing WebSocket-based communication for instant order updates, ensuring customers and staff have synchronized information about order status and preparation times."
+        },
+        {
+          number: "03",
+          title: "QR code integration",
+          description: "Developing the QR code generation and scanning system that enables customers to access menus and place orders directly from their smartphones without downloading any application."
+        }
+      ]
+    }
   },
   {
     id: 3,
@@ -44,6 +96,32 @@ const projects = [
     backgroundImage: "/ndp.png",
     mockupType: "phone" as const,
     mockupImage: "/ndp.png",
+    overview: {
+      headline: "Digitizing Academic Resource Sharing",
+      description: "GGT College needed a modern solution to replace their outdated paper-based book lending system. The existing process was time-consuming, prone to errors, and created unnecessary administrative burden on both students and staff.",
+    },
+    role: {
+      title: "Mobile Developer",
+      subtitle: "Native App Development",
+      description: "I spearheaded the mobile application development for NDP, focusing on creating an intuitive and efficient user experience for students to browse, request, and manage book loans entirely through their mobile devices.",
+      responsibilities: [
+        {
+          number: "01",
+          title: "Designing the mobile experience",
+          description: "Creating a clean, student-friendly interface that simplifies the book discovery and borrowing process, with features like search, filtering, and personalized recommendations."
+        },
+        {
+          number: "02",
+          title: "Implementing the lending system",
+          description: "Building the core functionality for book requests, approvals, due date tracking, and return processing, all synchronized with the college library database."
+        },
+        {
+          number: "03",
+          title: "Notification and reminder system",
+          description: "Developing push notification capabilities to keep students informed about loan approvals, upcoming due dates, and new book availability based on their interests."
+        }
+      ]
+    }
   },
 ]
 
@@ -382,55 +460,81 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
           </div>
 
           {/* Content Section */}
-          <div className="bg-black text-white py-20 md:py-32">
-            <div className="max-w-7xl mx-auto px-8 md:px-16">
-              {/* Project Details Layout */}
-              <div className="grid md:grid-cols-3 gap-8 mb-12">
-                {/* Left Column - Title */}
-                <div className="md:col-span-2">
-                  <h2 className="text-4xl md:text-5xl font-bold mb-4">{selectedProject.title}</h2>
-                  <p className="text-lg md:text-xl text-gray-400 leading-relaxed mb-8">
-                    {selectedProject.description}
+          <div className="bg-black text-white">
+            {/* Overview Section */}
+            <section className="py-20 md:py-32 border-b border-white/10">
+              <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
+                {/* Section Header */}
+                <div className="flex items-center justify-between mb-12">
+                  <div className="flex items-center gap-4">
+                    <span className="text-white/40 text-xs tracking-widest">---</span>
+                    <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">Overview</span>
+                  </div>
+                  <span className="text-white/40 text-sm">33%</span>
+                </div>
+
+                {/* Overview Content */}
+                <div className="max-w-3xl">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
+                    {selectedProject.overview?.headline}
+                  </h2>
+                  <p className="text-white/60 text-base md:text-lg leading-relaxed">
+                    {selectedProject.overview?.description}
                   </p>
                 </div>
-                
-                {/* Right Column - Details */}
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 mb-2">YEAR</h3>
-                    <p className="text-2xl font-bold">{selectedProject.year}</p>
+              </div>
+            </section>
+
+            {/* My Role Section */}
+            <section className="py-20 md:py-32">
+              <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
+                {/* Section Header */}
+                <div className="flex items-center justify-end mb-12">
+                  <div className="flex items-center gap-4">
+                    <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">My Role</span>
+                    <span className="text-white/40 text-xs tracking-widest">---</span>
                   </div>
-                  
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 mb-2">TYPE</h3>
-                    <p className="text-2xl font-bold capitalize">{selectedProject.mockupType}</p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 mb-2">TECHNOLOGIES</h3>
-                    <div className="space-y-1">
-                      {selectedProject.tags.map((tag, idx) => (
-                        <p key={idx} className="text-lg">{tag}</p>
-                      ))}
+                </div>
+
+                {/* Role Title */}
+                <div className="max-w-3xl mb-12">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8">
+                    {selectedProject.role?.title}
+                    <span className="text-white/40 mx-3">{"•"}</span>
+                    {selectedProject.role?.subtitle}
+                  </h2>
+                  <p className="text-white/60 text-base md:text-lg leading-relaxed">
+                    {selectedProject.role?.description}
+                  </p>
+                </div>
+
+                {/* Responsibilities */}
+                <div className="space-y-12 mt-16">
+                  {selectedProject.role?.responsibilities.map((item, idx) => (
+                    <div key={idx} className="grid md:grid-cols-12 gap-6 md:gap-12">
+                      {/* Number */}
+                      <div className="md:col-span-1">
+                        <span className="text-white/30 text-sm font-mono">{item.number}</span>
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="md:col-span-11 max-w-2xl">
+                        <h3 className="text-white text-lg md:text-xl font-semibold mb-3">
+                          {item.title}
+                        </h3>
+                        <p className="text-white/50 text-base leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
+            </section>
 
-              {/* Bottom Section - Role and Duration */}
-              <div className="grid md:grid-cols-2 gap-12 mb-16">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-2">ROLE</h3>
-                  <p className="text-lg text-gray-300">Frontend Developer, UI/UX Designer, Backend Developer</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 mb-2">DURATION</h3>
-                  <p className="text-lg text-gray-300">3 Months</p>
-                </div>
-              </div>
-
-              {/* View Project Button */}
-              <div className="text-center">
+            {/* View Project Button Section */}
+            <section className="py-16 md:py-24">
+              <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24 text-center">
                 <button
                   onClick={() => setSelectedProject(null)}
                   className="inline-flex items-center px-16 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors text-lg tracking-wide"
@@ -441,7 +545,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   </svg>
                 </button>
               </div>
-            </div>
+            </section>
           </div>
         </div>
       )}
