@@ -1,9 +1,48 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export function SplineScene() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [hasError, setHasError] = useState(false)
+
+  useEffect(() => {
+    let app: any = null
+    let mounted = true
+
+    async function loadSpline() {
+      if (!canvasRef.current) return
+
+      try {
+        const { Application } = await import("@splinetool/runtime")
+        
+        if (!mounted) return
+        
+        app = new Application(canvasRef.current)
+        await app.load("https://prod.spline.design/jD8BWozwPhxDEScS/scene.splinecode")
+        
+        if (mounted) {
+          setIsLoaded(true)
+        }
+      } catch (error) {
+        console.log("[v0] Spline load error:", error)
+        if (mounted) {
+          setHasError(true)
+          setIsLoaded(true)
+        }
+      }
+    }
+
+    loadSpline()
+
+    return () => {
+      mounted = false
+      if (app) {
+        app.dispose?.()
+      }
+    }
+  }, [])
 
   return (
     <div className="absolute inset-0 z-10">
@@ -12,15 +51,16 @@ export function SplineScene() {
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-white border-t-transparent" />
         </div>
       )}
-      <iframe
-        src="https://my.spline.design/jD8BWozwPhxDEScS/"
-        frameBorder="0"
-        width="100%"
-        height="100%"
-        onLoad={() => setIsLoaded(true)}
+      {hasError && (
+        <div className="absolute inset-0 bg-black" />
+      )}
+      <canvas
+        ref={canvasRef}
         className="absolute inset-0 w-full h-full"
-        style={{ border: "none" }}
-        allow="autoplay; fullscreen"
+        style={{ 
+          opacity: isLoaded && !hasError ? 1 : 0,
+          transition: "opacity 0.3s ease-in-out"
+        }}
       />
     </div>
   )
