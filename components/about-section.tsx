@@ -113,7 +113,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
     >
       {/* Reflection gradient from projects */}
       <div
-        className="absolute inset-x-0 top-0 h-48 opacity-40"
+        className="absolute inset-x-0 top-0 h-64 opacity-40"
         style={{
           background: `linear-gradient(to bottom, ${sectionGradient.includes("linear-gradient") ? "#6b7a94" : sectionGradient} 0%, transparent 100%)`,
         }}
@@ -122,7 +122,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       
       {/* Blurred reflection effect */}
       <div
-        className="absolute inset-x-0 top-0 h-64 blur-3xl opacity-30"
+        className="absolute inset-x-0 top-0 h-80 blur-3xl opacity-30"
         style={{
           background: sectionGradient,
         }}
@@ -130,19 +130,19 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       />
 
       {/* Sticky container - fills viewport when in view */}
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Central vertical blue line */}
+      <div className="sticky top-0 h-screen overflow-hidden pt-32 md:pt-40">
+        {/* Central vertical blue line - starts from very top */}
         <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 z-10">
           <div className="h-full w-full bg-gradient-to-b from-cyan-500/0 via-cyan-500 to-cyan-500/50" />
         </div>
 
-        {/* Blue dot marker on timeline */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
+        {/* Blue dot marker on timeline - positioned lower with content */}
+        <div className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 z-30">
           <div className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.6)]" />
         </div>
 
         {/* Main content grid - left side is STATIC */}
-        <div className="relative h-full w-full flex items-center">
+        <div className="relative h-full w-full flex items-start">
           <div className="max-w-6xl mx-auto px-6 md:px-12 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
               
