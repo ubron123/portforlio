@@ -209,7 +209,7 @@ export function ServicesSection() {
               }`}
             >
               {/* Desktop layout - alternating sides: odd services (1,3,5) = text LEFT/image RIGHT, even services (2,4,6) = image LEFT/text RIGHT */}
-              <div className="hidden md:flex items-center justify-between w-full gap-8">
+              <div className="hidden md:flex items-start justify-between w-full gap-8">
                 {isEven ? (
                   <>
                     {/* Service 1,3,5: Text on LEFT side */}
