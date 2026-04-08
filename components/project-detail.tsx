@@ -731,9 +731,9 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   }}
                 />
                 
-                {/* Bottom horizontal line - shorter width */}
+                {/* Bottom horizontal line - centered */}
                 <div 
-                  className={`absolute left-6 md:left-12 lg:left-16 bottom-[15%] h-0.5 bg-[#3AC2FF] transition-all duration-700 ease-out ${
+                  className={`absolute left-1/2 -translate-x-1/2 bottom-[15%] h-0.5 bg-[#3AC2FF] transition-all duration-700 ease-out ${
                     linePhase === 'bottom' 
                       ? 'opacity-100' 
                       : linePhase === 'transition-to-bottom'
@@ -742,12 +742,11 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   }`}
                   style={{
                     width: linePhase === 'transition-to-bottom' 
-                      ? `${lineProgress * 200}px` 
+                      ? `${lineProgress * 400}px` 
                       : linePhase === 'bottom' 
-                        ? '200px'
+                        ? '400px'
                         : '0px',
-                    maxWidth: '200px',
-                    transformOrigin: 'left',
+                    maxWidth: '400px',
                   }}
                 />
               </div>
