@@ -162,7 +162,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-black min-h-[200vh] pt-16 md:pt-24"
+      className="relative bg-black min-h-[200vh] pt-0"
     >
       {/* Reflection gradient from projects */}
       <div
