@@ -728,14 +728,14 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-3">
-                  {selectedProject.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                {selectedProject.tags.map((tag, idx) => (
+                  <span
+                    key={idx}
+                    className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium text-sm"
+                  >
+                    {tag}
+                  </span>
+                ))}
                 </div>
               </div>
             </div>
