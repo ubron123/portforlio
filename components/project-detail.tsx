@@ -154,12 +154,13 @@ const projects = [
   {
     id: 1,
     number: "01",
-    title: "Idle No More",
+    title: "VEGO",
+    detailTitle: "Idle No More",
     year: "2024",
     location: "Thimphu, Bhutan",
     tags: ["DESIGNING", "FRONTEND DEV", "BACKEND DEV"],
     description:
-      "Idle No More is an innovative car rental platform that optimizes the use of idle vehicles, with a focus especially on the Moroccan market.",
+      "VEGO is an innovative car rental platform that optimizes the use of idle vehicles, with a focus especially on the Moroccan market.",
     backgroundImage: "/vego.png",
     mockupType: "laptop" as const,
     mockupImage: "/vego.png",
@@ -373,18 +374,15 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
     }
   }, [isOpen, currentProject])
 
+  // Removed auto-scroll - let user scroll manually
   useEffect(() => {
     if (!isOpen) return
-    const id = Math.min(Math.max(currentProject, 1), projects.length)
-    const t = window.setTimeout(() => {
-      const container = scrollContainerRef.current
-      const section = sectionRefs.current[id - 1]
-      if (container && section) {
-        container.scrollTop = section.offsetTop
-      }
-    }, 0)
-    return () => clearTimeout(t)
-  }, [isOpen, currentProject])
+    // Reset scroll position to top when opening
+    const container = scrollContainerRef.current
+    if (container) {
+      container.scrollTop = 0
+    }
+  }, [isOpen])
 
   // Scroll progress and sticky responsibility handling for detail modal
   useEffect(() => {
@@ -708,7 +706,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
           <div className="relative h-screen">
             <img 
               src={selectedProject.mockupImage} 
-              alt={selectedProject.title}
+              alt={selectedProject.detailTitle || selectedProject.title}
               className="w-full h-full object-cover"
             />
             {/* Gradient fade to black at bottom */}
@@ -727,7 +725,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             {/* Project Title Overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
               <div className="max-w-6xl mx-auto">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2">{selectedProject.title}</h1>
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2">{selectedProject.detailTitle || selectedProject.title}</h1>
                 <p className="text-base md:text-lg text-white/60 mb-4">{selectedProject.location}</p>
                 
                 {/* Tags */}
