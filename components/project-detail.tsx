@@ -839,15 +839,15 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             {/* My Role Section - Right aligned */}
             <section 
               ref={myRoleSectionRef}
-              className="py-20 md:py-32 relative overflow-hidden"
+              className="py-20 md:py-32 relative"
             >
               {/* Glowing blue circle - left side for project 2 */}
               {selectedProject.id === 2 && (
                 <div 
-                  className="absolute top-1/2 -left-48 md:-left-72 -translate-y-1/2 w-[32rem] h-[32rem] md:w-[48rem] md:h-[48rem] rounded-full pointer-events-none"
+                  className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[40rem] h-[40rem] md:w-[56rem] md:h-[56rem] rounded-full pointer-events-none"
                   style={{
-                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.5) 0%, rgba(58, 194, 255, 0.25) 35%, rgba(58, 194, 255, 0.1) 55%, transparent 80%)',
-                    filter: 'blur(60px)',
+                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.6) 0%, rgba(58, 194, 255, 0.4) 25%, rgba(58, 194, 255, 0.2) 45%, rgba(58, 194, 255, 0.05) 65%, transparent 85%)',
+                    filter: 'blur(30px)',
                   }}
                 />
               )}
@@ -917,14 +917,14 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             </section>
 
             {/* Result Section - Left aligned */}
-            <section ref={resultSectionRef} className="py-20 md:py-32 relative overflow-hidden">
+            <section ref={resultSectionRef} className="py-20 md:py-32 relative">
               {/* Glowing blue circle - right side for projects 1 and 3 */}
               {(selectedProject.id === 1 || selectedProject.id === 3) && (
                 <div 
-                  className="absolute top-1/2 -right-48 md:-right-72 -translate-y-1/2 w-[32rem] h-[32rem] md:w-[48rem] md:h-[48rem] rounded-full pointer-events-none"
+                  className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[40rem] h-[40rem] md:w-[56rem] md:h-[56rem] rounded-full pointer-events-none"
                   style={{
-                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.5) 0%, rgba(58, 194, 255, 0.25) 35%, rgba(58, 194, 255, 0.1) 55%, transparent 80%)',
-                    filter: 'blur(60px)',
+                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.6) 0%, rgba(58, 194, 255, 0.4) 25%, rgba(58, 194, 255, 0.2) 45%, rgba(58, 194, 255, 0.05) 65%, transparent 85%)',
+                    filter: 'blur(30px)',
                   }}
                 />
               )}
