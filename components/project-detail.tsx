@@ -708,7 +708,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
               alt={selectedProject.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
+            {/* Gradient fade to black at bottom */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 via-30% to-transparent" />
             
             {/* Close Button */}
             <button
@@ -723,8 +724,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             {/* Project Title Overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
               <div className="max-w-6xl mx-auto">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">{selectedProject.title}</h1>
-                <p className="text-xl md:text-2xl text-white/80 mb-6">{selectedProject.year}</p>
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-light italic text-white mb-2">{selectedProject.title}</h1>
+                <p className="text-base md:text-lg text-white/60 mb-4">{selectedProject.location}</p>
                 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-3">
