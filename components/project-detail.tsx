@@ -946,17 +946,26 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 </h3>
                 <button
                   onClick={() => {
-                    const nextIndex = (projects.findIndex(p => p.id === selectedProject.id) + 1) % projects.length
-                    setSelectedProject(projects[nextIndex])
-                    // Reset scroll position and line state
+                    console.log("[v0] View Project clicked")
+                    const currentIndex = projects.findIndex(p => p.id === selectedProject.id)
+                    const nextIndex = (currentIndex + 1) % projects.length
+                    const nextProject = projects[nextIndex]
+                    console.log("[v0] Navigating from project", currentIndex, "to project", nextIndex, nextProject.title)
+                    
+                    // Reset scroll position first
                     if (detailScrollRef.current) {
                       detailScrollRef.current.scrollTop = 0
                     }
+                    
+                    // Reset line state
                     setActiveResponsibilityIndex(0)
                     setLinePhase('overview')
                     setLineProgress(0)
+                    
+                    // Then set the new project
+                    setSelectedProject(nextProject)
                   }}
-                  className="inline-flex items-center px-8 py-3 border border-white/30 text-white text-sm tracking-widest uppercase hover:bg-white/10 transition-colors"
+                  className="inline-flex items-center px-8 py-3 border border-white/30 text-white text-sm tracking-widest uppercase bg-transparent hover:bg-gray-500/30 transition-all duration-300"
                 >
                   View Project
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
