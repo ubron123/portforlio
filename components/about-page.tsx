@@ -179,7 +179,8 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             <img 
               src="/profile-about.png" 
               alt="Norbu Tshering"
-              className="w-full h-full object-cover object-top"
+              className="w-full h-full object-cover"
+              style={{ objectPosition: "center 30%" }}
             />
             {/* Gradient overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40" />
