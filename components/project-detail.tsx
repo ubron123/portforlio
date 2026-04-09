@@ -219,7 +219,7 @@ const projects = [
     },
     role: {
       title: "Frontend Developer, Database Developer",
-      subtitle: "Core Interface Designing",
+      subtitle: "",
       description: "I served as a Frontend Developer and Database Designer for Team SCAN2DINE. Throughout the project, I collaborated closely with designers, backend developers, and stakeholders to ensure a seamless user interface while designing a robust, scalable database. This dual responsibility led to the creation of a consistent UI across devices and an efficient data structure, enabling faster data retrieval, real-time updates, and a more maintainable system.",
       responsibilities: [
         {
@@ -844,10 +844,10 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
               {/* Glowing blue circle - left side for project 2 */}
               {selectedProject.id === 2 && (
                 <div 
-                  className="absolute top-1/2 -left-32 md:-left-48 -translate-y-1/2 w-64 h-64 md:w-96 md:h-96 rounded-full pointer-events-none"
+                  className="absolute top-1/2 -left-48 md:-left-72 -translate-y-1/2 w-[32rem] h-[32rem] md:w-[48rem] md:h-[48rem] rounded-full pointer-events-none"
                   style={{
-                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.3) 0%, rgba(58, 194, 255, 0.1) 40%, transparent 70%)',
-                    filter: 'blur(40px)',
+                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.5) 0%, rgba(58, 194, 255, 0.25) 35%, rgba(58, 194, 255, 0.1) 55%, transparent 80%)',
+                    filter: 'blur(60px)',
                   }}
                 />
               )}
@@ -921,10 +921,10 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
               {/* Glowing blue circle - right side for projects 1 and 3 */}
               {(selectedProject.id === 1 || selectedProject.id === 3) && (
                 <div 
-                  className="absolute top-1/2 -right-32 md:-right-48 -translate-y-1/2 w-64 h-64 md:w-96 md:h-96 rounded-full pointer-events-none"
+                  className="absolute top-1/2 -right-48 md:-right-72 -translate-y-1/2 w-[32rem] h-[32rem] md:w-[48rem] md:h-[48rem] rounded-full pointer-events-none"
                   style={{
-                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.3) 0%, rgba(58, 194, 255, 0.1) 40%, transparent 70%)',
-                    filter: 'blur(40px)',
+                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.5) 0%, rgba(58, 194, 255, 0.25) 35%, rgba(58, 194, 255, 0.1) 55%, transparent 80%)',
+                    filter: 'blur(60px)',
                   }}
                 />
               )}
