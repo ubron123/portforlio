@@ -273,7 +273,7 @@ const projects = [
     },
     role: {
       title: "Frontend Developer, Interface Designer",
-      subtitle: "Core Interface Designing",
+      subtitle: "",
       description: "I served as the Interface Designer and Developer for the NDP mobile application. I collaborated closely with stakeholders and developers to create a secure, intuitive, and visually clean interface that simplified the due-clearing process. My work ensured clear navigation, consistent design patterns, and seamless interaction, ultimately improving usability and reducing errors in the manual process.",
       responsibilities: [
         {
