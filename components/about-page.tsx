@@ -363,13 +363,13 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             background: "linear-gradient(135deg, #0a1628 0%, #0d2847 25%, #1a4a7a 50%, #2d6ba3 75%, #3d7eb8 100%)",
           }}
         >
-          {/* Profile Image - Full screen cover */}
-          <div className="absolute inset-0 z-0">
+          {/* Profile Image - Cropped to show till hands */}
+          <div className="absolute inset-0 z-0 overflow-hidden">
             <img 
               src="/profile-about.png" 
               alt="Norbu Tshering"
-              className="w-full h-full object-cover"
-              style={{ objectPosition: "center 20%" }}
+              className="w-full h-full object-cover scale-150 sm:scale-125 md:scale-110"
+              style={{ objectPosition: "center 30%" }}
             />
             {/* Gradient overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40" />
@@ -378,7 +378,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
           {/* About Title - Animates down on scroll */}
           <h1 
-            className="absolute left-6 md:left-12 text-white text-[15vw] md:text-[12vw] lg:text-[10vw] font-normal leading-none tracking-tight z-20 transition-transform duration-100 ease-out"
+            className="absolute left-4 sm:left-6 md:left-12 text-white text-[18vw] sm:text-[15vw] md:text-[12vw] lg:text-[10vw] font-normal leading-none tracking-tight z-20 transition-transform duration-100 ease-out"
             style={{ 
               top: `${80 + aboutTextOffset}px`,
             }}
@@ -387,13 +387,13 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           </h1>
 
           {/* Bio Text - Right side */}
-          <div className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-20 w-full md:w-[40%] lg:w-[35%]">
+          <div className="absolute right-4 sm:right-6 md:right-12 top-1/2 -translate-y-1/2 z-20 w-[90%] sm:w-[85%] md:w-[50%] lg:w-[40%] xl:w-[35%] px-2 sm:px-0">
             {/* Bio Paragraphs */}
-            <div className="space-y-6">
-              <p className="text-white/90 text-base md:text-lg leading-relaxed">
+            <div className="space-y-4 sm:space-y-6">
+              <p className="text-white/90 text-sm sm:text-base md:text-lg leading-relaxed">
                 {"I'm Norbu Tshering, a creative full-stack product engineer focused on the intersection of design and technology. Through my work, I explore how thoughtful aesthetics and solid functionality can come together to shape intuitive, meaningful digital experiences."}
               </p>
-              <p className="text-white/80 text-base md:text-lg leading-relaxed">
+              <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed">
                 Driven by curiosity and a mindset of continuous growth, I craft modern, minimalist, and user-centered solutions that balance visual clarity with technical precision.
               </p>
             </div>
@@ -403,7 +403,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
         {/* EDUCATION/JOURNEY SECTION */}
         <section 
           ref={educationRef}
-          className="relative min-h-screen w-full bg-[#0d0d0d] py-24 px-6 md:px-12"
+          className="relative min-h-screen w-full bg-[#0d0d0d] py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12"
         >
           {/* Particle Background Animation */}
           <ParticleBackground />
@@ -411,7 +411,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           {/* Journey Timeline */}
           <div className="max-w-6xl mx-auto relative z-10">
             {/* Journey Header with locations */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-8 mb-12 sm:mb-16">
               {journeyData.map((item, index) => (
                 <div key={index} className="relative">
                   {/* Arrow between items (hidden on last) */}
@@ -428,15 +428,15 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
                     <div className="absolute right-0 top-2 w-2 h-2 rounded-full bg-white/50" />
                   )}
                   
-                  <h3 className="text-cyan-400 text-2xl md:text-3xl font-bold mb-4 leading-tight pr-8">
+                  <h3 className="text-cyan-400 text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 leading-tight pr-8">
                     {item.location}
                   </h3>
                   
-                  <span className="inline-block border border-white/30 text-white/70 text-xs px-3 py-1 mb-4">
+                  <span className="inline-block border border-white/30 text-white/70 text-xs sm:text-sm px-3 py-1 mb-3 sm:mb-4">
                     {item.period}
                   </span>
                   
-                  <p className="text-white/60 text-sm leading-relaxed">
+                  <p className="text-white/60 text-sm sm:text-base leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -444,7 +444,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             </div>
 
             {/* Skills Section */}
-            <div className="mt-32 space-y-4">
+            <div className="mt-16 sm:mt-24 md:mt-32 space-y-2 sm:space-y-4">
               {skillsData.map((skill, index) => {
                 const isExpanded = expandedSkill === skill.name
                 
@@ -455,24 +455,24 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
                   >
                     {/* Skill Header - Clickable */}
                     <div 
-                      className="flex items-center justify-between py-6 group cursor-pointer hover:border-white/20 transition-colors"
+                      className="flex items-center justify-between py-4 sm:py-6 group cursor-pointer hover:border-white/20 transition-colors"
                       onClick={() => setExpandedSkill(isExpanded ? null : skill.name)}
                     >
-                      <h4 className="text-white/50 text-2xl md:text-4xl font-light group-hover:text-white/80 transition-colors">
+                      <h4 className="text-white/50 text-lg sm:text-2xl md:text-4xl font-light group-hover:text-white/80 transition-colors">
                         {skill.name}
                       </h4>
                       
-                      <div className="flex items-center gap-4">
-                        <span className="text-white/40 text-xs tracking-wider uppercase">
+                      <div className="flex items-center gap-2 sm:gap-4">
+                        <span className="hidden sm:inline text-white/40 text-xs tracking-wider uppercase">
                           {skill.category}
                         </span>
-                        <button className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-all">
+                        <button className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-all">
                           {isExpanded ? (
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-[14px] sm:h-[14px]">
                               <path d="M5 12h14" />
                             </svg>
                           ) : (
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-[14px] sm:h-[14px]">
                               <path d="M12 5v14M5 12h14" />
                             </svg>
                           )}
@@ -482,22 +482,22 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
                     {/* Expandable Content */}
                     {isExpanded && (
-                      <div className="pb-8 pt-2 animate-in fade-in slide-in-from-top-2 duration-300 mx-auto">
-                        <div className="max-w-2xl mx-auto px-6 md:px-12">
+                      <div className="pb-6 sm:pb-8 pt-2 animate-in fade-in slide-in-from-top-2 duration-300 mx-auto">
+                        <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-12">
                           {/* Description */}
-                          <p className="text-white/70 text-base leading-relaxed mb-8">
+                          <p className="text-white/70 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
                             {skill.description}
                           </p>
 
                           {/* Subsections for Framework + CMS */}
                           {skill.subsections && (
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
                               {skill.subsections.map((subsection, subIndex) => (
                                 <div key={subIndex}>
-                                  <h5 className="text-black text-xs tracking-wider uppercase mb-3 bg-white inline-block px-3 py-1">
+                                  <h5 className="text-black text-xs tracking-wider uppercase mb-2 sm:mb-3 bg-white inline-block px-2 sm:px-3 py-1">
                                     {subsection.title}
                                   </h5>
-                                  <p className="text-white/60 text-sm leading-relaxed">
+                                  <p className="text-white/60 text-xs sm:text-sm leading-relaxed">
                                     {subsection.items.join(", ")}
                                   </p>
                                 </div>
@@ -517,21 +517,21 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
         {/* ACHIEVEMENTS SECTION */}
         <section 
           ref={achievementsRef}
-          className="relative min-h-screen w-full bg-[#0d0d0d] py-24 px-6 md:px-12"
+          className="relative min-h-screen w-full bg-[#0d0d0d] py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12"
         >
           <div className="max-w-6xl mx-auto">
             {/* Achievements Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-12 md:gap-16">
               {/* AWARDS Column */}
               <div>
-                <h3 className="text-white/40 text-xs tracking-[0.2em] uppercase mb-8">
+                <h3 className="text-white/40 text-xs sm:text-sm tracking-[0.2em] uppercase mb-6 sm:mb-8">
                   AWARDS
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {achievementsData.awards.map((award, index) => (
-                    <div key={index} className="flex gap-4">
-                      <span className="text-white/30 text-sm">{award.number}</span>
-                      <span className="text-white/80 text-sm uppercase">{award.title}</span>
+                    <div key={index} className="flex gap-3 sm:gap-4">
+                      <span className="text-white/30 text-xs sm:text-sm">{award.number}</span>
+                      <span className="text-white/80 text-xs sm:text-sm uppercase">{award.title}</span>
                     </div>
                   ))}
                 </div>
@@ -539,14 +539,14 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
               {/* CERTIFICATIONS Column */}
               <div>
-                <h3 className="text-white/40 text-xs tracking-[0.2em] uppercase mb-8">
+                <h3 className="text-white/40 text-xs sm:text-sm tracking-[0.2em] uppercase mb-6 sm:mb-8">
                   CERTIFICATIONS
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {achievementsData.certifications.map((cert, index) => (
-                    <div key={index} className="flex gap-4">
-                      <span className="text-white/30 text-sm">{cert.number}</span>
-                      <span className="text-white/80 text-sm uppercase">{cert.title}</span>
+                    <div key={index} className="flex gap-3 sm:gap-4">
+                      <span className="text-white/30 text-xs sm:text-sm">{cert.number}</span>
+                      <span className="text-white/80 text-xs sm:text-sm uppercase">{cert.title}</span>
                     </div>
                   ))}
                 </div>
@@ -554,14 +554,14 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
               {/* PARTICIPATION Column */}
               <div>
-                <h3 className="text-white/40 text-xs tracking-[0.2em] uppercase mb-8">
+                <h3 className="text-white/40 text-xs sm:text-sm tracking-[0.2em] uppercase mb-6 sm:mb-8">
                   PARTICIPATION
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {achievementsData.participation.map((part, index) => (
-                    <div key={index} className="flex gap-4">
-                      <span className="text-white/30 text-sm">{part.number}</span>
-                      <span className="text-white/80 text-sm uppercase">{part.title}</span>
+                    <div key={index} className="flex gap-3 sm:gap-4">
+                      <span className="text-white/30 text-xs sm:text-sm">{part.number}</span>
+                      <span className="text-white/80 text-xs sm:text-sm uppercase">{part.title}</span>
                     </div>
                   ))}
                 </div>
@@ -574,19 +574,19 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
       {/* Fixed UI Elements */}
       
       {/* Top Navigation - Fixed */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex justify-end items-center gap-12 px-6 md:px-12 py-6">
-        <button className="text-white text-xs tracking-[0.2em] uppercase hover:text-white/70 transition-colors">
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 sm:px-6 md:px-12 py-4 sm:py-6">
+        <button className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase hover:text-white/70 transition-colors">
           CONTACT
         </button>
-        <span className="text-white/70 text-xs tracking-wider">
+        <span className="text-white/70 text-xs sm:text-sm tracking-wider">
           {currentTime}
         </span>
       </header>
 
       {/* Left side section label */}
-      <div className="hidden md:block fixed left-6 top-1/2 -translate-y-1/2 z-50">
+      <div className="hidden lg:block fixed left-4 md:left-6 top-1/2 -translate-y-1/2 z-50">
         <p 
-          className="text-white/40 text-xs tracking-[0.3em] uppercase transition-all duration-300"
+          className="text-white/40 text-[10px] md:text-xs tracking-[0.3em] uppercase transition-all duration-300"
           style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
         >
           {currentSection === "intro" ? "INTRO" : currentSection === "education" ? "EDUCATION" : "ACHIEVEMENTS"}
@@ -594,38 +594,38 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
       </div>
 
       {/* Right side scroll progress */}
-      <div className="hidden md:block fixed right-6 top-1/2 -translate-y-1/2 z-50">
-        <p className="text-white/40 text-xs tracking-wider">
+      <div className="hidden lg:block fixed right-4 md:right-6 top-1/2 -translate-y-1/2 z-50">
+        <p className="text-white/40 text-[10px] md:text-xs tracking-wider">
           {scrollProgress} %
         </p>
       </div>
 
       {/* Bottom Navigation Pill */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+      <div className="fixed bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-50">
         <div 
-          className="relative flex items-center gap-2 bg-black/50 backdrop-blur-xl rounded-full px-2 py-2 border border-white/10"
+          className="relative flex items-center gap-1 sm:gap-2 bg-black/50 backdrop-blur-xl rounded-full px-1.5 sm:px-2 py-1.5 sm:py-2 border border-white/10"
           onMouseEnter={() => setIsNavHovered(true)}
           onMouseLeave={() => setIsNavHovered(false)}
         >
           {/* Left Arrow - goes to previous section */}
           <button 
             onClick={handlePrevSection}
-            className={`p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10 ${
+            className={`p-1.5 sm:p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10 ${
               currentSection === "intro" ? "opacity-30 cursor-not-allowed" : ""
             }`}
             disabled={currentSection === "intro"}
             aria-label="Previous section"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-4 sm:h-4">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
           </button>
           
           {/* Section Name / Close Button on Hover */}
-          <div className="relative px-4 min-w-[120px] flex items-center justify-center">
+          <div className="relative px-3 sm:px-4 min-w-[100px] sm:min-w-[120px] flex items-center justify-center">
             {/* Section name - hidden on hover */}
             <span 
-              className={`text-white text-xs tracking-[0.2em] uppercase transition-opacity duration-200 ${
+              className={`text-white text-[10px] sm:text-xs tracking-[0.2em] uppercase transition-opacity duration-200 ${
                 isNavHovered ? "opacity-0" : "opacity-100"
               }`}
             >
@@ -640,7 +640,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
               }`}
               aria-label="Go to homepage"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-[18px] sm:h-[18px]">
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
@@ -649,20 +649,20 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           {/* Right Arrow - goes to next section */}
           <button 
             onClick={handleNextSection}
-            className={`p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10 ${
+            className={`p-1.5 sm:p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10 ${
               currentSection === "achievements" ? "opacity-30 cursor-not-allowed" : ""
             }`}
             disabled={currentSection === "achievements"}
             aria-label="Next section"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-4 sm:h-4">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </button>
 
           {/* Social Icons - shown on hover */}
           <div 
-            className={`flex items-center gap-2 ml-2 border-l border-white/10 pl-2 transition-all duration-200 ${
+            className={`hidden sm:flex items-center gap-2 ml-2 border-l border-white/10 pl-2 transition-all duration-200 ${
               isNavHovered ? "opacity-100 max-w-[100px]" : "opacity-0 max-w-0 overflow-hidden"
             }`}
           >
@@ -671,10 +671,10 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
               href="https://www.linkedin.com/in/norbutshering" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10"
+              className="p-1.5 sm:p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10"
               aria-label="LinkedIn"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="sm:w-4 sm:h-4">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
             </a>
@@ -682,10 +682,10 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             {/* Gmail */}
             <a 
               href="mailto:norbudev7@gmail.com" 
-              className="p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10"
+              className="p-1.5 sm:p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10"
               aria-label="Email"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="sm:w-4 sm:h-4">
                 <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
               </svg>
             </a>

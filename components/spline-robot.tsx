@@ -62,19 +62,34 @@ export function SplineRobot() {
     // Global error handler for uncaught Spline errors
     const handleError = (event: ErrorEvent) => {
       if (
-        event.message?.includes("Cannot read properties of undefined") &&
-        event.filename?.includes("spline")
+        event.message?.includes("Cannot read properties of undefined") ||
+        event.message?.includes("reading 'position'")
       ) {
         event.preventDefault()
-        return true
+        event.stopImmediatePropagation()
+        return false
       }
     }
 
-    window.addEventListener("error", handleError)
+    // Also handle unhandledrejection for promise errors
+    const handleRejection = (event: PromiseRejectionEvent) => {
+      const reason = event.reason?.message || event.reason?.toString() || ""
+      if (
+        reason.includes("Cannot read properties of undefined") ||
+        reason.includes("position")
+      ) {
+        event.preventDefault()
+        return false
+      }
+    }
+
+    window.addEventListener("error", handleError, true)
+    window.addEventListener("unhandledrejection", handleRejection)
 
     return () => {
       console.error = originalError
-      window.removeEventListener("error", handleError)
+      window.removeEventListener("error", handleError, true)
+      window.removeEventListener("unhandledrejection", handleRejection)
     }
   }, [])
 
