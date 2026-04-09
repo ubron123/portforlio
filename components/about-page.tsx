@@ -8,7 +8,23 @@ type AboutPageProps = {
   onClose: () => void
 }
 
-type Section = "intro" | "education"
+type Section = "intro" | "education" | "achievements"
+
+const achievementsData = {
+  awards: [
+    { number: "01", title: "WINNER OF PRJ202 (2025)" },
+    { number: "02", title: "FIVE TIMES RECIPIENT OF HM's CERTIFICATE (2017 - 2022)" },
+  ],
+  certifications: [
+    { number: "01", title: "CISCO NETWORK ACADEMY (2024)" },
+    { number: "02", title: "JOTA-JOTI (2020)" },
+    { number: "03", title: "LEADERSHIP AND ACTIVE COMMUNITY (2020)" },
+  ],
+  participation: [
+    { number: "01", title: "SPEAKER, GYALYONG KHERIG DRENDUR (2025)" },
+    { number: "02", title: "BHUTAN CHILDREN's PARLIAMENT (2016 - 2017)" },
+  ],
+}
 
 const journeyData = [
   {
@@ -83,6 +99,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const introRef = useRef<HTMLDivElement>(null)
   const educationRef = useRef<HTMLDivElement>(null)
+  const achievementsRef = useRef<HTMLDivElement>(null)
 
   // Update time every second
   useEffect(() => {
@@ -118,9 +135,13 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
     setAboutTextOffset(scrollRatio * maxOffset)
 
     // Determine current section
-    if (educationRef.current) {
+    if (achievementsRef.current && educationRef.current) {
       const educationTop = educationRef.current.offsetTop
-      if (scrollTop >= educationTop - viewportHeight / 2) {
+      const achievementsTop = achievementsRef.current.offsetTop
+      
+      if (scrollTop >= achievementsTop - viewportHeight / 2) {
+        setCurrentSection("achievements")
+      } else if (scrollTop >= educationTop - viewportHeight / 2) {
         setCurrentSection("education")
       } else {
         setCurrentSection("intro")
@@ -170,24 +191,35 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
         top: educationRef.current.offsetTop, 
         behavior: "smooth" 
       })
+    } else if (section === "achievements" && achievementsRef.current) {
+      containerRef.current.scrollTo({ 
+        top: achievementsRef.current.offsetTop, 
+        behavior: "smooth" 
+      })
     }
   }
 
   const handleNavClick = () => {
     if (currentSection === "education") {
       scrollToSection("intro")
+    } else if (currentSection === "achievements") {
+      scrollToSection("education")
     }
   }
 
   const handleNextSection = () => {
     if (currentSection === "intro") {
       scrollToSection("education")
+    } else if (currentSection === "education") {
+      scrollToSection("achievements")
     }
   }
 
   const handlePrevSection = () => {
     if (currentSection === "education") {
       scrollToSection("intro")
+    } else if (currentSection === "achievements") {
+      scrollToSection("education")
     }
   }
 
@@ -341,7 +373,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                               {skill.subsections.map((subsection, subIndex) => (
                                 <div key={subIndex}>
-                                  <h5 className="text-white/40 text-xs tracking-wider uppercase mb-3 border border-white/20 inline-block px-3 py-1">
+                                  <h5 className="text-black text-xs tracking-wider uppercase mb-3 bg-white inline-block px-3 py-1">
                                     {subsection.title}
                                   </h5>
                                   <p className="text-white/60 text-sm leading-relaxed">
@@ -357,6 +389,62 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
                   </div>
                 )
               })}
+            </div>
+          </div>
+        </section>
+
+        {/* ACHIEVEMENTS SECTION */}
+        <section 
+          ref={achievementsRef}
+          className="relative min-h-screen w-full bg-[#0d0d0d] py-24 px-6 md:px-12"
+        >
+          <div className="max-w-6xl mx-auto">
+            {/* Achievements Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+              {/* AWARDS Column */}
+              <div>
+                <h3 className="text-white/40 text-xs tracking-[0.2em] uppercase mb-8">
+                  AWARDS
+                </h3>
+                <div className="space-y-4">
+                  {achievementsData.awards.map((award, index) => (
+                    <div key={index} className="flex gap-4">
+                      <span className="text-white/30 text-sm">{award.number}</span>
+                      <span className="text-white/80 text-sm uppercase">{award.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* CERTIFICATIONS Column */}
+              <div>
+                <h3 className="text-white/40 text-xs tracking-[0.2em] uppercase mb-8">
+                  CERTIFICATIONS
+                </h3>
+                <div className="space-y-4">
+                  {achievementsData.certifications.map((cert, index) => (
+                    <div key={index} className="flex gap-4">
+                      <span className="text-white/30 text-sm">{cert.number}</span>
+                      <span className="text-white/80 text-sm uppercase">{cert.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* PARTICIPATION Column */}
+              <div>
+                <h3 className="text-white/40 text-xs tracking-[0.2em] uppercase mb-8">
+                  PARTICIPATION
+                </h3>
+                <div className="space-y-4">
+                  {achievementsData.participation.map((part, index) => (
+                    <div key={index} className="flex gap-4">
+                      <span className="text-white/30 text-sm">{part.number}</span>
+                      <span className="text-white/80 text-sm uppercase">{part.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -380,7 +468,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           className="text-white/40 text-xs tracking-[0.3em] uppercase transition-all duration-300"
           style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
         >
-          {currentSection === "intro" ? "INTRO" : "EDUCATION"}
+          {currentSection === "intro" ? "INTRO" : currentSection === "education" ? "EDUCATION" : "ACHIEVEMENTS"}
         </p>
       </div>
 
@@ -413,14 +501,14 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           </button>
           
           {/* Section Name / Close Button on Hover */}
-          <div className="relative px-4 min-w-[100px] flex items-center justify-center">
+          <div className="relative px-4 min-w-[120px] flex items-center justify-center">
             {/* Section name - hidden on hover */}
             <span 
               className={`text-white text-xs tracking-[0.2em] uppercase transition-opacity duration-200 ${
                 isNavHovered ? "opacity-0" : "opacity-100"
               }`}
             >
-              {currentSection === "intro" ? "INTRO" : "EDUCATION"}
+              {currentSection === "intro" ? "INTRO" : currentSection === "education" ? "EDUCATION" : "ACHIEVEMENTS"}
             </span>
             
             {/* Close button - shown on hover */}
@@ -441,15 +529,46 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           <button 
             onClick={handleNextSection}
             className={`p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10 ${
-              currentSection === "education" ? "opacity-30 cursor-not-allowed" : ""
+              currentSection === "achievements" ? "opacity-30 cursor-not-allowed" : ""
             }`}
-            disabled={currentSection === "education"}
+            disabled={currentSection === "achievements"}
             aria-label="Next section"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </button>
+
+          {/* Social Icons - shown on hover */}
+          <div 
+            className={`flex items-center gap-2 ml-2 border-l border-white/10 pl-2 transition-all duration-200 ${
+              isNavHovered ? "opacity-100 max-w-[100px]" : "opacity-0 max-w-0 overflow-hidden"
+            }`}
+          >
+            {/* LinkedIn */}
+            <a 
+              href="https://www.linkedin.com/in/norbutshering" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10"
+              aria-label="LinkedIn"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            
+            {/* Gmail */}
+            <a 
+              href="mailto:norbudev7@gmail.com" 
+              className="p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10"
+              aria-label="Email"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
 
