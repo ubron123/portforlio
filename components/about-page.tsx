@@ -73,22 +73,14 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           }}
         />
 
-        {/* Top Navigation */}
-        <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-12 py-6">
-          {/* Left - About title (clickable to close) */}
-          <button 
-            onClick={onClose}
-            className="text-white/70 text-xs tracking-[0.2em] uppercase hover:text-white transition-colors"
-          >
-            About
-          </button>
-          
-          {/* Center - Contact */}
+        {/* Top Navigation - Fixed */}
+        <header className="fixed top-0 left-0 right-0 z-50 flex justify-end items-center gap-12 px-6 md:px-12 py-6">
+          {/* Contact */}
           <button className="text-white text-xs tracking-[0.2em] uppercase hover:text-white/70 transition-colors">
             CONTACT
           </button>
           
-          {/* Right - Time */}
+          {/* Time */}
           <span className="text-white/70 text-xs tracking-wider">
             {currentTime}
           </span>
@@ -97,67 +89,65 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
         {/* Main Content */}
         <div className="relative min-h-screen flex flex-col">
           {/* Hero Section */}
-          <div className="flex-1 flex items-center pt-20 pb-32">
-            <div className="w-full max-w-7xl mx-auto px-6 md:px-12 relative">
-              {/* Large About Title */}
-              <h1 className="text-white text-[12vw] md:text-[10vw] lg:text-[8vw] font-bold leading-none tracking-tight mb-8 md:mb-0">
-                About
-              </h1>
+          <div className="flex-1 relative">
+            {/* Large About Title - Top Left */}
+            <h1 className="absolute top-16 left-6 md:left-12 text-white text-[15vw] md:text-[12vw] lg:text-[10vw] font-normal leading-none tracking-tight z-20">
+              About
+            </h1>
 
-              {/* Content Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
-                {/* Left - Image */}
-                <div className="relative order-2 md:order-1">
-                  <div className="relative w-full max-w-md mx-auto md:mx-0">
-                    {/* Profile Image */}
-                    <img 
-                      src="/11.png" 
-                      alt="Norbu Tshering"
-                      className="w-full h-auto object-contain relative z-10"
-                    />
-                    {/* Subtle glow behind image */}
-                    <div 
-                      className="absolute inset-0 -z-10 blur-3xl opacity-30"
-                      style={{
-                        background: "radial-gradient(circle at 50% 50%, rgba(58, 194, 255, 0.5) 0%, transparent 70%)",
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Right - Bio Text */}
-                <div className="space-y-6 order-1 md:order-2">
-                  {/* INTRO Label */}
-                  <p className="text-white/50 text-xs tracking-[0.3em] uppercase">
-                    INTRO
-                  </p>
-
-                  {/* Bio Paragraphs */}
-                  <div className="space-y-6">
-                    <p className="text-white/90 text-base md:text-lg leading-relaxed">
-                      {"I'm Norbu Tshering, a creative full-stack product engineer focused on the intersection of design and technology. Through my work, I explore how thoughtful aesthetics and solid functionality can come together to shape intuitive, meaningful digital experiences."}
-                    </p>
-                    <p className="text-white/80 text-base md:text-lg leading-relaxed">
-                      Driven by curiosity and a mindset of continuous growth, I craft modern, minimalist, and user-centered solutions that balance visual clarity with technical precision. My approach combines clean design, efficient code, and purposeful interaction to build products that not only work seamlessly but create real impact.
-                    </p>
-                  </div>
+            {/* Full height layout */}
+            <div className="min-h-screen flex items-end md:items-center">
+              {/* Image - Large, positioned left/center */}
+              <div className="absolute bottom-0 left-0 md:left-[5%] w-[80%] md:w-[50%] lg:w-[45%] h-[70vh] md:h-[85vh] z-10">
+                <div className="relative w-full h-full">
+                  {/* Profile Image */}
+                  <img 
+                    src="/11.png" 
+                    alt="Norbu Tshering"
+                    className="w-full h-full object-contain object-bottom"
+                  />
+                  {/* Subtle glow behind image */}
+                  <div 
+                    className="absolute inset-0 -z-10 blur-3xl opacity-40"
+                    style={{
+                      background: "radial-gradient(circle at 50% 70%, rgba(58, 194, 255, 0.5) 0%, transparent 60%)",
+                    }}
+                  />
                 </div>
               </div>
 
-              {/* Left side INTRO label - positioned absolutely */}
-              <div className="hidden md:block absolute left-6 top-1/2 -translate-y-1/2">
-                <p className="text-white/40 text-xs tracking-[0.3em] uppercase writing-mode-vertical transform -rotate-180"
-                   style={{ writingMode: "vertical-rl" }}>
+              {/* Bio Text - Right side */}
+              <div className="relative z-20 ml-auto w-full md:w-[45%] lg:w-[40%] px-6 md:px-12 pb-32 md:pb-0 pt-[50vh] md:pt-0">
+                {/* INTRO Label */}
+                <p className="text-white/50 text-xs tracking-[0.3em] uppercase mb-6">
                   INTRO
                 </p>
-              </div>
 
-              {/* Right side scroll progress */}
-              <div className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2">
-                <p className="text-white/40 text-xs tracking-wider">
-                  {scrollProgress} %
-                </p>
+                {/* Bio Paragraphs */}
+                <div className="space-y-6">
+                  <p className="text-white/90 text-base md:text-lg leading-relaxed">
+                    {"I'm Norbu Tshering, a creative full-stack product engineer focused on the intersection of design and technology. Through my work, I explore how thoughtful aesthetics and solid functionality can come together to shape intuitive, meaningful digital experiences."}
+                  </p>
+                  <p className="text-white/80 text-base md:text-lg leading-relaxed">
+                    Driven by curiosity and a mindset of continuous growth, I craft modern, minimalist, and user-centered solutions that balance visual clarity with technical precision. My approach combines clean design, efficient code, and purposeful interaction to build products that not only work seamlessly but create real impact.
+                  </p>
+                </div>
               </div>
+            </div>
+
+            {/* Left side INTRO label - positioned absolutely */}
+            <div className="hidden md:block fixed left-6 top-1/2 -translate-y-1/2 z-30">
+              <p className="text-white/40 text-xs tracking-[0.3em] uppercase"
+                 style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}>
+                INTRO
+              </p>
+            </div>
+
+            {/* Right side scroll progress */}
+            <div className="hidden md:block fixed right-6 top-1/2 -translate-y-1/2 z-30">
+              <p className="text-white/40 text-xs tracking-wider">
+                {scrollProgress} %
+              </p>
             </div>
           </div>
 
