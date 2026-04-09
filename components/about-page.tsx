@@ -3,6 +3,124 @@
 import { useEffect, useState, useRef, useCallback } from "react"
 import { useRouter } from "next/navigation"
 
+// Interactive Particle Background Component
+function ParticleBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const mouseRef = useRef({ x: 0, y: 0 })
+  const particlesRef = useRef<Array<{
+    x: number
+    y: number
+    baseX: number
+    baseY: number
+    size: number
+    speedX: number
+    speedY: number
+  }>>([])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    // Set canvas size
+    const resizeCanvas = () => {
+      const parent = canvas.parentElement
+      if (parent) {
+        canvas.width = parent.offsetWidth
+        canvas.height = parent.offsetHeight
+      }
+    }
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+
+    // Initialize particles
+    const particleCount = 80
+    particlesRef.current = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      baseX: Math.random() * canvas.width,
+      baseY: Math.random() * canvas.height,
+      size: Math.random() * 2 + 1, // Size between 1-3px
+      speedX: (Math.random() - 0.5) * 0.5,
+      speedY: (Math.random() - 0.5) * 0.5,
+    }))
+
+    // Handle mouse move
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      }
+    }
+    canvas.addEventListener('mousemove', handleMouseMove)
+
+    // Animation loop
+    let animationId: number
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      particlesRef.current.forEach((particle) => {
+        // Always apply continuous floating motion
+        particle.x += particle.speedX
+        particle.y += particle.speedY
+        
+        // Add some randomness to movement for more organic feel
+        particle.speedX += (Math.random() - 0.5) * 0.02
+        particle.speedY += (Math.random() - 0.5) * 0.02
+        
+        // Limit max speed
+        particle.speedX = Math.max(-0.8, Math.min(0.8, particle.speedX))
+        particle.speedY = Math.max(-0.8, Math.min(0.8, particle.speedY))
+
+        // Calculate distance from mouse
+        const dx = mouseRef.current.x - particle.x
+        const dy = mouseRef.current.y - particle.y
+        const distance = Math.sqrt(dx * dx + dy * dy)
+        const maxDistance = 150
+
+        // Move towards cursor if within range (additive to floating motion)
+        if (distance < maxDistance && mouseRef.current.x !== 0 && mouseRef.current.y !== 0) {
+          const force = (maxDistance - distance) / maxDistance
+          particle.x += dx * force * 0.03
+          particle.y += dy * force * 0.03
+        }
+
+        // Wrap particles around screen edges
+        if (particle.x < 0) particle.x = canvas.width
+        if (particle.x > canvas.width) particle.x = 0
+        if (particle.y < 0) particle.y = canvas.height
+        if (particle.y > canvas.height) particle.y = 0
+
+        // Draw particle
+        ctx.beginPath()
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + (particle.size / 3) * 0.4})`
+        ctx.fill()
+      })
+
+      animationId = requestAnimationFrame(animate)
+    }
+    animate()
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas)
+      canvas.removeEventListener('mousemove', handleMouseMove)
+      cancelAnimationFrame(animationId)
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 pointer-events-auto z-0"
+      style={{ width: '100%', height: '100%' }}
+    />
+  )
+}
+
 type AboutPageProps = {
   isOpen: boolean
   onClose: () => void
@@ -28,19 +146,19 @@ const achievementsData = {
 
 const journeyData = [
   {
-    location: "THIMPHU (BHUTAN)",
-    period: "2016-2022",
+    location: "HAA (BHUTAN)",
+    period: "2003-2020",
     description: "Raised amidst beautiful landscapes, in a country known for its unique culture and Gross National Happiness, this is where my eye for balance and detail took shape. My journey into the digital world began here, where I learned to turn design into interface.",
   },
   {
-    location: "BANGKOK (THAILAND)",
-    period: "2022-2024",
-    description: "In search of a new challenge, I landed in the vibrant city of Bangkok, where I truly grew as a developer. Collaborating with exceptional designers on high-profile projects, I deepened my skills in interaction and front-end craft, bringing digital experiences to life.",
+    location: "THIMPHU (BHUTAN)",
+    period: "2023-PRESENT",
+    description: "In search of a new challenge, I landed in the vibrant campus of GCIT college, Thimphu, where I truly grew as a developer. Collaborating with exceptional designers on high-profile projects, I deepened my skills in interaction and front-end craft, bringing digital experiences to life.",
   },
   {
-    location: "GLOBAL (REMOTE)",
+    location: "FREELANCE",
     period: "2025-TODAY",
-    description: "Wanting to expand my horizons, I now work independently with agencies and individuals around the world. I'm learning to navigate projects on my own, collaborate with diverse teams, and continue to grow both my skills and confidence as a creative professional.",
+    description: "Wanting to expand my horizons, I now work independently with agencies and individuals around the country. I'm learning to navigate projects on my own, collaborate with diverse teams, and continue to grow both my skills and confidence as a creative professional.",
   },
 ]
 
@@ -287,8 +405,11 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           ref={educationRef}
           className="relative min-h-screen w-full bg-[#0d0d0d] py-24 px-6 md:px-12"
         >
+          {/* Particle Background Animation */}
+          <ParticleBackground />
+
           {/* Journey Timeline */}
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto relative z-10">
             {/* Journey Header with locations */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               {journeyData.map((item, index) => (
@@ -307,7 +428,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
                     <div className="absolute right-0 top-2 w-2 h-2 rounded-full bg-white/50" />
                   )}
                   
-                  <h3 className="text-[#c9a962] text-2xl md:text-3xl font-bold mb-4 leading-tight pr-8">
+                  <h3 className="text-cyan-400 text-2xl md:text-3xl font-bold mb-4 leading-tight pr-8">
                     {item.location}
                   </h3>
                   
