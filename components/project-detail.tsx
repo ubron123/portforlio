@@ -938,7 +938,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             </section>
 
             {/* Next Project Section */}
-            <section ref={bottomSectionRef} className="py-16 md:py-24">
+            <section ref={bottomSectionRef} className="py-16 md:py-24 relative z-10">
               <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24 text-center">
                 <span className="text-white/40 text-xs tracking-widest uppercase block mb-4">Next Project</span>
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-8">
@@ -965,7 +965,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                     // Then set the new project
                     setSelectedProject(nextProject)
                   }}
-                  className="inline-flex items-center px-8 py-3 border border-white/30 text-white text-sm tracking-widest uppercase bg-transparent hover:bg-gray-500/30 transition-all duration-300"
+                  className="relative z-50 inline-flex items-center px-8 py-3 border border-white/30 text-white text-sm tracking-widest uppercase bg-transparent hover:bg-gray-500/30 transition-all duration-300 cursor-pointer"
                 >
                   View Project
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
