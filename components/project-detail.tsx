@@ -734,7 +734,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             {/* Project Title Overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
               <div className="max-w-6xl mx-auto">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2">{selectedProject.detailTitle || selectedProject.title}</h1>
+                <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2">{selectedProject.detailTitle || selectedProject.title}</h1>
                 <p className="text-base md:text-lg text-white/60 mb-4">{selectedProject.location}</p>
                 
                 {/* Tags */}
@@ -825,7 +825,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 {/* Overview Content - line handled by SVG now */}
                 <div className="relative pl-8 md:pl-12">
                   <div className="max-w-3xl">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight mb-8 whitespace-nowrap">
                       {selectedProject.overview?.headline}
                     </h2>
                     <p className="text-white/60 text-base md:text-lg leading-relaxed">
@@ -839,9 +839,19 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             {/* My Role Section - Right aligned */}
             <section 
               ref={myRoleSectionRef}
-              className="py-20 md:py-32"
+              className="py-20 md:py-32 relative overflow-hidden"
             >
-              <div className="px-6 md:px-12 lg:px-16">
+              {/* Glowing blue circle - left side for project 2 */}
+              {selectedProject.id === 2 && (
+                <div 
+                  className="absolute top-1/2 -left-32 md:-left-48 -translate-y-1/2 w-64 h-64 md:w-96 md:h-96 rounded-full pointer-events-none"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.3) 0%, rgba(58, 194, 255, 0.1) 40%, transparent 70%)',
+                    filter: 'blur(40px)',
+                  }}
+                />
+              )}
+              <div className="px-6 md:px-12 lg:px-16 relative z-10">
                 {/* Section Header - Right aligned */}
                 <div className="flex items-center justify-end gap-4 mb-12">
                   <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">My Role</span>
@@ -853,7 +863,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   <div className="relative pr-8 md:pr-12 max-w-4xl">
                     {/* Role Title */}
                     <div className="mb-8">
-                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight">
+                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight whitespace-nowrap">
                         {selectedProject.role?.title}
                         <span className="text-white/40 mx-3">{"•"}</span>
                         {selectedProject.role?.subtitle}
@@ -907,8 +917,18 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             </section>
 
             {/* Result Section - Left aligned */}
-            <section ref={resultSectionRef} className="py-20 md:py-32">
-              <div className="px-6 md:px-12 lg:px-16">
+            <section ref={resultSectionRef} className="py-20 md:py-32 relative overflow-hidden">
+              {/* Glowing blue circle - right side for projects 1 and 3 */}
+              {(selectedProject.id === 1 || selectedProject.id === 3) && (
+                <div 
+                  className="absolute top-1/2 -right-32 md:-right-48 -translate-y-1/2 w-64 h-64 md:w-96 md:h-96 rounded-full pointer-events-none"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(58, 194, 255, 0.3) 0%, rgba(58, 194, 255, 0.1) 40%, transparent 70%)',
+                    filter: 'blur(40px)',
+                  }}
+                />
+              )}
+              <div className="px-6 md:px-12 lg:px-16 relative z-10">
                 {/* Section Header - Left aligned */}
                 <div className="flex items-center gap-4 mb-12">
                   <span className="text-[#3AC2FF] text-xs tracking-widest">---</span>
@@ -918,7 +938,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 {/* Result Content - line handled by SVG now */}
                 <div className="relative pl-8 md:pl-12">
                   <div className="max-w-3xl mb-16">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-8 text-balance">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight mb-8 whitespace-nowrap">
                       {selectedProject.result?.headline}
                     </h2>
                     <p className="text-white/60 text-base md:text-lg leading-relaxed">
@@ -955,11 +975,9 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 </h3>
                 <button
                   onClick={() => {
-                    console.log("[v0] View Project clicked")
                     const currentIndex = projects.findIndex(p => p.id === selectedProject.id)
                     const nextIndex = (currentIndex + 1) % projects.length
                     const nextProject = projects[nextIndex]
-                    console.log("[v0] Navigating from project", currentIndex, "to project", nextIndex, nextProject.title)
                     
                     // Reset scroll position first
                     if (detailScrollRef.current) {
