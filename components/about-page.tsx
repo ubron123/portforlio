@@ -29,9 +29,47 @@ const journeyData = [
 ]
 
 const skillsData = [
-  { name: "DESIGN", category: "DESIGN" },
-  { name: "FRAMEWORK + CMS", category: "DEVELOPMENT" },
-  { name: "WEBFLOW", category: "DEVELOPMENT" },
+  { 
+    name: "DESIGN", 
+    category: "DESIGN",
+    description: "I create modern, clean, and user-focused designs that bring your brand and ideas to life. From wireframes to fully polished visuals, I focus on aesthetics, usability, and scalability; ensuring that every design decision enhances the user experience and aligns with your brand identity."
+  },
+  { 
+    name: "FRAMEWORK + CMS", 
+    category: "DEVELOPMENT",
+    description: "Fast, scalable websites with Nuxt.js or Next.js and tailored to your needs. Whether I handle the CMS configuration with Sanity or integrate the front-end with your existing systems (Craft, WordPress, Prismic, Dato, or similar), I handle everything from dynamic content, complex filters API connections and performance optimization, delivering a seamless digital experience.",
+    subsections: [
+      {
+        title: "FRAMEWORKS",
+        items: ["Nuxt.js (Vue ecosystem, advanced)", "Next.js (React ecosystem)"]
+      },
+      {
+        title: "TOOLS",
+        items: ["JavaScript / TypeScript, SCSS Webpack, Node.js"]
+      },
+      {
+        title: "MOTION & INTERACTIONS",
+        items: ["GSAP, Locomotive Scroll, Lenis Scroll, Swiper.js, Lottie"]
+      },
+      {
+        title: "CMS / HEADLESS",
+        items: ["Sanity and experience integrating with multiple systems (WordPress, Craft, Strati, etc.)"]
+      },
+      {
+        title: "APIS",
+        items: ["REST & GraphQL, Open Graph, API integration"]
+      },
+      {
+        title: "SOFTWARES",
+        items: ["Figma, VS Code, Fork, Atlassian Suite"]
+      }
+    ]
+  },
+  { 
+    name: "WEBFLOW", 
+    category: "DEVELOPMENT",
+    description: "Smooth, interactive Webflow websites with modern animations and CMS-driven content. Designed for clients who want speed, flexibility, and simple content management, while still benefiting from advanced front-end customization."
+  },
 ]
 
 export function AboutPage({ isOpen, onClose }: AboutPageProps) {
@@ -41,6 +79,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
   const [currentSection, setCurrentSection] = useState<Section>("intro")
   const [aboutTextOffset, setAboutTextOffset] = useState(0)
   const [isNavHovered, setIsNavHovered] = useState(false)
+  const [expandedSkill, setExpandedSkill] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const introRef = useRef<HTMLDivElement>(null)
   const educationRef = useRef<HTMLDivElement>(null)
@@ -180,7 +219,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
               src="/profile-about.png" 
               alt="Norbu Tshering"
               className="w-full h-full object-cover"
-              style={{ objectPosition: "center 30%" }}
+              style={{ objectPosition: "center 20%" }}
             />
             {/* Gradient overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40" />
@@ -199,11 +238,6 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
           {/* Bio Text - Right side */}
           <div className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-20 w-full md:w-[40%] lg:w-[35%]">
-            {/* INTRO Label */}
-            <p className="text-white/50 text-xs tracking-[0.3em] uppercase mb-6">
-              INTRO
-            </p>
-
             {/* Bio Paragraphs */}
             <div className="space-y-6">
               <p className="text-white/90 text-base md:text-lg leading-relaxed">
@@ -258,27 +292,71 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
             {/* Skills Section */}
             <div className="mt-32 space-y-4">
-              {skillsData.map((skill, index) => (
-                <div 
-                  key={index}
-                  className="flex items-center justify-between py-6 border-t border-white/10 group cursor-pointer hover:border-white/20 transition-colors"
-                >
-                  <h4 className="text-white/50 text-2xl md:text-4xl font-light group-hover:text-white/80 transition-colors">
-                    {skill.name}
-                  </h4>
-                  
-                  <div className="flex items-center gap-4">
-                    <span className="text-white/40 text-xs tracking-wider uppercase">
-                      {skill.category}
-                    </span>
-                    <button className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-all">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M12 5v14M5 12h14" />
-                      </svg>
-                    </button>
+              {skillsData.map((skill, index) => {
+                const isExpanded = expandedSkill === skill.name
+                
+                return (
+                  <div 
+                    key={index}
+                    className="border-t border-white/10"
+                  >
+                    {/* Skill Header - Clickable */}
+                    <div 
+                      className="flex items-center justify-between py-6 group cursor-pointer hover:border-white/20 transition-colors"
+                      onClick={() => setExpandedSkill(isExpanded ? null : skill.name)}
+                    >
+                      <h4 className="text-white/50 text-2xl md:text-4xl font-light group-hover:text-white/80 transition-colors">
+                        {skill.name}
+                      </h4>
+                      
+                      <div className="flex items-center gap-4">
+                        <span className="text-white/40 text-xs tracking-wider uppercase">
+                          {skill.category}
+                        </span>
+                        <button className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-all">
+                          {isExpanded ? (
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M5 12h14" />
+                            </svg>
+                          ) : (
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 5v14M5 12h14" />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Expandable Content */}
+                    {isExpanded && (
+                      <div className="pb-8 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                        <div className="max-w-4xl">
+                          {/* Description */}
+                          <p className="text-white/70 text-base leading-relaxed mb-8">
+                            {skill.description}
+                          </p>
+
+                          {/* Subsections for Framework + CMS */}
+                          {skill.subsections && (
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                              {skill.subsections.map((subsection, subIndex) => (
+                                <div key={subIndex}>
+                                  <h5 className="text-white/40 text-xs tracking-wider uppercase mb-3 border border-white/20 inline-block px-3 py-1">
+                                    {subsection.title}
+                                  </h5>
+                                  <p className="text-white/60 text-sm leading-relaxed">
+                                    {subsection.items.join(", ")}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </section>
