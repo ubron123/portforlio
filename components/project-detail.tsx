@@ -68,34 +68,36 @@ function ParticleBackground() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       particlesRef.current.forEach((particle) => {
+        // Always apply continuous floating motion
+        particle.x += particle.speedX
+        particle.y += particle.speedY
+        
+        // Add some randomness to movement for more organic feel
+        particle.speedX += (Math.random() - 0.5) * 0.02
+        particle.speedY += (Math.random() - 0.5) * 0.02
+        
+        // Limit max speed
+        particle.speedX = Math.max(-0.8, Math.min(0.8, particle.speedX))
+        particle.speedY = Math.max(-0.8, Math.min(0.8, particle.speedY))
+
         // Calculate distance from mouse
         const dx = mouseRef.current.x - particle.x
         const dy = mouseRef.current.y - particle.y
         const distance = Math.sqrt(dx * dx + dy * dy)
         const maxDistance = 150
 
-        // Move towards cursor if within range
-        if (distance < maxDistance) {
+        // Move towards cursor if within range (additive to floating motion)
+        if (distance < maxDistance && mouseRef.current.x !== 0 && mouseRef.current.y !== 0) {
           const force = (maxDistance - distance) / maxDistance
-          particle.x += dx * force * 0.02
-          particle.y += dy * force * 0.02
-        } else {
-          // Gentle floating motion
-          particle.x += particle.speedX
-          particle.y += particle.speedY
-
-          // Slowly return to base position
-          particle.x += (particle.baseX - particle.x) * 0.01
-          particle.y += (particle.baseY - particle.y) * 0.01
+          particle.x += dx * force * 0.03
+          particle.y += dy * force * 0.03
         }
 
-        // Keep particles within bounds
-        if (particle.x < 0 || particle.x > canvas.width) {
-          particle.baseX = Math.random() * canvas.width
-        }
-        if (particle.y < 0 || particle.y > canvas.height) {
-          particle.baseY = Math.random() * canvas.height
-        }
+        // Wrap particles around screen edges
+        if (particle.x < 0) particle.x = canvas.width
+        if (particle.x > canvas.width) particle.x = 0
+        if (particle.y < 0) particle.y = canvas.height
+        if (particle.y > canvas.height) particle.y = 0
 
         // Draw particle
         ctx.beginPath()
@@ -152,22 +154,23 @@ const projects = [
   {
     id: 1,
     number: "01",
-    title: "VEGO",
+    title: "Idle No More",
     year: "2024",
+    location: "Thimphu, Bhutan",
     tags: ["DESIGNING", "FRONTEND DEV", "BACKEND DEV"],
     description:
-      "VEGO is an innovative car rental platform that optimizes the use of idle vehicles, with a focus especially on the Moroccan market.",
+      "Idle No More is an innovative car rental platform that optimizes the use of idle vehicles, with a focus especially on the Moroccan market.",
     backgroundImage: "/vego.png",
     mockupType: "laptop" as const,
     mockupImage: "/vego.png",
     overview: {
       headline: "Turning Visual Ideas Into Powerful Interfaces",
-      description: "VeGo, a car rental and peer-to-peer vehicle lending platform focused on optimizing underutilized vehicles, faced challenges stemming from high user interaction and an inconsistent user interface. Additionally, strict time constraints demanded the rapid development of a cohesive and user-friendly design, making the situation both complex and time-sensitive",
+      description: "Idle No More, a car rental and peer-to-peer vehicle lending platform focused on optimizing underutilized vehicles, faced challenges stemming from high user interaction and an inconsistent user interface. Additionally, strict time constraints demanded the rapid development of a cohesive and user-friendly design, making the situation both complex and time-sensitive",
     },
     role: {
       title: "Frontend Developer",
       subtitle: "Core Interface Designing",
-      description: "I served as a Frontend Developer for Team VeGo. Throughout the development process, I collaborated closely with designers and other developers to ensure a consistent and cohesive user interface. This collaboration led to the consolidation of existing systems and ultimately contributed to the formation of a unified core development team.",
+      description: "I served as a Frontend Developer for Team Idle No More. Throughout the development process, I collaborated closely with designers and other developers to ensure a consistent and cohesive user interface. This collaboration led to the consolidation of existing systems and ultimately contributed to the formation of a unified core development team.",
       responsibilities: [
         {
           number: "01",
@@ -724,15 +727,15 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             {/* Project Title Overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
               <div className="max-w-6xl mx-auto">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-light italic text-white mb-2">{selectedProject.title}</h1>
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2">{selectedProject.title}</h1>
                 <p className="text-base md:text-lg text-white/60 mb-4">{selectedProject.location}</p>
                 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2">
                 {selectedProject.tags.map((tag, idx) => (
                   <span
                     key={idx}
-                    className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium text-sm"
+                    className="px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium text-xs"
                   >
                     {tag}
                   </span>
@@ -747,8 +750,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             {/* Interactive Particle Background */}
             <ParticleBackground />
             
-            {/* Fixed Scroll Progress Indicator */}
-            <div className="sticky top-6 right-6 z-50 flex justify-end px-6 md:px-12 lg:px-16 h-0">
+            {/* Fixed Scroll Progress Indicator - Middle right */}
+            <div className="fixed top-1/2 right-6 md:right-12 lg:right-16 z-50 -translate-y-1/2">
               <span className="text-white/40 text-sm font-mono">{detailScrollProgress}%</span>
             </div>
             
