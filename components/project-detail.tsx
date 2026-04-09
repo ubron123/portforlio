@@ -865,7 +865,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                     <div className="mb-8">
                       <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight whitespace-nowrap">
                         {selectedProject.role?.title}
-                        <span className="text-white/40 mx-3">{"•"}</span>
+                        <span className="text-white mx-3">{"•"}</span>
                         {selectedProject.role?.subtitle}
                       </h2>
                     </div>
