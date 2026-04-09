@@ -204,7 +204,9 @@ const projects = [
     id: 2,
     number: "02",
     title: "SCAN2DINE",
+    detailTitle: "From Scan to Serve",
     year: "2024",
+    location: "Thimphu, Bhutan",
     tags: ["DESIGNING", "FRONTEND DEV", "BACKEND DEV"],
     description:
       "Scan2Dine is a restaurant digital menu application that allows cafe/Restaurant to customers to place orders and track them in real-time.",
@@ -212,38 +214,43 @@ const projects = [
     mockupType: "laptop" as const,
     mockupImage: "/scan2dine.png",
     overview: {
-      headline: "Streamlining Restaurant Operations Through Digital Innovation",
-      description: "Scan2Dine aimed to revolutionize the traditional restaurant ordering experience by eliminating paper menus and manual order-taking. The challenge was creating an intuitive interface that both customers and restaurant staff could adopt quickly while ensuring real-time synchronization between orders and kitchen operations.",
+      headline: "Speed Meets Smart Design Here",
+      description: "Scan2Dine, a web-based digital menu using a QR code system, allows users to place orders and track them in real time. Due to the platform's large scale, it required a complex database design and highly responsive interfaces to retrieve and update data from the server quickly, making real-time performance and system efficiency critical challenges.",
     },
     role: {
-      title: "Full Stack Developer",
-      subtitle: "End-to-End System Design",
-      description: "I led the full stack development of Scan2Dine, from conceptualizing the user experience to implementing the backend infrastructure. My focus was on creating a seamless flow between customer ordering and kitchen management systems.",
+      title: "Frontend Developer, Database Developer",
+      subtitle: "Core Interface Designing",
+      description: "I served as a Frontend Developer and Database Designer for Team SCAN2DINE. Throughout the project, I collaborated closely with designers, backend developers, and stakeholders to ensure a seamless user interface while designing a robust, scalable database. This dual responsibility led to the creation of a consistent UI across devices and an efficient data structure, enabling faster data retrieval, real-time updates, and a more maintainable system.",
       responsibilities: [
         {
           number: "01",
-          title: "Building the digital menu system",
-          description: "Designing and implementing a flexible menu management system that allows restaurants to easily update items, prices, and availability in real-time across all customer-facing interfaces."
+          title: "Optimizing Database Architecture",
+          description: "Designed and implemented a scalable database schema, ensuring efficient data storage, retrieval, and relationships for high-volume user interactions."
         },
         {
           number: "02",
-          title: "Real-time order tracking",
-          description: "Implementing WebSocket-based communication for instant order updates, ensuring customers and staff have synchronized information about order status and preparation times."
+          title: "Enhancing Frontend Performance",
+          description: "Developed reusable UI components and modular code blocks, improving interface consistency and speeding up development and prototyping."
         },
         {
           number: "03",
-          title: "QR code integration",
-          description: "Developing the QR code generation and scanning system that enables customers to access menus and place orders directly from their smartphones without downloading any application."
+          title: "Ensuring Real-Time Data Accuracy",
+          description: "Integrated asynchronous data fetching and real-time updates to synchronize frontend displays with backend operations seamlessly."
+        },
+        {
+          number: "04",
+          title: "Standardizing Components and Documentation",
+          description: "Audited existing frontend and database patterns, documented best practices, and created clear guidelines to support cross-team adoption and reduce future errors."
         }
       ]
     },
     result: {
-      headline: "Seamless Ordering Experience Delivered",
-      description: "The implementation resulted in significant improvements in restaurant operational efficiency. Order accuracy increased while wait times decreased, creating a better experience for both customers and staff.",
+      headline: "Clarity and Components That Scale",
+      description: "The database efficiently captured all necessary details while eliminating redundant data entry. The system operated approximately 20% faster compared to the previous setup, provided real-time updates for users and customers, and was completed in a short span of time thanks to the use of reusable component codes.",
       stats: [
-        { value: "40%", label: "Reduction in order processing time from table to kitchen" },
-        { value: "95%", label: "Order accuracy rate achieved through digital menu system" },
-        { value: "2x", label: "Increase in table turnover during peak hours" }
+        { value: "~20%", label: "Faster system operation compared to the previous setup" },
+        { value: "100%", label: "Real-time updates for users and customers" },
+        { value: "4x", label: "Reusable components accelerating development time" }
       ]
     }
   },
