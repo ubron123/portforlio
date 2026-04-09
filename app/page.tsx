@@ -6,6 +6,7 @@ import { ProjectCarousel } from "@/components/project-carousel"
 import { CursorFollower } from "@/components/cursor-follower"
 import { ProjectDetail } from "@/components/project-detail"
 import { AboutSection } from "@/components/about-section"
+import { AboutPage } from "@/components/about-page"
 import { ServicesSection } from "@/components/services-section"
 import { CTAFooter } from "@/components/cta-footer"
 
@@ -18,11 +19,16 @@ const projectGradients: Record<number, string> = {
 
 export default function Home() {
   const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false)
+  const [isAboutPageOpen, setIsAboutPageOpen] = useState(false)
   const [currentProject, setCurrentProject] = useState(1)
   const [currentGradient, setCurrentGradient] = useState(projectGradients[1])
 
   const handleWorkClick = () => {
     setIsProjectDetailOpen(true)
+  }
+
+  const handleAboutClick = () => {
+    setIsAboutPageOpen(true)
   }
 
   return (
@@ -80,6 +86,7 @@ export default function Home() {
             </button>
             <button
               type="button"
+              onClick={handleAboutClick}
               className="rounded-full px-4 py-2 text-[10px] font-medium uppercase tracking-[0.2em] text-white transition-colors hover:bg-white/15 sm:px-5 sm:text-xs md:px-7"
             >
               ABOUT
@@ -105,6 +112,12 @@ export default function Home() {
         isOpen={isProjectDetailOpen}
         onClose={() => setIsProjectDetailOpen(false)}
         currentProject={currentProject}
+      />
+
+      {/* About Page Modal */}
+      <AboutPage
+        isOpen={isAboutPageOpen}
+        onClose={() => setIsAboutPageOpen(false)}
       />
 
       {/* Custom Cursor Follower */}
