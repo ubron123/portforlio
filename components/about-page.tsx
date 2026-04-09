@@ -368,8 +368,8 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             <img 
               src="/profile-about.png" 
               alt="Norbu Tshering"
-              className="w-full h-full object-cover scale-150 sm:scale-125 md:scale-110"
-              style={{ objectPosition: "center 30%" }}
+              className="w-full h-full object-cover scale-125 sm:scale-110 md:scale-100"
+              style={{ objectPosition: "center 40%" }}
             />
             {/* Gradient overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40" />
@@ -573,8 +573,8 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
       {/* Fixed UI Elements */}
       
-      {/* Top Navigation - Fixed */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 sm:px-6 md:px-12 py-4 sm:py-6">
+      {/* Top Navigation - Scrolls with page */}
+      <header className="absolute top-0 left-0 right-0 z-50 flex justify-between items-center px-4 sm:px-6 md:px-12 py-4 sm:py-6">
         <button className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase hover:text-white/70 transition-colors">
           CONTACT
         </button>
