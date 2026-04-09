@@ -98,7 +98,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             {/* Full height layout */}
             <div className="min-h-screen flex items-end md:items-center">
               {/* Image - Large, positioned left/center */}
-              <div className="absolute bottom-0 left-0 md:left-[5%] w-[80%] md:w-[50%] lg:w-[45%] h-[70vh] md:h-[85vh] z-10">
+              <div className="absolute bottom-0 left-0 md:left-[2%] w-[90%] md:w-[55%] lg:w-[52%] h-[75vh] md:h-[95vh] z-10">
                 <div className="relative w-full h-full">
                   {/* Profile Image */}
                   <img 
@@ -116,8 +116,8 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
                 </div>
               </div>
 
-              {/* Bio Text - Right side */}
-              <div className="relative z-20 ml-auto w-full md:w-[45%] lg:w-[40%] px-6 md:px-12 pb-32 md:pb-0 pt-[50vh] md:pt-0">
+              {/* Bio Text - Right side, vertically centered */}
+              <div className="relative z-20 ml-auto w-full md:w-[45%] lg:w-[40%] px-6 md:px-12 pb-32 md:pb-0 pt-[50vh] md:pt-0 flex flex-col justify-center min-h-screen md:min-h-0">
                 {/* INTRO Label */}
                 <p className="text-white/50 text-xs tracking-[0.3em] uppercase mb-6">
                   INTRO
@@ -129,22 +129,22 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
                     {"I'm Norbu Tshering, a creative full-stack product engineer focused on the intersection of design and technology. Through my work, I explore how thoughtful aesthetics and solid functionality can come together to shape intuitive, meaningful digital experiences."}
                   </p>
                   <p className="text-white/80 text-base md:text-lg leading-relaxed">
-                    Driven by curiosity and a mindset of continuous growth, I craft modern, minimalist, and user-centered solutions that balance visual clarity with technical precision. My approach combines clean design, efficient code, and purposeful interaction to build products that not only work seamlessly but create real impact.
+                    Driven by curiosity and a mindset of continuous growth, I craft modern, minimalist, and user-centered solutions that balance visual clarity with technical precision.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Left side INTRO label - positioned absolutely */}
-            <div className="hidden md:block fixed left-6 top-1/2 -translate-y-1/2 z-30">
+            {/* Left side INTRO label - positioned absolutely, scrolls with content */}
+            <div className="hidden md:block absolute left-6 top-1/2 -translate-y-1/2 z-30">
               <p className="text-white/40 text-xs tracking-[0.3em] uppercase"
                  style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}>
                 INTRO
               </p>
             </div>
 
-            {/* Right side scroll progress */}
-            <div className="hidden md:block fixed right-6 top-1/2 -translate-y-1/2 z-30">
+            {/* Right side scroll progress - scrolls with content */}
+            <div className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2 z-30">
               <p className="text-white/40 text-xs tracking-wider">
                 {scrollProgress} %
               </p>
