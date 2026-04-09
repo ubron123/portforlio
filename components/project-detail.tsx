@@ -258,7 +258,9 @@ const projects = [
     id: 3,
     number: "03",
     title: "NDP",
+    detailTitle: "Dues, Done Fast",
     year: "2025",
+    location: "Thimphu, Bhutan",
     tags: ["DESIGNING", "FRONTEND DEV", "BACKEND DEV"],
     description:
       "NDP is a mobile application specifically developed for GGT College to streamline the book-sharing process, eliminating the need for students to handle paperwork manually.",
@@ -266,38 +268,38 @@ const projects = [
     mockupType: "phone" as const,
     mockupImage: "/ndp.png",
     overview: {
-      headline: "Digitizing Academic Resource Sharing",
-      description: "GGT College needed a modern solution to replace their outdated paper-based book lending system. The existing process was time-consuming, prone to errors, and created unnecessary administrative burden on both students and staff.",
+      headline: "Simplifying Chaos Into A Clean Digital Flow",
+      description: "NDP is a mobile application developed for GCIT College to streamline the due-clearing process. With a large student population, there was a need for a secure, efficient, and reliable solution with clear navigation and a clean user interface to replace traditional manual paper-based procedures.",
     },
     role: {
-      title: "Mobile Developer",
-      subtitle: "Native App Development",
-      description: "I spearheaded the mobile application development for NDP, focusing on creating an intuitive and efficient user experience for students to browse, request, and manage book loans entirely through their mobile devices.",
+      title: "Frontend Developer, Interface Designer",
+      subtitle: "Core Interface Designing",
+      description: "I served as the Interface Designer and Developer for the NDP mobile application. I collaborated closely with stakeholders and developers to create a secure, intuitive, and visually clean interface that simplified the due-clearing process. My work ensured clear navigation, consistent design patterns, and seamless interaction, ultimately improving usability and reducing errors in the manual process.",
       responsibilities: [
         {
           number: "01",
-          title: "Designing the mobile experience",
-          description: "Creating a clean, student-friendly interface that simplifies the book discovery and borrowing process, with features like search, filtering, and personalized recommendations."
+          title: "Ensuring Consistency and Efficiency",
+          description: "Standardized UI elements, reusable components, and workflows to speed up development and maintain consistency across the app."
         },
         {
           number: "02",
-          title: "Implementing the lending system",
-          description: "Building the core functionality for book requests, approvals, due date tracking, and return processing, all synchronized with the college library database."
+          title: "Enhancing Frontend Performance",
+          description: "Developed reusable UI components and modular code blocks, improving interface consistency and speeding up development and prototyping."
         },
         {
           number: "03",
-          title: "Notification and reminder system",
-          description: "Developing push notification capabilities to keep students informed about loan approvals, upcoming due dates, and new book availability based on their interests."
+          title: "Designing a Clean and Intuitive Interface",
+          description: "Created a visually clear, user-friendly UI that prioritized ease of navigation and accessibility for all students."
         }
       ]
     },
     result: {
-      headline: "Paperless Library Management Achieved",
-      description: "The NDP application successfully transformed the college library operations, eliminating paper-based processes entirely while improving student satisfaction with the book borrowing experience.",
+      headline: "Simple Navigation, and Efficiency at Every Step",
+      description: "As a result, the NDP mobile application increased efficiency by over 30% compared to the traditional paper-based process, significantly reducing the time and effort required for due clearance. The app's clean, user-friendly interface and intuitive navigation allowed students to complete their tasks quickly and accurately, while real-time updates and interactive features ensured a seamless and reliable experience for both students and administrators.",
       stats: [
-        { value: "100%", label: "Paperless book lending process achieved for the college" },
-        { value: "60%", label: "Reduction in administrative workload for library staff" },
-        { value: "85%", label: "Student adoption rate within the first semester" }
+        { value: "30%+", label: "Increased efficiency compared to traditional paper-based process" },
+        { value: "100%", label: "Real-time updates for students and administrators" },
+        { value: "3x", label: "Faster due clearance completion time" }
       ]
     }
   },
