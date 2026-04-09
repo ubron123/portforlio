@@ -98,7 +98,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             {/* Full height layout */}
             <div className="min-h-screen flex items-end md:items-center">
               {/* Image - Large, positioned left/center */}
-              <div className="absolute bottom-0 left-0 md:left-[2%] w-[90%] md:w-[55%] lg:w-[52%] h-[75vh] md:h-[95vh] z-10">
+              <div className="absolute bottom-0 left-0 md:left-0 w-[100%] md:w-[75%] lg:w-[70%] h-[90vh] md:h-[120vh] z-10">
                 <div className="relative w-full h-full">
                   {/* Profile Image */}
                   <img 
