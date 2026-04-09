@@ -8,6 +8,122 @@ interface ProjectDetailProps {
   currentProject: number
 }
 
+// Interactive Particle Background Component
+function ParticleBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const mouseRef = useRef({ x: 0, y: 0 })
+  const particlesRef = useRef<Array<{
+    x: number
+    y: number
+    baseX: number
+    baseY: number
+    size: number
+    speedX: number
+    speedY: number
+  }>>([])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    // Set canvas size
+    const resizeCanvas = () => {
+      const parent = canvas.parentElement
+      if (parent) {
+        canvas.width = parent.offsetWidth
+        canvas.height = parent.offsetHeight
+      }
+    }
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+
+    // Initialize particles
+    const particleCount = 80
+    particlesRef.current = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      baseX: Math.random() * canvas.width,
+      baseY: Math.random() * canvas.height,
+      size: Math.random() * 2 + 1, // Size between 1-3px
+      speedX: (Math.random() - 0.5) * 0.5,
+      speedY: (Math.random() - 0.5) * 0.5,
+    }))
+
+    // Handle mouse move
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      }
+    }
+    canvas.addEventListener('mousemove', handleMouseMove)
+
+    // Animation loop
+    let animationId: number
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      particlesRef.current.forEach((particle) => {
+        // Calculate distance from mouse
+        const dx = mouseRef.current.x - particle.x
+        const dy = mouseRef.current.y - particle.y
+        const distance = Math.sqrt(dx * dx + dy * dy)
+        const maxDistance = 150
+
+        // Move towards cursor if within range
+        if (distance < maxDistance) {
+          const force = (maxDistance - distance) / maxDistance
+          particle.x += dx * force * 0.02
+          particle.y += dy * force * 0.02
+        } else {
+          // Gentle floating motion
+          particle.x += particle.speedX
+          particle.y += particle.speedY
+
+          // Slowly return to base position
+          particle.x += (particle.baseX - particle.x) * 0.01
+          particle.y += (particle.baseY - particle.y) * 0.01
+        }
+
+        // Keep particles within bounds
+        if (particle.x < 0 || particle.x > canvas.width) {
+          particle.baseX = Math.random() * canvas.width
+        }
+        if (particle.y < 0 || particle.y > canvas.height) {
+          particle.baseY = Math.random() * canvas.height
+        }
+
+        // Draw particle
+        ctx.beginPath()
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + (particle.size / 3) * 0.4})`
+        ctx.fill()
+      })
+
+      animationId = requestAnimationFrame(animate)
+    }
+    animate()
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas)
+      canvas.removeEventListener('mousemove', handleMouseMove)
+      cancelAnimationFrame(animationId)
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 pointer-events-auto z-0"
+      style={{ width: '100%', height: '100%' }}
+    />
+  )
+}
+
 // Custom hook for scroll progress tracking
 function useScrollProgress(containerRef: React.RefObject<HTMLDivElement | null>) {
   const [progress, setProgress] = useState(0)
@@ -627,6 +743,14 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
 
           {/* Content Section */}
           <div className="bg-black text-white relative">
+            {/* Interactive Particle Background */}
+            <ParticleBackground />
+            
+            {/* Fixed Scroll Progress Indicator */}
+            <div className="sticky top-6 right-6 z-50 flex justify-end px-6 md:px-12 lg:px-16 h-0">
+              <span className="text-white/40 text-sm font-mono">{detailScrollProgress}%</span>
+            </div>
+            
             {/* Animated Line - Single continuous line that travels across the screen */}
             <div className="sticky top-0 pointer-events-none z-40 h-0">
               <div className="relative h-screen overflow-hidden">
@@ -685,7 +809,6 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 <div className="flex items-center gap-4 mb-12">
                   <span className="text-[#3AC2FF] text-xs tracking-widest">---</span>
                   <span className="text-[#3AC2FF] text-xs tracking-widest uppercase">Overview</span>
-                  <span className="text-white/40 text-sm ml-auto">{detailScrollProgress}%</span>
                 </div>
 
                 {/* Overview Content - line handled by SVG now */}
