@@ -725,7 +725,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             {/* Project Title Overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
               <div className="max-w-6xl mx-auto">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2">{selectedProject.detailTitle || selectedProject.title}</h1>
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2">{selectedProject.detailTitle || selectedProject.title}</h1>
                 <p className="text-base md:text-lg text-white/60 mb-4">{selectedProject.location}</p>
                 
                 {/* Tags */}
@@ -758,7 +758,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
               <div className="relative h-screen overflow-hidden">
                 {/* Single moving line element */}
                 <div 
-                  className="absolute w-0.5 bg-[#3AC2FF] transition-all duration-500 ease-out"
+                  className="absolute w-0.5 bg-[#3AC2FF] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
                   style={{
                     // Vertical line height
                     height: linePhase === 'transition-to-bottom' || linePhase === 'bottom' 
@@ -785,7 +785,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 
                 {/* Horizontal line at bottom - grows from center */}
                 <div 
-                  className={`absolute h-0.5 bg-[#3AC2FF] transition-all duration-500 ease-out ${
+                  className={`absolute h-0.5 bg-[#3AC2FF] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                     linePhase === 'transition-to-bottom' || linePhase === 'bottom' 
                       ? 'opacity-100' 
                       : 'opacity-0'
