@@ -329,8 +329,8 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
                     {/* Expandable Content */}
                     {isExpanded && (
-                      <div className="pb-8 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                        <div className="max-w-4xl">
+                      <div className="pb-8 pt-2 animate-in fade-in slide-in-from-top-2 duration-300 mx-auto">
+                        <div className="max-w-2xl mx-auto px-6 md:px-12">
                           {/* Description */}
                           <p className="text-white/70 text-base leading-relaxed mb-8">
                             {skill.description}
