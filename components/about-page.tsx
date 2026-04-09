@@ -97,20 +97,20 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
             {/* Full height layout */}
             <div className="min-h-screen flex items-end md:items-center">
-              {/* Image - Large, positioned left/center */}
-              <div className="absolute bottom-0 left-0 md:left-0 w-[100%] md:w-[75%] lg:w-[70%] h-[90vh] md:h-[120vh] z-10">
+              {/* Image - Large, centered, cropped below elbow */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] md:w-[85%] lg:w-[80%] h-[100vh] md:h-[140vh] z-10 overflow-hidden">
                 <div className="relative w-full h-full">
-                  {/* Profile Image */}
+                  {/* Profile Image - cropped to show upper body only */}
                   <img 
                     src="/11.png" 
                     alt="Norbu Tshering"
-                    className="w-full h-full object-contain object-bottom"
+                    className="w-full h-[200%] object-cover object-top"
                   />
                   {/* Subtle glow behind image */}
                   <div 
                     className="absolute inset-0 -z-10 blur-3xl opacity-40"
                     style={{
-                      background: "radial-gradient(circle at 50% 70%, rgba(58, 194, 255, 0.5) 0%, transparent 60%)",
+                      background: "radial-gradient(circle at 50% 30%, rgba(58, 194, 255, 0.5) 0%, transparent 60%)",
                     }}
                   />
                 </div>
