@@ -218,7 +218,7 @@ const projects = [
       description: "Scan2Dine, a web-based digital menu using a QR code system, allows users to place orders and track them in real time. Due to the platform's large scale, it required a complex database design and highly responsive interfaces to retrieve and update data from the server quickly, making real-time performance and system efficiency critical challenges.",
     },
     role: {
-      title: "Frontend Developer. Database Developer",
+      title: "Frontend Developer • Database Developer",
       subtitle: "",
       description: "I served as a Frontend Developer and Database Designer for Team SCAN2DINE. Throughout the project, I collaborated closely with designers, backend developers, and stakeholders to ensure a seamless user interface while designing a robust, scalable database. This dual responsibility led to the creation of a consistent UI across devices and an efficient data structure, enabling faster data retrieval, real-time updates, and a more maintainable system.",
       responsibilities: [
@@ -272,7 +272,7 @@ const projects = [
       description: "NDP is a mobile application developed for GCIT College to streamline the due-clearing process. With a large student population, there was a need for a secure, efficient, and reliable solution with clear navigation and a clean user interface to replace traditional manual paper-based procedures.",
     },
     role: {
-      title: "Frontend Developer. Interface Designer",
+      title: "Frontend Developer • Interface Designer",
       subtitle: "",
       description: "I served as the Interface Designer and Developer for the NDP mobile application. I collaborated closely with stakeholders and developers to create a secure, intuitive, and visually clean interface that simplified the due-clearing process. My work ensured clear navigation, consistent design patterns, and seamless interaction, ultimately improving usability and reducing errors in the manual process.",
       responsibilities: [
