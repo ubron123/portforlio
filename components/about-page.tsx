@@ -363,14 +363,13 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             background: "linear-gradient(135deg, #0a1628 0%, #0d2847 25%, #1a4a7a 50%, #2d6ba3 75%, #3d7eb8 100%)",
           }}
         >
-          {/* Profile Image - Smaller and centered */}
-          <div className="absolute inset-0 z-0 flex items-center justify-center">
-            <div className="relative w-[70%] h-[85%] md:w-[60%] md:h-[80%]">
+          {/* Profile Image - Left corner, bottom aligned, behind text */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute left-0 bottom-0 w-[80%] h-[90%] md:w-[65%] md:h-[85%]">
               <img 
                 src="/profile-about.png" 
                 alt="Norbu Tshering"
-                className="w-full h-full object-cover"
-                style={{ objectPosition: "center 20%" }}
+                className="w-full h-full object-cover object-[center_20%]"
               />
             </div>
             {/* Gradient overlay for text readability */}
