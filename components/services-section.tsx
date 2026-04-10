@@ -105,7 +105,13 @@ export function ServicesSection() {
         const sectionRect = sectionRef.current.getBoundingClientRect()
 
         // Use the slot's exact left position relative to the section container
-        const cubeLeft = slotRect.left - sectionRect.left
+        let cubeLeft = slotRect.left - sectionRect.left
+        
+        // Pull cube more towards left when it's on the right side (even services)
+        const isEven = closestIndex % 2 === 0
+        if (isEven) {
+          cubeLeft -= 80 // Move left by 80px when on right side
+        }
 
         setCubePosition({
           top: slotRect.top - sectionRect.top,
