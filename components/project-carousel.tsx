@@ -193,7 +193,7 @@ export function ProjectCarousel({ onActiveProjectChange, onProjectClick }: Proje
                       </div>
                     )}
 
-                    <div className="absolute inset-0 overflow-hidden">
+                    <div className="absolute inset-0 overflow-hidden p-[2px]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={project.image}
