@@ -136,41 +136,41 @@ export function ServicesSection() {
 
   return (
     <section ref={sectionRef} className="relative bg-black">
-      {/* Line split area - single line comes down from center, turns at left corner with glow */}
-      <div className="relative h-8 md:h-10">
+      {/* Line split area - hidden on mobile, shown md+ */}
+      <div className="relative h-0 md:h-10 hidden md:block">
         {/* Center line coming from above - extends far up to connect with About section (no gap) */}
         <div className="absolute left-1/2 -top-[200vh] w-px h-[200vh] -translate-x-1/2 bg-cyan-500/70" />
         {/* Line continues down to the split point */}
-        <div className="absolute left-1/2 top-0 w-px h-6 md:h-8 -translate-x-1/2 bg-cyan-500/70" />
+        <div className="absolute left-1/2 top-0 w-px h-8 -translate-x-1/2 bg-cyan-500/70" />
         
         {/* Horizontal line from center going to left corner */}
-        <div className="absolute top-6 md:top-8 left-[4%] md:left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
+        <div className="absolute top-8 left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
         
         {/* Blue circular gradient glow at LEFT corner where line turns - large with half off screen */}
-        <div className="absolute left-0 top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-64 md:w-[500px] h-64 md:h-[500px] rounded-full bg-cyan-500/15 blur-3xl" />
-        <div className="absolute left-0 top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-40 md:w-80 h-40 md:h-80 rounded-full bg-cyan-400/20 blur-2xl" />
-        <div className="absolute left-0 top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-20 md:w-40 h-20 md:h-40 rounded-full bg-cyan-400/30 blur-xl" />
+        <div className="absolute left-0 top-8 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="absolute left-0 top-8 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-cyan-400/20 blur-2xl" />
+        <div className="absolute left-0 top-8 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-cyan-400/30 blur-xl" />
         
         {/* Corner curve at left - line turns down */}
-        <svg className="absolute top-6 md:top-8 left-[4%] md:left-[6%] w-4 md:w-6 h-4 md:h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
+        <svg className="absolute top-8 left-[6%] w-6 h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
           <path d="M24 0 Q0 0 0 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
         </svg>
         
         {/* Horizontal line from center going to right corner */}
-        <div className="absolute top-6 md:top-8 left-1/2 right-[4%] md:right-[6%] h-px bg-gradient-to-r from-cyan-500/70 to-cyan-500/50" />
+        <div className="absolute top-8 left-1/2 right-[6%] h-px bg-gradient-to-r from-cyan-500/70 to-cyan-500/50" />
         
         {/* Corner curve at right - line turns down */}
-        <svg className="absolute top-6 md:top-8 right-[4%] md:right-[6%] w-4 md:w-6 h-4 md:h-6 translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
+        <svg className="absolute top-8 right-[6%] w-6 h-6 translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
           <path d="M0 0 Q24 0 24 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
         </svg>
         
         {/* Vertical lines going down from corners */}
-        <div className="absolute left-[4%] md:left-[6%] top-[calc(1.5rem+16px)] md:top-[calc(2rem+24px)] w-px h-8 md:h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
-        <div className="absolute right-[4%] md:right-[6%] top-[calc(1.5rem+16px)] md:top-[calc(2rem+24px)] w-px h-8 md:h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        <div className="absolute left-[6%] top-[calc(2rem+24px)] w-px h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        <div className="absolute right-[6%] top-[calc(2rem+24px)] w-px h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
       </div>
 
-      {/* Header - inside the frame */}
-      <div className="relative text-center px-4 md:px-6 pb-6 md:pb-8 mx-[4%] md:mx-[6%] border-l border-r border-cyan-500/30">
+      {/* Header - inside the frame on desktop, plain on mobile */}
+      <div className="relative text-center px-4 md:px-6 pb-6 md:pb-8 md:mx-[6%] md:border-l md:border-r border-cyan-500/30">
         <p className="text-cyan-400 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 md:mb-6">MY SERVICES</p>
         <p className="text-gray-300 text-sm md:text-base lg:text-xl max-w-2xl mx-auto leading-relaxed">
           Engineering component-driven, full-stack products that help SaaS teams build faster, and grow smarter with complete sets of skills
@@ -178,7 +178,7 @@ export function ServicesSection() {
       </div>
 
       {/* Services list container - inside the frame */}
-      <div className="relative mx-[4%] md:mx-[6%] border-l border-r border-cyan-500/30 px-4 md:px-6 lg:px-12">
+      <div className="relative md:mx-[6%] md:border-l md:border-r border-cyan-500/30 px-4 md:px-6 lg:px-12">
         {/* Floating 3D Cube that travels down the page */}
         <div 
           className="absolute z-20 w-64 lg:w-80 h-64 lg:h-80 pointer-events-none hidden md:block"
@@ -290,8 +290,8 @@ export function ServicesSection() {
         })}
       </div>
 
-      {/* Bottom of frame - lines continue down then fade */}
-      <div className="relative h-12 md:h-20 mx-[4%] md:mx-[6%]">
+      {/* Bottom of frame - lines continue down then fade (desktop only) */}
+      <div className="relative hidden md:block h-20 mx-[6%]">
         <div className="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-cyan-500/30 to-transparent" />
         <div className="absolute right-0 top-0 w-px h-full bg-gradient-to-b from-cyan-500/30 to-transparent" />
       </div>

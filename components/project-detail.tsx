@@ -525,10 +525,26 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
         }
       `}</style>
       <div ref={scrollContainerRef} className="fixed inset-0 bg-black z-50 overflow-y-auto">
+      {/* Mobile-only top bar */}
+      <div className="fixed top-0 left-0 right-0 z-[60] flex sm:hidden items-center justify-between px-4 py-3 bg-black/70 backdrop-blur-md pointer-events-auto">
+        <div>
+          <p className="text-white/40 text-[10px] tracking-wider">{currentData.number} / 0{projects.length}</p>
+          <p className="text-white text-sm font-semibold tracking-wider">{currentData.title}</p>
+        </div>
+        <button
+          onClick={onClose}
+          className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 transition-all border border-white/20"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
       {/* Fixed UI Overlay */}
       <div className="fixed inset-0 z-50 pointer-events-none">
-        {/* Top Left - Project Number */}
-        <div className="absolute top-8 left-8 md:top-12 md:left-12 lg:top-16 lg:left-16">
+        {/* Top Left - Project Number (hidden on mobile to avoid overlap) */}
+        <div className="absolute top-8 left-8 md:top-12 md:left-12 lg:top-16 lg:left-16 hidden sm:block">
           <div className="relative w-[120px] h-[80px] md:w-[160px] md:h-[100px] lg:w-[200px] lg:h-[120px] flex items-center justify-center">
             {/* Fixed "0" - Completely static */}
             <span
@@ -567,8 +583,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
           </div>
         </div>
 
-        {/* Top Right - Project Details */}
-        <div className="absolute top-8 right-8 md:top-12 md:right-12 lg:top-16 lg:right-16 max-w-md text-right">
+        {/* Top Right - Project Details (hidden on mobile to avoid overlap) */}
+        <div className="absolute top-8 right-8 md:top-12 md:right-12 lg:top-16 lg:right-16 max-w-md text-right hidden sm:block">
           {/* Title and Year Row */}
           <div className="flex items-baseline justify-end gap-6 mb-4">
             <h2 className="text-[22px] md:text-[33px] lg:text-[44px] font-bold text-white tracking-wider transition-all duration-500">
@@ -597,8 +613,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
           </p>
         </div>
 
-        {/* Bottom Right - Scroll Percentage */}
-        <div className={`absolute bottom-8 right-8 md:bottom-12 md:right-12 lg:bottom-16 lg:right-16`}>
+        {/* Bottom Right - Scroll Percentage (hidden on mobile) */}
+        <div className={`absolute bottom-8 right-8 md:bottom-12 md:right-12 lg:bottom-16 lg:right-16 hidden sm:block`}>
           <span className={`font-medium ${
             scrollPercent > 66 ? 'text-black' : 'text-white/60'
           } text-xs md:text-sm transition-colors duration-300`}>
@@ -607,10 +623,10 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
         </div>
 
         {/* Glassmorphism Project Navigation - hide when scrolled past projects */}
-        <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto group transition-opacity duration-300 ${
+        <div className={`fixed bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto group transition-opacity duration-300 ${
           scrollPercent > 90 ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}>
-          <div className="relative flex items-center gap-3 bg-white/10 backdrop-blur-xl rounded-xl px-3 py-2 border border-white/20 shadow-lg">
+          <div className="relative flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-xl rounded-xl px-2 sm:px-3 py-1.5 sm:py-2 border border-white/20 shadow-lg">
             {/* Close/Home button - appears on hover */}
             <button
               onClick={onClose}

@@ -184,8 +184,8 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
 
       {/* Sticky container - fills viewport when in view */}
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Central vertical blue line - starts below the shooting star trigger point */}
-        <div className="absolute left-1/2 top-[40%] bottom-0 w-px -translate-x-1/2 z-10">
+        {/* Central vertical blue line - hidden on mobile, shows md+ */}
+        <div className="absolute left-1/2 top-[40%] bottom-0 w-px -translate-x-1/2 z-10 hidden md:block">
           <div className="h-full w-full bg-cyan-500/70" />
         </div>
 

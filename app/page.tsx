@@ -23,6 +23,13 @@ export default function Home() {
   const [currentProject, setCurrentProject] = useState(1)
   const [currentGradient, setCurrentGradient] = useState(projectGradients[1])
 
+  const handleContactClick = () => {
+    const footer = document.getElementById('cta-footer')
+    if (footer) {
+      footer.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   const handleWorkClick = () => {
     setIsProjectDetailOpen(true)
   }
@@ -36,8 +43,13 @@ export default function Home() {
       {/* Top Section - Black Background */}
       <section className="h-[50vh] sm:h-[45vh] md:h-[50vh] lg:h-[55vh] bg-black relative flex flex-col">
         {/* Header */}
-        <header className="flex justify-between items-center px-4 sm:px-6 md:px-12 py-4 sm:py-6 z-20 relative pointer-events-none">
-          <span className="text-white text-xs sm:text-sm tracking-wider">CONTACT</span>
+        <header className="flex justify-between items-center px-4 sm:px-6 md:px-12 py-4 sm:py-6 z-20 relative">
+          <button
+            onClick={handleContactClick}
+            className="text-white text-xs sm:text-sm tracking-wider hover:text-white/70 transition-colors cursor-pointer"
+          >
+            CONTACT
+          </button>
           <span className="text-white text-xs sm:text-sm">© 2025</span>
         </header>
 
@@ -105,7 +117,9 @@ export default function Home() {
       <ServicesSection />
 
       {/* CTA Footer */}
-      <CTAFooter />
+      <div id="cta-footer">
+        <CTAFooter />
+      </div>
 
       {/* Project Detail Modal */}
       <ProjectDetail
