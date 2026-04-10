@@ -138,10 +138,10 @@ export function ServicesSection() {
         {/* Horizontal line from center going to left corner */}
         <div className="absolute top-6 md:top-8 left-[4%] md:left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
         
-        {/* Blue circular gradient glow at LEFT corner where line turns - doubled size */}
-        <div className="absolute left-[4%] md:left-[6%] top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-40 md:w-80 h-40 md:h-80 rounded-full bg-cyan-500/15 blur-3xl" />
-        <div className="absolute left-[4%] md:left-[6%] top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-24 md:w-48 h-24 md:h-48 rounded-full bg-cyan-400/20 blur-2xl" />
-        <div className="absolute left-[4%] md:left-[6%] top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-10 md:w-20 h-10 md:h-20 rounded-full bg-cyan-400/30 blur-xl" />
+        {/* Blue circular gradient glow at LEFT corner where line turns - large with half off screen */}
+        <div className="absolute left-0 top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-64 md:w-[500px] h-64 md:h-[500px] rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="absolute left-0 top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-40 md:w-80 h-40 md:h-80 rounded-full bg-cyan-400/20 blur-2xl" />
+        <div className="absolute left-0 top-6 md:top-8 -translate-x-1/2 -translate-y-1/2 w-20 md:w-40 h-20 md:h-40 rounded-full bg-cyan-400/30 blur-xl" />
         
         {/* Corner curve at left - line turns down */}
         <svg className="absolute top-6 md:top-8 left-[4%] md:left-[6%] w-4 md:w-6 h-4 md:h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
@@ -204,7 +204,7 @@ export function ServicesSection() {
             <div
               key={service.id}
               ref={el => { serviceRefs.current[index] = el }}
-              className={`relative py-12 sm:py-16 md:py-24 lg:py-36 transition-opacity duration-700 ${
+              className={`relative py-8 sm:py-10 md:py-16 lg:py-24 transition-opacity duration-700 ${
                 isActive ? 'opacity-100' : 'opacity-40'
               }`}
             >

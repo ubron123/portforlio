@@ -95,7 +95,7 @@ export default function Home() {
         </nav>
 
         {/* Spacing below project carousel */}
-        <div className="h-16 md:h-24" />
+        <div className="h-8 md:h-12" />
       </section>
 
       {/* About Section with Timeline */}

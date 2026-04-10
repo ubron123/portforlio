@@ -166,8 +166,8 @@ export function ProjectCarousel({ onActiveProjectChange }: ProjectCarouselProps)
                       opacity: s.opacity,
                       transform: "translate(-50%, -50%)",
                       transitionProperty: "left, width, height, opacity, transform, box-shadow",
-                      transitionDuration: "650ms",
-                      transitionTimingFunction: "cubic-bezier(0.32, 0.72, 0, 1)",
+                      transitionDuration: "900ms",
+                      transitionTimingFunction: "cubic-bezier(0.25, 0.1, 0.25, 1)",
                     }}
                     onClick={() => {
                       if (isCenter) nextSlide()

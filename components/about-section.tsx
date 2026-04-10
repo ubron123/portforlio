@@ -184,8 +184,8 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
 
       {/* Sticky container - fills viewport when in view */}
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Central vertical blue line - starts after some space from top */}
-        <div className="absolute left-1/2 top-24 bottom-0 w-px -translate-x-1/2 z-10">
+        {/* Central vertical blue line - starts below the shooting star trigger point */}
+        <div className="absolute left-1/2 top-[40%] bottom-0 w-px -translate-x-1/2 z-10">
           <div className="h-full w-full bg-cyan-500/70" />
         </div>
 
@@ -256,16 +256,16 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
               
               {/* LEFT SIDE - Always visible, static content, vertically centered */}
-              <div className="space-y-6 md:pr-8 flex flex-col justify-center">
-                <p className="text-cyan-400 text-xs tracking-[0.3em] uppercase">
+              <div className="space-y-8 md:pr-8 flex flex-col justify-center">
+                <p className="text-cyan-400 text-sm md:text-base tracking-[0.3em] uppercase">
                   A Snapshot of Me
                 </p>
-                <h2 className="text-white text-lg md:text-xl lg:text-2xl font-bold leading-tight">
+                <h2 className="text-white text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
                   Transform Scattered Interfaces,
                   <br />
                   <span className="text-white/90">Into Scalable Product Systems.</span>
                 </h2>
-                <p className="text-white/60 text-sm leading-relaxed max-w-md">
+                <p className="text-white/60 text-base md:text-lg lg:text-xl leading-relaxed max-w-lg">
                   Creative, analytical, and driven. I specialize in
                   blending design aesthetics with technical
                   functionality.
@@ -304,28 +304,28 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
                       : "opacity-0 -translate-y-full pointer-events-none"
                   }`}
                 >
-                  <div className="space-y-8 w-full">
-                    <p className="text-cyan-400 text-xs tracking-[0.3em] uppercase font-bold">
+                  <div className="space-y-10 w-full">
+                    <p className="text-cyan-400 text-sm md:text-base tracking-[0.3em] uppercase font-bold">
                       Who Am I
                     </p>
-                    <div className="space-y-6">
-                      <div className="flex items-baseline gap-4">
-                        <span className="text-cyan-400 text-5xl md:text-6xl font-bold">03+</span>
-                        <span className="text-white/60 text-sm leading-tight">
+                    <div className="space-y-8">
+                      <div className="flex items-baseline gap-6">
+                        <span className="text-cyan-400 text-6xl md:text-7xl lg:text-8xl font-bold">03+</span>
+                        <span className="text-white/60 text-base md:text-lg leading-tight">
                           Experience
                         </span>
                       </div>
-                      <div className="flex items-baseline gap-4">
-                        <span className="text-cyan-400 text-5xl md:text-6xl font-bold">04+</span>
-                        <span className="text-white/60 text-sm leading-tight">
+                      <div className="flex items-baseline gap-6">
+                        <span className="text-cyan-400 text-6xl md:text-7xl lg:text-8xl font-bold">04+</span>
+                        <span className="text-white/60 text-base md:text-lg leading-tight">
                           Clients Across
                           <br />
                           Nation
                         </span>
                       </div>
-                      <div className="flex items-baseline gap-4">
-                        <span className="text-cyan-400 text-5xl md:text-6xl font-bold">06+</span>
-                        <span className="text-white/60 text-sm leading-tight">
+                      <div className="flex items-baseline gap-6">
+                        <span className="text-cyan-400 text-6xl md:text-7xl lg:text-8xl font-bold">06+</span>
+                        <span className="text-white/60 text-base md:text-lg leading-tight">
                           SaaS Projects
                           <br />
                           Completed
@@ -343,60 +343,60 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
                       : "opacity-0 translate-y-full pointer-events-none"
                   }`}
                 >
-                  <div className="space-y-6 w-full">
-                    <p className="text-cyan-400 text-xs tracking-[0.3em] uppercase font-bold">
+                  <div className="space-y-8 w-full">
+                    <p className="text-cyan-400 text-sm md:text-base tracking-[0.3em] uppercase font-bold">
                       My Certifications
                     </p>
                     
                     {/* Certificate Cards */}
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {/* Google Certificate */}
-                      <div className="group flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
-                        <div className="w-16 h-12 bg-gradient-to-br from-amber-100 to-amber-50 rounded flex items-center justify-center shrink-0">
-                          <span className="text-amber-700 text-[10px] font-serif">Certificate</span>
+                      <div className="group flex items-center gap-5 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+                        <div className="w-20 h-14 bg-gradient-to-br from-amber-100 to-amber-50 rounded flex items-center justify-center shrink-0">
+                          <span className="text-amber-700 text-xs font-serif">Certificate</span>
                         </div>
                         <div>
-                          <p className="text-white text-sm font-medium">Google Certification</p>
-                          <p className="text-white/50 text-xs">UX Design Professional</p>
+                          <p className="text-white text-base md:text-lg font-medium">Google Certification</p>
+                          <p className="text-white/50 text-sm">UX Design Professional</p>
                         </div>
                       </div>
 
                       {/* React Certificate */}
-                      <div className="group flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
-                        <div className="w-16 h-12 bg-gradient-to-br from-cyan-100 to-cyan-50 rounded flex items-center justify-center shrink-0">
-                          <span className="text-cyan-700 text-[10px] font-serif">Certificate</span>
+                      <div className="group flex items-center gap-5 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+                        <div className="w-20 h-14 bg-gradient-to-br from-cyan-100 to-cyan-50 rounded flex items-center justify-center shrink-0">
+                          <span className="text-cyan-700 text-xs font-serif">Certificate</span>
                         </div>
                         <div>
-                          <p className="text-white text-sm font-medium">React Development</p>
-                          <p className="text-white/50 text-xs">Advanced Frontend</p>
+                          <p className="text-white text-base md:text-lg font-medium">React Development</p>
+                          <p className="text-white/50 text-sm">Advanced Frontend</p>
                         </div>
                       </div>
 
                       {/* Coursera Certificate */}
-                      <div className="group flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
-                        <div className="w-16 h-12 bg-gradient-to-br from-blue-100 to-blue-50 rounded flex items-center justify-center shrink-0">
-                          <span className="text-blue-700 text-[10px] font-serif">Certificate</span>
+                      <div className="group flex items-center gap-5 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+                        <div className="w-20 h-14 bg-gradient-to-br from-blue-100 to-blue-50 rounded flex items-center justify-center shrink-0">
+                          <span className="text-blue-700 text-xs font-serif">Certificate</span>
                         </div>
                         <div>
-                          <p className="text-white text-sm font-medium">Coursera</p>
-                          <p className="text-white/50 text-xs">Full Stack Development</p>
+                          <p className="text-white text-base md:text-lg font-medium">Coursera</p>
+                          <p className="text-white/50 text-sm">Full Stack Development</p>
                         </div>
                       </div>
 
                       {/* Udemy Certificate */}
-                      <div className="group flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
-                        <div className="w-16 h-12 bg-gradient-to-br from-violet-100 to-violet-50 rounded flex items-center justify-center shrink-0">
-                          <span className="text-violet-700 text-[10px] font-serif">Certificate</span>
+                      <div className="group flex items-center gap-5 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+                        <div className="w-20 h-14 bg-gradient-to-br from-violet-100 to-violet-50 rounded flex items-center justify-center shrink-0">
+                          <span className="text-violet-700 text-xs font-serif">Certificate</span>
                         </div>
                         <div>
-                          <p className="text-white text-sm font-medium">Udemy</p>
-                          <p className="text-white/50 text-xs">Web Development Bootcamp</p>
+                          <p className="text-white text-base md:text-lg font-medium">Udemy</p>
+                          <p className="text-white/50 text-sm">Web Development Bootcamp</p>
                         </div>
                       </div>
                     </div>
 
                     {/* Certification Labels */}
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-white/40">
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-white/40">
                       <span>GOOGLE</span>
                       <span className="text-cyan-500">|</span>
                       <span>REACT</span>
