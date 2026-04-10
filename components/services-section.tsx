@@ -98,29 +98,15 @@ export function ServicesSection() {
 
       setActiveService(closestIndex)
 
-      // Position the cube at the active service's image slot - constrain within frame boundaries
+      // Position the cube exactly at the active service's image slot position
       const activeSlot = imageSlotRefs.current[closestIndex]
       if (activeSlot && sectionRef.current) {
         const slotRect = activeSlot.getBoundingClientRect()
         const sectionRect = sectionRef.current.getBoundingClientRect()
-        
-        // Calculate frame boundaries (4% or 6% from edges)
-        const frameLeftPercent = window.innerWidth > 768 ? 6 : 4
-        const frameRightPercent = window.innerWidth > 768 ? 6 : 4
-        
-        const frameLeftPx = (window.innerWidth * frameLeftPercent) / 100
-        const frameRightPx = (window.innerWidth * frameRightPercent) / 100
-        const cubeWidth = window.innerWidth > 1024 ? 320 : 256 // w-64 lg:w-80
-        const padding = 40 // Add padding from both lines
-        
-        // Calculate the center of the available space between the two frame lines
-        const availableLeft = frameLeftPx + padding
-        const availableRight = sectionRect.width - frameRightPx - padding
-        const availableCenter = (availableLeft + availableRight) / 2
-        
-        // Position cube center at this calculated center point, accounting for cube width
-        const cubeLeft = availableCenter - cubeWidth / 2
-        
+
+        // Use the slot's exact left position relative to the section container
+        const cubeLeft = slotRect.left - sectionRect.left
+
         setCubePosition({
           top: slotRect.top - sectionRect.top,
           left: cubeLeft,
