@@ -252,7 +252,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
 
         {/* Main content grid - left side is STATIC, stays vertically centered */}
         <div className="relative h-full w-full flex items-center">
-          <div className="max-w-6xl mx-auto px-6 md:px-12 w-full">
+          <div className="w-full px-6 md:px-16 lg:px-24">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
               
               {/* LEFT SIDE - Always visible, static content, vertically centered */}

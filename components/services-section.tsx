@@ -129,7 +129,7 @@ export function ServicesSection() {
   return (
     <section ref={sectionRef} className="relative bg-black">
       {/* Line split area - single line comes down from center, turns at left corner with glow */}
-      <div className="relative h-16 md:h-20">
+      <div className="relative h-8 md:h-10">
         {/* Center line coming from above - extends far up to connect with About section (no gap) */}
         <div className="absolute left-1/2 -top-[200vh] w-px h-[200vh] -translate-x-1/2 bg-cyan-500/70" />
         {/* Line continues down to the split point */}
@@ -164,7 +164,7 @@ export function ServicesSection() {
       {/* Header - inside the frame */}
       <div className="relative text-center px-4 md:px-6 pb-6 md:pb-8 mx-[4%] md:mx-[6%] border-l border-r border-cyan-500/30">
         <p className="text-cyan-400 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 md:mb-6">MY SERVICES</p>
-        <p className="text-gray-300 text-xs md:text-sm lg:text-base max-w-2xl mx-auto leading-relaxed">
+        <p className="text-gray-300 text-sm md:text-base lg:text-xl max-w-2xl mx-auto leading-relaxed">
           Engineering component-driven, full-stack products that help SaaS teams build faster, and grow smarter with complete sets of skills
         </p>
       </div>
@@ -173,7 +173,7 @@ export function ServicesSection() {
       <div className="relative mx-[4%] md:mx-[6%] border-l border-r border-cyan-500/30 px-4 md:px-6 lg:px-12">
         {/* Floating 3D Cube that travels down the page */}
         <div 
-          className="absolute z-20 w-48 lg:w-64 h-48 lg:h-64 pointer-events-none hidden md:block"
+          className="absolute z-20 w-64 lg:w-80 h-64 lg:h-80 pointer-events-none hidden md:block"
           style={{
             top: cubePosition.top,
             left: cubePosition.left,
@@ -189,8 +189,8 @@ export function ServicesSection() {
               transition: 'transform 1.2s ease-out',
             }}
           >
-              {services.map((s, i) => (
-              <CubeFace key={s.id} index={i} image={s.image} size={128} />
+            {services.map((s, i) => (
+              <CubeFace key={s.id} index={i} image={s.image} size={160} />
             ))}
           </div>
         </div>
@@ -228,7 +228,7 @@ export function ServicesSection() {
                     {/* Image slot on RIGHT side - bottom aligned with text */}
                     <div 
                       ref={el => { imageSlotRefs.current[index] = el }}
-                      className="w-48 lg:w-64 h-48 lg:h-64 flex-shrink-0"
+                      className="w-64 lg:w-80 h-64 lg:h-80 flex-shrink-0"
                     />
                   </>
                 ) : (
@@ -236,7 +236,7 @@ export function ServicesSection() {
                     {/* Service 2,4,6: Image slot on LEFT side - bottom aligned with text */}
                     <div 
                       ref={el => { imageSlotRefs.current[index] = el }}
-                      className="w-48 lg:w-64 h-48 lg:h-64 flex-shrink-0"
+                      className="w-64 lg:w-80 h-64 lg:h-80 flex-shrink-0"
                     />
                     {/* Text on RIGHT side */}
                     <div className="flex-1 text-right max-w-md">
@@ -292,13 +292,14 @@ export function ServicesSection() {
 }
 
 function CubeFace({ index, image, size }: { index: number; image: string; size: number }) {
+  const half = size
   const transforms = [
-    `translateZ(${size}px)`,                    // Front
-    `rotateY(90deg) translateZ(${size}px)`,     // Right
-    `rotateY(180deg) translateZ(${size}px)`,    // Back
-    `rotateY(-90deg) translateZ(${size}px)`,    // Left
-    `rotateX(90deg) translateZ(${size}px)`,     // Top
-    `rotateX(-90deg) translateZ(${size}px)`,    // Bottom
+    `translateZ(${half}px)`,                    // Front
+    `rotateY(90deg) translateZ(${half}px)`,     // Right
+    `rotateY(180deg) translateZ(${half}px)`,    // Back
+    `rotateY(-90deg) translateZ(${half}px)`,    // Left
+    `rotateX(90deg) translateZ(${half}px)`,     // Top
+    `rotateX(-90deg) translateZ(${half}px)`,    // Bottom
   ]
 
   return (
