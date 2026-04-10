@@ -702,8 +702,8 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 {/* L-shaped arrow with circle endpoint */}
                 <svg
                   className="absolute text-black"
-                  style={{ right: '-100px', top: '50%', width: '140px', height: '90px', marginTop: '-45px' }}
-                  viewBox="0 0 140 90"
+                  style={{ right: '-200px', top: '50%', width: '280px', height: '90px', marginTop: '-45px' }}
+                  viewBox="0 0 280 90"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -718,14 +718,14 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   {/* Horizontal leg — extends right toward button */}
                   <line
                     x1="15" y1="40"
-                    x2="115" y2="40"
+                    x2="255" y2="40"
                     stroke="currentColor"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                   />
                   {/* Circle endpoint — points at the button */}
                   <circle
-                    cx="115" cy="40"
+                    cx="255" cy="40"
                     r="4.5"
                     fill="currentColor"
                   />
