@@ -726,7 +726,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             </div>
 
             {/* 3D Button with Star Animation */}
-            <div className="relative flex-shrink-0 -ml-8">
+            <div className="relative flex-shrink-0 -ml-40">
               {/* Star particles — always animating, centered on button */}
               <div className="absolute pointer-events-none overflow-visible" style={{width: '100px', height: '100px', top: 0, left: 0}}>
                 {/* Star 1 */}
