@@ -235,7 +235,7 @@ export function ServicesSection() {
                       <h3 className="text-white text-2xl md:text-3xl font-bold mb-5 tracking-tight uppercase">
                         {service.title}
                       </h3>
-                      <p className="text-gray-400 text-sm md:text-base leading-relaxed">
+                      <p className="text-gray-400 text-base md:text-lg lg:text-xl leading-relaxed">
                         {service.description}
                       </p>
                     </div>
@@ -260,7 +260,7 @@ export function ServicesSection() {
                       <h3 className="text-white text-2xl md:text-3xl font-bold mb-5 tracking-tight uppercase">
                         {service.title}
                       </h3>
-                      <p className="text-gray-400 text-sm md:text-base leading-relaxed">
+                      <p className="text-gray-400 text-base md:text-lg lg:text-xl leading-relaxed">
                         {service.description}
                       </p>
                     </div>
@@ -287,7 +287,7 @@ export function ServicesSection() {
                   />
                 </div>
                 
-                <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+                <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-xs">
                   {service.description}
                 </p>
               </div>
