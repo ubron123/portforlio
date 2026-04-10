@@ -147,9 +147,9 @@ export function ServicesSection() {
         <div className="absolute top-8 left-[6%] right-1/2 h-px bg-gradient-to-r from-cyan-500/50 to-cyan-500/70" />
         
         {/* Blue circular gradient glow at LEFT corner where line turns - large with half off screen */}
-        <div className="absolute left-0 top-8 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-cyan-500/15 blur-3xl" />
-        <div className="absolute left-0 top-8 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-cyan-400/20 blur-2xl" />
-        <div className="absolute left-0 top-8 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-cyan-400/30 blur-xl" />
+        <div className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-cyan-500/15 blur-3xl" />
+        <div className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-cyan-400/20 blur-2xl" />
+        <div className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-cyan-400/30 blur-xl" />
         
         {/* Corner curve at left - line turns down */}
         <svg className="absolute top-8 left-[6%] w-6 h-6 -translate-x-[1px] -translate-y-[1px]" viewBox="0 0 24 24" fill="none">
