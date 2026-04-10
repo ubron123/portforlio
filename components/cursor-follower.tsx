@@ -6,6 +6,7 @@ export function CursorFollower() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isVisible, setIsVisible] = useState(true)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
+  const [isOverSpline, setIsOverSpline] = useState(false)
 
   useEffect(() => {
     // Check if device is touch-based
@@ -20,6 +21,13 @@ export function CursorFollower() {
     const updateMousePosition = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY })
       if (!isVisible) setIsVisible(true)
+      
+      // Check if hovering over spline animation area
+      const target = e.target as HTMLElement
+      const isSpline = target.closest('[data-spline-area]') !== null || 
+                       target.tagName === 'IFRAME' && target.closest('[data-spline-area]') !== null ||
+                       target.closest('.spline-container') !== null
+      setIsOverSpline(isSpline)
     }
 
     const handleMouseEnter = () => setIsVisible(true)
@@ -41,75 +49,79 @@ export function CursorFollower() {
 
   return (
     <>
-      {/* Water wave ripples - multiple layers */}
-      <div
-        className="fixed pointer-events-none z-40 transition-all duration-800 ease-out"
-        style={{
-          left: position.x,
-          top: position.y,
-          transform: "translate(-50%, -50%)",
-          opacity: isVisible ? 0.8 : 0,
-        }}
-      >
-        <div
-          className="absolute border-2 border-cyan-400"
-          style={{
-            width: "60px",
-            height: "60px",
-            transform: "translate(-50%, -50%)",
-            left: "50%",
-            top: "50%",
-            borderRadius: "40% 60% 50% 50% / 60% 40% 60% 40%",
-            animation: "ripple-expand 2s ease-out infinite, wave-shape 3s ease-in-out infinite",
-          }}
-        />
-      </div>
+      {/* Water wave ripples - multiple layers (hidden when over spline) */}
+      {!isOverSpline && (
+        <>
+          <div
+            className="fixed pointer-events-none z-40 transition-all duration-800 ease-out"
+            style={{
+              left: position.x,
+              top: position.y,
+              transform: "translate(-50%, -50%)",
+              opacity: isVisible ? 0.8 : 0,
+            }}
+          >
+            <div
+              className="absolute border-2 border-cyan-400"
+              style={{
+                width: "60px",
+                height: "60px",
+                transform: "translate(-50%, -50%)",
+                left: "50%",
+                top: "50%",
+                borderRadius: "40% 60% 50% 50% / 60% 40% 60% 40%",
+                animation: "ripple-expand 2s ease-out infinite, wave-shape 3s ease-in-out infinite",
+              }}
+            />
+          </div>
 
-      <div
-        className="fixed pointer-events-none z-39 transition-all duration-900 ease-out"
-        style={{
-          left: position.x,
-          top: position.y,
-          transform: "translate(-50%, -50%)",
-          opacity: isVisible ? 0.6 : 0,
-        }}
-      >
-        <div
-          className="absolute border border-blue-400"
-          style={{
-            width: "80px",
-            height: "80px",
-            transform: "translate(-50%, -50%)",
-            left: "50%",
-            top: "50%",
-            borderRadius: "45% 55% 55% 45% / 55% 45% 55% 45%",
-            animation: "ripple-expand 2.5s ease-out infinite 0.3s, wave-shape 3.5s ease-in-out infinite 0.5s",
-          }}
-        />
-      </div>
+          <div
+            className="fixed pointer-events-none z-39 transition-all duration-900 ease-out"
+            style={{
+              left: position.x,
+              top: position.y,
+              transform: "translate(-50%, -50%)",
+              opacity: isVisible ? 0.6 : 0,
+            }}
+          >
+            <div
+              className="absolute border border-blue-400"
+              style={{
+                width: "80px",
+                height: "80px",
+                transform: "translate(-50%, -50%)",
+                left: "50%",
+                top: "50%",
+                borderRadius: "45% 55% 55% 45% / 55% 45% 55% 45%",
+                animation: "ripple-expand 2.5s ease-out infinite 0.3s, wave-shape 3.5s ease-in-out infinite 0.5s",
+              }}
+            />
+          </div>
 
-      <div
-        className="fixed pointer-events-none z-38 transition-all duration-1000 ease-out"
-        style={{
-          left: position.x,
-          top: position.y,
-          transform: "translate(-50%, -50%)",
-          opacity: isVisible ? 0.4 : 0,
-        }}
-      >
-        <div
-          className="absolute border border-teal-400"
-          style={{
-            width: "100px",
-            height: "100px",
-            transform: "translate(-50%, -50%)",
-            left: "50%",
-            top: "50%",
-            borderRadius: "50% 40% 60% 40% / 40% 60% 40% 60%",
-            animation: "ripple-expand 3s ease-out infinite 0.6s, wave-shape 4s ease-in-out infinite 1s",
-          }}
-        />
-      </div>
+          <div
+            className="fixed pointer-events-none z-38 transition-all duration-1000 ease-out"
+            style={{
+              left: position.x,
+              top: position.y,
+              transform: "translate(-50%, -50%)",
+              opacity: isVisible ? 0.4 : 0,
+            }}
+          >
+            <div
+              className="absolute border border-teal-400"
+              style={{
+                width: "100px",
+                height: "100px",
+                transform: "translate(-50%, -50%)",
+                left: "50%",
+                top: "50%",
+                borderRadius: "50% 40% 60% 40% / 40% 60% 40% 60%",
+                animation: "ripple-expand 3s ease-out infinite 0.6s, wave-shape 4s ease-in-out infinite 1s",
+              }}
+            />
+          </div>
+        </>
+      )}
 
       {/* Main cursor point */}
       <div
@@ -147,27 +159,29 @@ export function CursorFollower() {
         </div>
       </div>
 
-      {/* Water drop trail */}
-      <div
-        className="fixed pointer-events-none z-35 transition-all duration-800 ease-out"
-        style={{
-          left: position.x,
-          top: position.y,
-          transform: "translate(-50%, -50%)",
-          opacity: isVisible ? 0.5 : 0,
-        }}
-      >
+      {/* Water drop trail (hidden when over spline) */}
+      {!isOverSpline && (
         <div
-          className="w-12 h-12 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 blur-lg"
+          className="fixed pointer-events-none z-35 transition-all duration-800 ease-out"
           style={{
+            left: position.x,
+            top: position.y,
             transform: "translate(-50%, -50%)",
-            left: "50%",
-            top: "50%",
-            borderRadius: "45% 55% 55% 45% / 55% 45% 55% 45%",
-            animation: "water-float 2s ease-in-out infinite, wave-shape 2.5s ease-in-out infinite",
+            opacity: isVisible ? 0.5 : 0,
           }}
-        />
-      </div>
+        >
+          <div
+            className="w-12 h-12 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 blur-lg"
+            style={{
+              transform: "translate(-50%, -50%)",
+              left: "50%",
+              top: "50%",
+              borderRadius: "45% 55% 55% 45% / 55% 45% 55% 45%",
+              animation: "water-float 2s ease-in-out infinite, wave-shape 2.5s ease-in-out infinite",
+            }}
+          />
+        </div>
+      )}
 
       {/* Hide default cursor on the whole page */}
       <style jsx global>{`

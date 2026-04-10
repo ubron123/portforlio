@@ -605,6 +605,52 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             {scrollPercent}%
           </span>
         </div>
+
+        {/* Glassmorphism Project Navigation */}
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto group">
+          <div className="relative flex items-center gap-3 bg-white/10 backdrop-blur-xl rounded-xl px-3 py-2 border border-white/20 shadow-lg">
+            {/* Close/Home button - appears on hover */}
+            <button
+              onClick={onClose}
+              className="absolute -left-10 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:-left-12 border border-white/20"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Project Image Thumbnail */}
+            <div className="w-12 h-9 md:w-14 md:h-10 rounded-lg overflow-hidden bg-white/5 flex-shrink-0">
+              <img
+                src={currentData.backgroundImage}
+                alt={currentData.title}
+                className="w-full h-full object-cover transition-all duration-500"
+              />
+            </div>
+
+            {/* Project Name and Number */}
+            <div className="flex flex-col justify-center min-w-[80px]">
+              <span className="text-white/40 text-[9px] tracking-wider">
+                {currentData.number} /0{projects.length}
+              </span>
+              <span className="text-white text-sm font-medium tracking-wide">
+                {currentData.title}
+              </span>
+            </div>
+
+            {/* Blue Circle Arrow Link */}
+            <a
+              href="https://scan2dinee.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 md:w-9 md:h-9 bg-[#3AC2FF] hover:bg-[#2BA3E6] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 flex-shrink-0"
+            >
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
 
       {/* Project Sections with Full Screen Background Images */}
