@@ -295,7 +295,26 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
               </div>
 
               {/* RIGHT SIDE - Sliding content area, also vertically centered */}
-              <div className="relative md:pl-8 h-[400px] overflow-hidden flex items-center">
+              <div className="relative md:pl-8 flex flex-col">
+                {/* Dynamic sticky title that switches between slides */}
+                <div className="mb-6 h-7 relative overflow-hidden">
+                  <p
+                    className={`absolute text-cyan-400 text-sm tracking-[0.3em] uppercase font-bold transition-all duration-500 ${
+                      activeSlide === "whoami" ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                    }`}
+                  >
+                    WHO AM I
+                  </p>
+                  <p
+                    className={`absolute text-cyan-400 text-sm tracking-[0.3em] uppercase font-bold transition-all duration-500 ${
+                      activeSlide === "certifications" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                    }`}
+                  >
+                    MY CERTIFICATIONS
+                  </p>
+                </div>
+
+                <div className="relative h-[400px] overflow-hidden flex items-center">
                 {/* WHO AM I Content */}
                 <div
                   className={`absolute inset-0 flex items-center transition-all duration-700 ease-out ${
@@ -305,9 +324,6 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
                   }`}
                 >
                   <div className="space-y-10 w-full">
-                    <p className="text-cyan-400 text-base md:text-lg tracking-[0.3em] uppercase font-bold">
-                      Who Am I
-                    </p>
                     <div className="space-y-8">
                       <div className="flex items-baseline gap-6">
                         <span className="text-cyan-400 text-6xl md:text-7xl lg:text-8xl font-bold">03+</span>
@@ -344,10 +360,6 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
                   }`}
                 >
                   <div className="space-y-8 w-full">
-                    <p className="text-cyan-400 text-base md:text-lg tracking-[0.3em] uppercase font-bold">
-                      My Certifications
-                    </p>
-                    
                     {/* Certificate Cards */}
                     <div className="space-y-4">
                       {/* Google Certificate */}
@@ -406,6 +418,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
                       <span>UDEMY</span>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
             </div>
