@@ -585,12 +585,20 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
       
       {/* Top Navigation - Fixed */}
       <header className="fixed top-0 left-0 right-0 z-50 flex justify-end items-center gap-12 px-6 md:px-12 py-6">
-        <a
-          href="mailto:norbudev7@gmail.com"
-          className="text-white text-xs tracking-[0.2em] uppercase hover:text-white/70 transition-colors"
+        <button
+          onClick={() => {
+            onClose()
+            setTimeout(() => {
+              const footer = document.getElementById('cta-footer')
+              if (footer) {
+                footer.scrollIntoView({ behavior: 'smooth' })
+              }
+            }, 100)
+          }}
+          className="text-white text-xs tracking-[0.2em] uppercase hover:text-white/70 transition-colors cursor-pointer"
         >
           CONTACT
-        </a>
+        </button>
         <span className="text-white/70 text-xs tracking-wider">
           {currentTime}
         </span>
