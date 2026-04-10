@@ -702,7 +702,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 {/* L-shaped arrow with circle endpoint */}
                 <svg
                   className="absolute text-black"
-                  style={{ left: '-15px', top: '50%', width: '140px', height: '90px', marginTop: '-45px' }}
+                  style={{ right: '-100px', top: '50%', width: '140px', height: '90px', marginTop: '-45px' }}
                   viewBox="0 0 140 90"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -734,7 +734,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             </div>
 
             {/* 3D Button with Star Animation */}
-            <div className="relative flex-shrink-0">
+            <div className="relative flex-shrink-0 -ml-8">
               {/* Star particles — always animating, centered on button */}
               <div className="absolute pointer-events-none overflow-visible" style={{width: '100px', height: '100px', top: 0, left: 0}}>
                 {/* Star 1 */}
