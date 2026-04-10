@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { SplineRobot } from "@/components/spline-robot"
 import { ProjectCarousel } from "@/components/project-carousel"
-import { CursorFollower } from "@/components/cursor-follower"
+
 import { ProjectDetail } from "@/components/project-detail"
 import { AboutSection } from "@/components/about-section"
 import { AboutPage } from "@/components/about-page"
@@ -120,8 +120,7 @@ export default function Home() {
         onClose={() => setIsAboutPageOpen(false)}
       />
 
-      {/* Custom Cursor Follower */}
-      <CursorFollower />
+
     </main>
   )
 }
