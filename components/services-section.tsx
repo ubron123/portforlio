@@ -110,8 +110,9 @@ export function ServicesSection() {
         
         const frameLeftPx = (window.innerWidth * frameLeftPercent) / 100
         const frameRightPx = (window.innerWidth * frameRightPercent) / 100
-        const maxLeftPosition = frameLeftPx + 20 // Add small padding from left line
-        const maxRightPosition = window.innerWidth - frameRightPx - 320 // 320 is cube width for lg screens
+        const cubeWidth = window.innerWidth > 1024 ? 320 : 256 // w-64 lg:w-80
+        const maxLeftPosition = frameLeftPx + 40 // Add padding from left line
+        const maxRightPosition = sectionRect.width - frameRightPx - cubeWidth - 60 // Increased padding from right line
         
         let cubeLeft = slotRect.left - sectionRect.left
         
