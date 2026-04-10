@@ -98,29 +98,28 @@ export function ServicesSection() {
 
       setActiveService(closestIndex)
 
-      // Position the cube at the active service's image slot - constrain within frame boundaries
+      // Position the cube at the active service's image slot symmetrically
       const activeSlot = imageSlotRefs.current[closestIndex]
       if (activeSlot && sectionRef.current) {
         const slotRect = activeSlot.getBoundingClientRect()
         const sectionRect = sectionRef.current.getBoundingClientRect()
-        
-        // Calculate frame boundaries (4% or 6% from edges)
-        const frameLeftPercent = window.innerWidth > 768 ? 6 : 4
-        const frameRightPercent = window.innerWidth > 768 ? 6 : 4
-        
-        const frameLeftPx = (window.innerWidth * frameLeftPercent) / 100
-        const frameRightPx = (window.innerWidth * frameRightPercent) / 100
+
+        const framePercent = window.innerWidth > 768 ? 6 : 4
+        const framePx = (sectionRect.width * framePercent) / 100
         const cubeWidth = window.innerWidth > 1024 ? 320 : 256 // w-64 lg:w-80
-        const padding = 40 // Add padding from both lines
-        
-        // Calculate the center of the available space between the two frame lines
-        const availableLeft = frameLeftPx + padding
-        const availableRight = sectionRect.width - frameRightPx - padding
-        const availableCenter = (availableLeft + availableRight) / 2
-        
-        // Position cube center at this calculated center point, accounting for cube width
-        const cubeLeft = availableCenter - cubeWidth / 2
-        
+        const innerPadding = 20 // gap between cube and frame line
+
+        // Fixed left-side position: just inside the left frame line
+        const leftPosition = framePx + innerPadding
+
+        // Fixed right-side position: mirror of left — same distance from the right frame line
+        const rightPosition = sectionRect.width - framePx - innerPadding - cubeWidth
+
+        // isEven services (0,2,4): text left, cube goes RIGHT
+        // isOdd services (1,3,5): text right, cube goes LEFT
+        const isEven = closestIndex % 2 === 0
+        const cubeLeft = isEven ? rightPosition : leftPosition
+
         setCubePosition({
           top: slotRect.top - sectionRect.top,
           left: cubeLeft,
