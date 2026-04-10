@@ -699,26 +699,46 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   OUT
                 </span>
                 
-                {/* Curved Arrow — bold hand-drawn style arc pointing down at the button */}
+                {/* L-shaped arrow: goes right then turns down to point at the button */}
                 <svg
-                  className="absolute text-black"
-                  style={{ left: '100%', top: '5%', width: '140px', height: '110px', marginLeft: '8px' }}
-                  viewBox="0 0 140 110"
+                  className="absolute text-black/75"
+                  style={{ left: '100%', top: '30%', width: '120px', height: '80px', marginLeft: '10px' }}
+                  viewBox="0 0 120 80"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  {/* Bold curved path: sweeps down and right with a natural arc */}
-                  <path
-                    d="M 10 10 Q 20 50, 90 85"
+                  {/* Horizontal leg — goes right */}
+                  <line
+                    x1="4" y1="10"
+                    x2="90" y2="10"
                     stroke="currentColor"
-                    strokeWidth="4"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+                  {/* Rounded corner */}
+                  <path
+                    d="M 90 10 Q 106 10, 106 26"
+                    stroke="currentColor"
+                    strokeWidth="3"
                     strokeLinecap="round"
                     fill="none"
                   />
-                  {/* Filled triangular arrowhead — solid triangle pointing toward button */}
-                  <polygon
-                    points="90,85 110,65 125,95"
-                    fill="currentColor"
+                  {/* Vertical leg — goes down */}
+                  <line
+                    x1="106" y1="26"
+                    x2="106" y2="62"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+                  {/* Arrowhead — pointing down */}
+                  <path
+                    d="M 94 54 L 106 70 L 118 54"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
                   />
                 </svg>
               </div>
