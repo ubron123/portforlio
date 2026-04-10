@@ -144,8 +144,6 @@ export function ServicesSection() {
     <section ref={sectionRef} className="relative bg-black">
       {/* Line split area - single line comes down from center, turns at left corner with glow */}
       <div className="relative h-8 md:h-10">
-        {/* Center line coming from above - extends far up to connect with About section (no gap) */}
-        <div className="absolute left-1/2 -top-[200vh] w-px h-[200vh] -translate-x-1/2 bg-cyan-500/70" />
         {/* Line continues down to the split point */}
         <div className="absolute left-1/2 top-0 w-px h-6 md:h-8 -translate-x-1/2 bg-cyan-500/70" />
         
@@ -170,9 +168,9 @@ export function ServicesSection() {
           <path d="M0 0 Q24 0 24 24" stroke="rgba(34,211,238,0.5)" strokeWidth="1" fill="none" />
         </svg>
         
-        {/* Vertical lines going down from corners */}
-        <div className="absolute left-[4%] md:left-[6%] top-[calc(1.5rem+16px)] md:top-[calc(2rem+24px)] w-px h-8 md:h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
-        <div className="absolute right-[4%] md:right-[6%] top-[calc(1.5rem+16px)] md:top-[calc(2rem+24px)] w-px h-8 md:h-12 bg-gradient-to-b from-cyan-500/50 to-cyan-500/40" />
+        {/* Vertical lines going down from corners - extend throughout services section */}
+        <div className="absolute left-[4%] md:left-[6%] top-[calc(1.5rem+16px)] md:top-[calc(2rem+24px)] bottom-0 w-px bg-gradient-to-b from-cyan-500/50 to-cyan-500/30" />
+        <div className="absolute right-[4%] md:right-[6%] top-[calc(1.5rem+16px)] md:top-[calc(2rem+24px)] bottom-0 w-px bg-gradient-to-b from-cyan-500/50 to-cyan-500/30" />
       </div>
 
       {/* Header - inside the frame */}
