@@ -69,6 +69,7 @@ const SLOT_STYLE: Record<
 
 type ProjectCarouselProps = {
   onActiveProjectChange?: (projectId: number) => void
+  onProjectClick?: (projectId: number) => void
 }
 
 function getSlot(
@@ -84,7 +85,7 @@ function getSlot(
   return "center"
 }
 
-export function ProjectCarousel({ onActiveProjectChange }: ProjectCarouselProps) {
+export function ProjectCarousel({ onActiveProjectChange, onProjectClick }: ProjectCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [progress, setProgress] = useState(0)
 
@@ -171,12 +172,14 @@ export function ProjectCarousel({ onActiveProjectChange }: ProjectCarouselProps)
                       transitionTimingFunction: "cubic-bezier(0.25, 0.1, 0.25, 1)",
                     }}
                     onClick={() => {
-                      if (isCenter) nextSlide()
-                      else goTo(index)
+                      if (isCenter) {
+                        onProjectClick?.(project.id)
+                      } else {
+                        goTo(index)
+                        onProjectClick?.(project.id)
+                      }
                     }}
-                    aria-label={
-                      isCenter ? `${project.title}, next project` : `Show ${project.title}`
-                    }
+                    aria-label={`Open ${project.title}`}
                   >
                     {isCenter && (
                       <div
@@ -190,13 +193,13 @@ export function ProjectCarousel({ onActiveProjectChange }: ProjectCarouselProps)
                       </div>
                     )}
 
-                    <div className="absolute inset-0 flex items-center justify-center bg-neutral-800/30 p-1.5 sm:p-2">
+                    <div className="absolute inset-0 overflow-hidden">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={project.image}
-                        alt=""
-                        className="max-h-full max-w-full object-contain"
-                        style={{ opacity: isCenter ? 1 : 0.78 }}
+                        alt={project.title}
+                        className="h-full w-full object-cover"
+                        style={{ opacity: isCenter ? 1 : 0.82 }}
                       />
                     </div>
                   </button>

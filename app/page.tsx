@@ -72,10 +72,16 @@ export default function Home() {
 
       {/* Bottom Section — project carousel + dynamic tint */}
       <section className="relative min-h-[50vh] sm:min-h-[55vh] md:min-h-[50vh] lg:min-h-[48vh] overflow-hidden pb-24 sm:pb-28">
-        <ProjectCarousel onActiveProjectChange={(id) => {
-          setCurrentProject(id)
-          setCurrentGradient(projectGradients[id] || projectGradients[1])
-        }} />
+        <ProjectCarousel
+          onActiveProjectChange={(id) => {
+            setCurrentProject(id)
+            setCurrentGradient(projectGradients[id] || projectGradients[1])
+          }}
+          onProjectClick={(id) => {
+            setCurrentProject(id)
+            setIsProjectDetailOpen(true)
+          }}
+        />
 
         {/* Glass nav: WORK · menu · ABOUT */}
         <nav className="absolute bottom-5 sm:bottom-7 md:bottom-9 left-1/2 z-30 -translate-x-1/2">
