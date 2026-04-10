@@ -707,14 +707,6 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  {/* Vertical leg — goes down below "OUT" */}
-                  <line
-                    x1="15" y1="8"
-                    x2="15" y2="40"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
                   {/* Horizontal leg — extends right toward button */}
                   <line
                     x1="15" y1="40"
