@@ -681,7 +681,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
         </section>
       ))}
       {/* Reach Out Section */}
-      <section className="h-[50vh] bg-white flex items-center justify-center pt-8 md:pt-12 lg:pt-16">
+      <section className="h-[33vh] bg-white flex items-center justify-center">
         <div className="w-full max-w-6xl px-6 md:px-12 lg:px-20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-16">
             {/* Left Text */}
@@ -699,25 +699,29 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   OUT
                 </span>
                 
-                {/* Curved Arrow */}
-                <svg 
-                  className="absolute -right-12 -bottom-2 md:-right-16 w-10 h-12 md:w-14 md:h-16 text-black/50"
-                  viewBox="0 0 40 50" 
+                {/* Curved Arrow — sweeps right then curves to point at the button */}
+                <svg
+                  className="absolute text-black/60"
+                  style={{ left: '100%', top: '40%', width: '140px', height: '60px', marginLeft: '16px' }}
+                  viewBox="0 0 140 60"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path 
-                    d="M8 5C8 5 25 5 25 22C25 35 25 40 25 45" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
+                  <path
+                    d="M 5 30 C 40 30, 100 10, 130 30"
+                    stroke="currentColor"
+                    strokeWidth="2"
                     strokeLinecap="round"
+                    fill="none"
                   />
-                  <path 
-                    d="M19 40L25 48L31 40" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
+                  {/* Arrowhead at the end pointing right */}
+                  <path
+                    d="M 120 22 L 132 30 L 120 38"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                     strokeLinejoin="round"
+                    fill="none"
                   />
                 </svg>
               </div>
@@ -725,40 +729,40 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
 
             {/* 3D Button with Star Animation */}
             <div className="relative flex-shrink-0">
-              {/* Star particles container */}
-              <div className="absolute inset-0 pointer-events-none overflow-visible" style={{width: '120px', height: '120px'}}>
+              {/* Star particles — always animating, centered on button */}
+              <div className="absolute pointer-events-none overflow-visible" style={{width: '100px', height: '100px', top: 0, left: 0}}>
                 {/* Star 1 */}
-                <div className="absolute left-1/2 top-1/2 w-3 h-3 star-particle star-1">
+                <div className="absolute left-1/2 top-1/2 w-5 h-5 star-particle star-1">
                   <svg viewBox="0 0 24 24" className="w-full h-full text-[#3AC2FF]" fill="currentColor">
                     <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
                   </svg>
                 </div>
                 {/* Star 2 */}
-                <div className="absolute left-1/2 top-1/2 w-2 h-2 star-particle star-2">
+                <div className="absolute left-1/2 top-1/2 w-4 h-4 star-particle star-2">
                   <svg viewBox="0 0 24 24" className="w-full h-full text-[#5fd4ff]" fill="currentColor">
                     <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
                   </svg>
                 </div>
                 {/* Star 3 */}
-                <div className="absolute left-1/2 top-1/2 w-2.5 h-2.5 star-particle star-3">
+                <div className="absolute left-1/2 top-1/2 w-5 h-5 star-particle star-3">
                   <svg viewBox="0 0 24 24" className="w-full h-full text-[#3AC2FF]" fill="currentColor">
                     <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
                   </svg>
                 </div>
                 {/* Star 4 */}
-                <div className="absolute left-1/2 top-1/2 w-2 h-2 star-particle star-4">
+                <div className="absolute left-1/2 top-1/2 w-4 h-4 star-particle star-4">
                   <svg viewBox="0 0 24 24" className="w-full h-full text-[#7de0ff]" fill="currentColor">
                     <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
                   </svg>
                 </div>
                 {/* Star 5 */}
-                <div className="absolute left-1/2 top-1/2 w-3 h-3 star-particle star-5">
+                <div className="absolute left-1/2 top-1/2 w-5 h-5 star-particle star-5">
                   <svg viewBox="0 0 24 24" className="w-full h-full text-[#3AC2FF]" fill="currentColor">
                     <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
                   </svg>
                 </div>
                 {/* Star 6 */}
-                <div className="absolute left-1/2 top-1/2 w-2 h-2 star-particle star-6">
+                <div className="absolute left-1/2 top-1/2 w-4 h-4 star-particle star-6">
                   <svg viewBox="0 0 24 24" className="w-full h-full text-[#5fd4ff]" fill="currentColor">
                     <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
                   </svg>

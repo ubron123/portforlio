@@ -153,51 +153,54 @@
   animation: fadeIn 0.6s ease-out forwards;
 }
 
-/* Star burst animations for reach out button */
+/* Star burst animations for reach out button — always playing */
 .star-particle {
   opacity: 0;
   pointer-events: none;
 }
 
+/* Each star pops in at full size then flies outward and fades — 
+   the cycle duration is 3s so a new burst fires every 0.5s offset */
 @keyframes star-burst-1 {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-  10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(calc(-50% - 50px), calc(-50% - 60px)) scale(0.3); }
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+  15%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(20deg); }
+  100% { opacity: 0; transform: translate(calc(-50% - 70px), calc(-50% - 80px)) scale(0.4) rotate(60deg); }
 }
 
 @keyframes star-burst-2 {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-  10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, calc(-50% - 80px)) scale(0.3); }
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+  15%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(-15deg); }
+  100% { opacity: 0; transform: translate(-50%, calc(-50% - 100px)) scale(0.4) rotate(-40deg); }
 }
 
 @keyframes star-burst-3 {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-  10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(calc(-50% + 55px), calc(-50% - 55px)) scale(0.3); }
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+  15%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(10deg); }
+  100% { opacity: 0; transform: translate(calc(-50% + 75px), calc(-50% - 70px)) scale(0.4) rotate(50deg); }
 }
 
 @keyframes star-burst-4 {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-  10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(calc(-50% - 65px), calc(-50% - 35px)) scale(0.3); }
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+  15%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(-20deg); }
+  100% { opacity: 0; transform: translate(calc(-50% - 85px), calc(-50% - 45px)) scale(0.4) rotate(-60deg); }
 }
 
 @keyframes star-burst-5 {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-  10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(calc(-50% + 60px), calc(-50% - 40px)) scale(0.3); }
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+  15%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(30deg); }
+  100% { opacity: 0; transform: translate(calc(-50% + 80px), calc(-50% - 50px)) scale(0.4) rotate(70deg); }
 }
 
 @keyframes star-burst-6 {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-  10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(calc(-50% + 10px), calc(-50% - 75px)) scale(0.3); }
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+  15%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(-10deg); }
+  100% { opacity: 0; transform: translate(calc(-50% + 15px), calc(-50% - 95px)) scale(0.4) rotate(-45deg); }
 }
 
-.star-1 { animation: star-burst-1 3s ease-out infinite 0s; }
-.star-2 { animation: star-burst-2 3s ease-out infinite 0.5s; }
-.star-3 { animation: star-burst-3 3s ease-out infinite 1s; }
-.star-4 { animation: star-burst-4 3s ease-out infinite 1.5s; }
-.star-5 { animation: star-burst-5 3s ease-out infinite 2s; }
-.star-6 { animation: star-burst-6 3s ease-out infinite 2.5s; }
+/* Stagger each star by 0.5s so they fire continuously throughout the 3s loop */
+.star-1 { animation: star-burst-1 3s cubic-bezier(0.22, 1, 0.36, 1) infinite 0s; }
+.star-2 { animation: star-burst-2 3s cubic-bezier(0.22, 1, 0.36, 1) infinite 0.5s; }
+.star-3 { animation: star-burst-3 3s cubic-bezier(0.22, 1, 0.36, 1) infinite 1s; }
+.star-4 { animation: star-burst-4 3s cubic-bezier(0.22, 1, 0.36, 1) infinite 1.5s; }
+.star-5 { animation: star-burst-5 3s cubic-bezier(0.22, 1, 0.36, 1) infinite 2s; }
+.star-6 { animation: star-burst-6 3s cubic-bezier(0.22, 1, 0.36, 1) infinite 2.5s; }
