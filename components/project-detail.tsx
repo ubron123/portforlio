@@ -1050,6 +1050,129 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 <div className="mt-16 h-8" />
               </div>
             </section>
+
+            {/* Reach Out Section */}
+            <section className="py-20 md:py-32 relative z-10 bg-white">
+              <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
+                  {/* Text */}
+                  <span className="text-black/70 text-xl md:text-2xl font-light">
+                    Have a project in mind?
+                  </span>
+                  
+                  {/* REACH OUT text with arrow */}
+                  <div className="flex flex-col items-start relative">
+                    <span className="text-black text-3xl md:text-4xl font-bold tracking-tight leading-none">
+                      REACH
+                    </span>
+                    <span className="text-black text-3xl md:text-4xl font-bold tracking-tight leading-none">
+                      OUT
+                    </span>
+                    {/* Curved arrow pointing to button */}
+                    <svg 
+                      className="absolute -right-8 bottom-0 w-8 h-10 text-black/70"
+                      viewBox="0 0 32 40" 
+                      fill="none"
+                    >
+                      <path 
+                        d="M8 4C8 4 24 4 24 20C24 32 24 36 24 36" 
+                        stroke="currentColor" 
+                        strokeWidth="1.5" 
+                        strokeLinecap="round"
+                      />
+                      <path 
+                        d="M18 32L24 38L30 32" 
+                        stroke="currentColor" 
+                        strokeWidth="1.5" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  
+                  {/* 3D Push Button */}
+                  <div className="relative mt-6 md:mt-0 md:ml-8">
+                    {/* Star particles container */}
+                    <div className="absolute inset-0 pointer-events-none overflow-visible">
+                      {/* Star 1 - top left */}
+                      <div className="absolute left-1/2 top-1/2 w-3 h-3 star-particle star-1">
+                        <svg viewBox="0 0 24 24" className="w-full h-full text-[#3AC2FF]" fill="currentColor">
+                          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                        </svg>
+                      </div>
+                      {/* Star 2 - top */}
+                      <div className="absolute left-1/2 top-1/2 w-2 h-2 star-particle star-2">
+                        <svg viewBox="0 0 24 24" className="w-full h-full text-[#5fd4ff]" fill="currentColor">
+                          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                        </svg>
+                      </div>
+                      {/* Star 3 - top right */}
+                      <div className="absolute left-1/2 top-1/2 w-2.5 h-2.5 star-particle star-3">
+                        <svg viewBox="0 0 24 24" className="w-full h-full text-[#3AC2FF]" fill="currentColor">
+                          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                        </svg>
+                      </div>
+                      {/* Star 4 - left */}
+                      <div className="absolute left-1/2 top-1/2 w-2 h-2 star-particle star-4">
+                        <svg viewBox="0 0 24 24" className="w-full h-full text-[#7de0ff]" fill="currentColor">
+                          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                        </svg>
+                      </div>
+                      {/* Star 5 - right */}
+                      <div className="absolute left-1/2 top-1/2 w-3 h-3 star-particle star-5">
+                        <svg viewBox="0 0 24 24" className="w-full h-full text-[#3AC2FF]" fill="currentColor">
+                          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                        </svg>
+                      </div>
+                      {/* Star 6 - top center */}
+                      <div className="absolute left-1/2 top-1/2 w-2 h-2 star-particle star-6">
+                        <svg viewBox="0 0 24 24" className="w-full h-full text-[#5fd4ff]" fill="currentColor">
+                          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                        </svg>
+                      </div>
+                    </div>
+                    
+                    {/* Button */}
+                    <a
+                      href="mailto:contact@example.com"
+                      className="group relative block cursor-pointer"
+                    >
+                      {/* Button shadow/base (dark bottom) */}
+                      <div 
+                        className="absolute inset-0 rounded-full bg-[#1a8ab5] transform translate-y-3"
+                        style={{
+                          width: '80px',
+                          height: '80px',
+                        }}
+                      />
+                      {/* Button middle layer */}
+                      <div 
+                        className="absolute inset-0 rounded-full bg-gradient-to-b from-[#2ba3d4] to-[#1f90bd] transform translate-y-1.5"
+                        style={{
+                          width: '80px',
+                          height: '80px',
+                        }}
+                      />
+                      {/* Button top (main surface) */}
+                      <div 
+                        className="relative rounded-full bg-gradient-to-b from-[#5fd4ff] via-[#3AC2FF] to-[#2ba3d4] flex items-center justify-center shadow-lg group-hover:translate-y-1 group-active:translate-y-2 transition-transform duration-150"
+                        style={{
+                          width: '80px',
+                          height: '80px',
+                        }}
+                      >
+                        {/* Highlight/shine effect */}
+                        <div 
+                          className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-6 rounded-full bg-white/30 blur-sm"
+                        />
+                        {/* Inner circle for depth */}
+                        <div className="absolute inset-3 rounded-full border border-white/20" />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       )}
