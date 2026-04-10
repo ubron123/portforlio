@@ -305,7 +305,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
                   }`}
                 >
                   <div className="space-y-10 w-full">
-                    <p className="text-cyan-400 text-sm md:text-base tracking-[0.3em] uppercase font-bold">
+                    <p className="text-cyan-400 text-base md:text-lg tracking-[0.3em] uppercase font-bold">
                       Who Am I
                     </p>
                     <div className="space-y-8">
@@ -344,7 +344,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
                   }`}
                 >
                   <div className="space-y-8 w-full">
-                    <p className="text-cyan-400 text-sm md:text-base tracking-[0.3em] uppercase font-bold">
+                    <p className="text-cyan-400 text-base md:text-lg tracking-[0.3em] uppercase font-bold">
                       My Certifications
                     </p>
                     
