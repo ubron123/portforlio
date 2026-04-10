@@ -213,6 +213,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
   const [currentSection, setCurrentSection] = useState<Section>("intro")
   const [aboutTextOffset, setAboutTextOffset] = useState(0)
   const [isNavHovered, setIsNavHovered] = useState(false)
+  const [hoveredDownload, setHoveredDownload] = useState<"cv" | "resume" | null>(null)
   const [expandedSkill, setExpandedSkill] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const introRef = useRef<HTMLDivElement>(null)
@@ -584,9 +585,12 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
       
       {/* Top Navigation - Fixed */}
       <header className="fixed top-0 left-0 right-0 z-50 flex justify-end items-center gap-12 px-6 md:px-12 py-6">
-        <button className="text-white text-xs tracking-[0.2em] uppercase hover:text-white/70 transition-colors">
+        <a
+          href="mailto:norbudev7@gmail.com"
+          className="text-white text-xs tracking-[0.2em] uppercase hover:text-white/70 transition-colors"
+        >
           CONTACT
-        </button>
+        </a>
         <span className="text-white/70 text-xs tracking-wider">
           {currentTime}
         </span>
@@ -616,6 +620,61 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           onMouseEnter={() => setIsNavHovered(true)}
           onMouseLeave={() => setIsNavHovered(false)}
         >
+          {/* Download Icons - shown on hover, left side */}
+          <div 
+            className={`flex items-center gap-2 mr-2 border-r border-white/10 pr-2 transition-all duration-200 ${
+              isNavHovered ? "opacity-100 max-w-[100px]" : "opacity-0 max-w-0 overflow-hidden"
+            }`}
+          >
+            {/* Download CV */}
+            <div className="relative">
+              <a
+                href="/norbu-tshering-cv.pdf"
+                download="Norbu_Tshering_CV.pdf"
+                onMouseEnter={() => setHoveredDownload("cv")}
+                onMouseLeave={() => setHoveredDownload(null)}
+                className="p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10 flex items-center justify-center"
+                aria-label="Download CV"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              </a>
+              {hoveredDownload === "cv" && (
+                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white text-black text-[10px] tracking-wider uppercase px-2 py-1 rounded pointer-events-none">
+                  Download CV
+                </div>
+              )}
+            </div>
+
+            {/* Download Resume */}
+            <div className="relative">
+              <a
+                href="/norbu-tshering-resume.pdf"
+                download="Norbu_Tshering_Resume.pdf"
+                onMouseEnter={() => setHoveredDownload("resume")}
+                onMouseLeave={() => setHoveredDownload(null)}
+                className="p-2 text-white/70 hover:text-white transition-all rounded-full hover:bg-white/10 flex items-center justify-center"
+                aria-label="Download Resume"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+              </a>
+              {hoveredDownload === "resume" && (
+                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white text-black text-[10px] tracking-wider uppercase px-2 py-1 rounded pointer-events-none">
+                  Download Resume
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Left Arrow - goes to previous section */}
           <button 
             onClick={handlePrevSection}
