@@ -699,46 +699,35 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   OUT
                 </span>
                 
-                {/* L-shaped arrow: short leg down below "reach", long leg right to button */}
+                {/* L-shaped arrow with circle endpoint */}
                 <svg
-                  className="absolute text-black/75"
-                  style={{ left: '-20px', top: '50%', width: '140px', height: '80px', marginTop: '-40px' }}
-                  viewBox="0 0 140 80"
+                  className="absolute text-black"
+                  style={{ left: '-15px', top: '50%', width: '140px', height: '90px', marginTop: '-45px' }}
+                  viewBox="0 0 140 90"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  {/* Short vertical leg — goes down below "reach" */}
+                  {/* Vertical leg — goes down below "OUT" */}
                   <line
-                    x1="12" y1="10"
-                    x2="12" y2="32"
+                    x1="15" y1="8"
+                    x2="15" y2="40"
                     stroke="currentColor"
-                    strokeWidth="3"
+                    strokeWidth="2.5"
                     strokeLinecap="round"
                   />
-                  {/* Right-angle corner */}
+                  {/* Horizontal leg — extends right toward button */}
                   <line
-                    x1="12" y1="32"
-                    x2="28" y2="32"
+                    x1="15" y1="40"
+                    x2="115" y2="40"
                     stroke="currentColor"
-                    strokeWidth="3"
+                    strokeWidth="2.5"
                     strokeLinecap="round"
                   />
-                  {/* Long horizontal leg — runs right toward button */}
-                  <line
-                    x1="28" y1="32"
-                    x2="110" y2="32"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
-                  {/* Arrowhead — pointing right at button */}
-                  <path
-                    d="M 100 22 L 120 32 L 100 42"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    fill="none"
+                  {/* Circle endpoint — points at the button */}
+                  <circle
+                    cx="115" cy="40"
+                    r="4.5"
+                    fill="currentColor"
                   />
                 </svg>
               </div>
