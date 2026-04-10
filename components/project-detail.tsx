@@ -699,31 +699,26 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   OUT
                 </span>
                 
-                {/* Curved Arrow — arcs down and right to point at the button */}
+                {/* Curved Arrow — bold hand-drawn style arc pointing down at the button */}
                 <svg
-                  className="absolute text-black/50"
-                  style={{ left: '100%', top: '10%', width: '120px', height: '90px', marginLeft: '12px' }}
-                  viewBox="0 0 120 90"
+                  className="absolute text-black"
+                  style={{ left: '100%', top: '5%', width: '140px', height: '110px', marginLeft: '8px' }}
+                  viewBox="0 0 140 110"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  {/* Curved path: starts top-left, sweeps down-right in a natural arc */}
+                  {/* Bold curved path: sweeps down and right with a natural arc */}
                   <path
-                    d="M 8 8 C 10 40, 60 50, 100 72"
+                    d="M 10 10 Q 20 50, 90 85"
                     stroke="currentColor"
-                    strokeWidth="1.8"
+                    strokeWidth="4"
                     strokeLinecap="round"
                     fill="none"
-                    strokeDasharray="none"
                   />
-                  {/* Arrowhead at end — angled to match the curve's exit direction */}
-                  <path
-                    d="M 86 64 L 101 73 L 92 86"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    fill="none"
+                  {/* Filled triangular arrowhead — solid triangle pointing toward button */}
+                  <polygon
+                    points="90,85 110,65 125,95"
+                    fill="currentColor"
                   />
                 </svg>
               </div>
