@@ -363,14 +363,16 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             background: "linear-gradient(135deg, #0a1628 0%, #0d2847 25%, #1a4a7a 50%, #2d6ba3 75%, #3d7eb8 100%)",
           }}
         >
-          {/* Profile Image - Full screen cover */}
-          <div className="absolute inset-0 z-0">
-            <img 
-              src="/profile-about.png" 
-              alt="Norbu Tshering"
-              className="w-full h-full object-cover"
-              style={{ objectPosition: "center 20%" }}
-            />
+          {/* Profile Image - Smaller and centered */}
+          <div className="absolute inset-0 z-0 flex items-center justify-center">
+            <div className="relative w-[70%] h-[85%] md:w-[60%] md:h-[80%]">
+              <img 
+                src="/profile-about.png" 
+                alt="Norbu Tshering"
+                className="w-full h-full object-cover"
+                style={{ objectPosition: "center 20%" }}
+              />
+            </div>
             {/* Gradient overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
@@ -517,9 +519,17 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
         {/* ACHIEVEMENTS SECTION */}
         <section 
           ref={achievementsRef}
-          className="relative min-h-screen w-full bg-[#0d0d0d] py-24 px-6 md:px-12"
+          className="relative min-h-screen w-full bg-[#0d0d0d] py-24 px-6 md:px-12 overflow-hidden"
         >
-          <div className="max-w-6xl mx-auto">
+          {/* Glowing blue circle - right side */}
+          <div
+            className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[40rem] h-[40rem] md:w-[56rem] md:h-[56rem] rounded-full pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle, rgba(58, 194, 255, 0.6) 0%, rgba(58, 194, 255, 0.4) 25%, rgba(58, 194, 255, 0.2) 45%, rgba(58, 194, 255, 0.05) 65%, transparent 85%)',
+              filter: 'blur(30px)',
+            }}
+          />
+          <div className="max-w-6xl mx-auto relative z-10">
             {/* Achievements Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
               {/* AWARDS Column */}
