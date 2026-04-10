@@ -699,41 +699,41 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   OUT
                 </span>
                 
-                {/* L-shaped arrow: goes right then turns down to point at the button */}
+                {/* L-shaped arrow: short horizontal leg below "reach", then down to button */}
                 <svg
                   className="absolute text-black/75"
-                  style={{ left: '100%', top: '30%', width: '120px', height: '80px', marginLeft: '10px' }}
-                  viewBox="0 0 120 80"
+                  style={{ left: '100%', top: '20%', width: '100px', height: '100px', marginLeft: '8px' }}
+                  viewBox="0 0 100 100"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  {/* Horizontal leg — goes right */}
+                  {/* Short horizontal leg — extends right from text */}
                   <line
-                    x1="4" y1="10"
-                    x2="90" y2="10"
+                    x1="8" y1="12"
+                    x2="32" y2="12"
                     stroke="currentColor"
                     strokeWidth="3"
                     strokeLinecap="round"
                   />
-                  {/* Rounded corner */}
-                  <path
-                    d="M 90 10 Q 106 10, 106 26"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    fill="none"
-                  />
-                  {/* Vertical leg — goes down */}
+                  {/* Right-angle corner */}
                   <line
-                    x1="106" y1="26"
-                    x2="106" y2="62"
+                    x1="32" y1="12"
+                    x2="32" y2="28"
                     stroke="currentColor"
                     strokeWidth="3"
                     strokeLinecap="round"
                   />
-                  {/* Arrowhead — pointing down */}
+                  {/* Long vertical leg — runs down toward button */}
+                  <line
+                    x1="32" y1="28"
+                    x2="32" y2="70"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+                  {/* Arrowhead — pointing down at button */}
                   <path
-                    d="M 94 54 L 106 70 L 118 54"
+                    d="M 22 60 L 32 75 L 42 60"
                     stroke="currentColor"
                     strokeWidth="3"
                     strokeLinecap="round"
