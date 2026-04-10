@@ -699,41 +699,41 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   OUT
                 </span>
                 
-                {/* L-shaped arrow: short horizontal leg below "reach", then down to button */}
+                {/* L-shaped arrow: short leg down below "reach", long leg right to button */}
                 <svg
                   className="absolute text-black/75"
-                  style={{ left: '100%', top: '20%', width: '100px', height: '100px', marginLeft: '8px' }}
-                  viewBox="0 0 100 100"
+                  style={{ left: '-20px', top: '50%', width: '140px', height: '80px', marginTop: '-40px' }}
+                  viewBox="0 0 140 80"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  {/* Short horizontal leg — extends right from text */}
+                  {/* Short vertical leg — goes down below "reach" */}
                   <line
-                    x1="8" y1="12"
-                    x2="32" y2="12"
+                    x1="12" y1="10"
+                    x2="12" y2="32"
                     stroke="currentColor"
                     strokeWidth="3"
                     strokeLinecap="round"
                   />
                   {/* Right-angle corner */}
                   <line
-                    x1="32" y1="12"
-                    x2="32" y2="28"
+                    x1="12" y1="32"
+                    x2="28" y2="32"
                     stroke="currentColor"
                     strokeWidth="3"
                     strokeLinecap="round"
                   />
-                  {/* Long vertical leg — runs down toward button */}
+                  {/* Long horizontal leg — runs right toward button */}
                   <line
-                    x1="32" y1="28"
-                    x2="32" y2="70"
+                    x1="28" y1="32"
+                    x2="110" y2="32"
                     stroke="currentColor"
                     strokeWidth="3"
                     strokeLinecap="round"
                   />
-                  {/* Arrowhead — pointing down at button */}
+                  {/* Arrowhead — pointing right at button */}
                   <path
-                    d="M 22 60 L 32 75 L 42 60"
+                    d="M 100 22 L 120 32 L 100 42"
                     stroke="currentColor"
                     strokeWidth="3"
                     strokeLinecap="round"
