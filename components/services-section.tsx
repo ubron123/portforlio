@@ -98,16 +98,29 @@ export function ServicesSection() {
 
       setActiveService(closestIndex)
 
-      // Position the cube at the active service's image slot - align vertically with text
+      // Position the cube at the active service's image slot - constrain within frame boundaries
       const activeSlot = imageSlotRefs.current[closestIndex]
       if (activeSlot && sectionRef.current) {
         const slotRect = activeSlot.getBoundingClientRect()
         const sectionRect = sectionRef.current.getBoundingClientRect()
         
-        // Position cube at the top-left of the slot (same level as text)
+        // Calculate frame boundaries (4% or 6% from edges)
+        const frameLeftPercent = window.innerWidth > 768 ? 6 : 4
+        const frameRightPercent = window.innerWidth > 768 ? 6 : 4
+        
+        const frameLeftPx = (window.innerWidth * frameLeftPercent) / 100
+        const frameRightPx = (window.innerWidth * frameRightPercent) / 100
+        const maxLeftPosition = frameLeftPx + 20 // Add small padding from left line
+        const maxRightPosition = window.innerWidth - frameRightPx - 320 // 320 is cube width for lg screens
+        
+        let cubeLeft = slotRect.left - sectionRect.left
+        
+        // Constrain cube position to stay within frame boundaries
+        cubeLeft = Math.max(maxLeftPosition, Math.min(maxRightPosition, cubeLeft))
+        
         setCubePosition({
           top: slotRect.top - sectionRect.top,
-          left: slotRect.left - sectionRect.left,
+          left: cubeLeft,
         })
       }
     }
