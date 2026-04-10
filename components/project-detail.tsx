@@ -645,10 +645,10 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
               href="https://scan2dinee.netlify.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 md:w-9 md:h-9 bg-[#3AC2FF] hover:bg-[#2BA3E6] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 flex-shrink-0"
+              className="w-6 h-6 md:w-7 md:h-7 bg-[#3AC2FF] hover:bg-[#2BA3E6] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 flex-shrink-0"
             >
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </a>
           </div>
@@ -699,26 +699,28 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   OUT
                 </span>
                 
-                {/* Curved Arrow — sweeps right then curves to point at the button */}
+                {/* Curved Arrow — arcs down and right to point at the button */}
                 <svg
-                  className="absolute text-black/60"
-                  style={{ left: '100%', top: '40%', width: '140px', height: '60px', marginLeft: '16px' }}
-                  viewBox="0 0 140 60"
+                  className="absolute text-black/50"
+                  style={{ left: '100%', top: '10%', width: '120px', height: '90px', marginLeft: '12px' }}
+                  viewBox="0 0 120 90"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
+                  {/* Curved path: starts top-left, sweeps down-right in a natural arc */}
                   <path
-                    d="M 5 30 C 40 30, 100 10, 130 30"
+                    d="M 8 8 C 10 40, 60 50, 100 72"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="1.8"
                     strokeLinecap="round"
                     fill="none"
+                    strokeDasharray="none"
                   />
-                  {/* Arrowhead at the end pointing right */}
+                  {/* Arrowhead at end — angled to match the curve's exit direction */}
                   <path
-                    d="M 120 22 L 132 30 L 120 38"
+                    d="M 86 64 L 101 73 L 92 86"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="1.8"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     fill="none"
