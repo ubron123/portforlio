@@ -39,30 +39,31 @@ const SLIDE_DURATION = 5000
  * Horizontal slide swap — ~4px gap between card edges (see calc on left/right).
  * Based on center at 50% with width ~38%; side cards ~26% so edges align with 4px gutters.
  */
+// Responsive slot styles - adjusted for mobile
 const SLOT_STYLE: Record<
   "left" | "center" | "right",
   { left: string; width: string; height: string; zIndex: number; opacity: number }
 > = {
   left: {
-    left: "calc(18% - 4px)",
-    width: "min(26%, 248px)",
-    height: "76%",
+    left: "calc(15% - 2px)",
+    width: "min(24%, 200px)",
+    height: "70%",
     zIndex: 10,
-    opacity: 0.92,
+    opacity: 0.85,
   },
   center: {
     left: "50%",
-    width: "min(38%, 420px)",
-    height: "88%",
+    width: "min(42%, 380px)",
+    height: "85%",
     zIndex: 20,
     opacity: 1,
   },
   right: {
-    left: "calc(82% + 4px)",
-    width: "min(26%, 248px)",
-    height: "76%",
+    left: "calc(85% + 2px)",
+    width: "min(24%, 200px)",
+    height: "70%",
     zIndex: 10,
-    opacity: 0.92,
+    opacity: 0.85,
   },
 }
 

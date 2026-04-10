@@ -256,16 +256,16 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
               
               {/* LEFT SIDE - Always visible, static content, vertically centered */}
-              <div className="space-y-8 md:pr-8 flex flex-col justify-center">
-                <p className="text-cyan-400 text-sm md:text-base tracking-[0.3em] uppercase">
+              <div className="space-y-4 sm:space-y-6 md:space-y-8 md:pr-8 flex flex-col justify-center">
+                <p className="text-cyan-400 text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase">
                   A Snapshot of Me
                 </p>
-                <h2 className="text-white text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
+                <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
                   Transform Scattered Interfaces,
                   <br />
                   <span className="text-white/90">Into Scalable Product Systems.</span>
                 </h2>
-                <p className="text-white/60 text-base md:text-lg lg:text-xl leading-relaxed max-w-lg">
+                <p className="text-white/60 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-lg">
                   Creative, analytical, and driven. I specialize in
                   blending design aesthetics with technical
                   functionality.
@@ -323,25 +323,25 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
                       : "opacity-0 -translate-y-full pointer-events-none"
                   }`}
                 >
-                  <div className="space-y-10 w-full">
-                    <div className="space-y-8">
-                      <div className="flex items-baseline gap-6">
-                        <span className="text-cyan-400 text-6xl md:text-7xl lg:text-8xl font-bold">03+</span>
-                        <span className="text-white/60 text-base md:text-lg leading-tight">
+                  <div className="space-y-6 sm:space-y-10 w-full">
+                    <div className="space-y-4 sm:space-y-8">
+                      <div className="flex items-baseline gap-3 sm:gap-6">
+                        <span className="text-cyan-400 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">03+</span>
+                        <span className="text-white/60 text-sm sm:text-base md:text-lg leading-tight">
                           Experience
                         </span>
                       </div>
-                      <div className="flex items-baseline gap-6">
-                        <span className="text-cyan-400 text-6xl md:text-7xl lg:text-8xl font-bold">04+</span>
-                        <span className="text-white/60 text-base md:text-lg leading-tight">
+                      <div className="flex items-baseline gap-3 sm:gap-6">
+                        <span className="text-cyan-400 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">04+</span>
+                        <span className="text-white/60 text-sm sm:text-base md:text-lg leading-tight">
                           Clients Across
                           <br />
                           Nation
                         </span>
                       </div>
-                      <div className="flex items-baseline gap-6">
-                        <span className="text-cyan-400 text-6xl md:text-7xl lg:text-8xl font-bold">06+</span>
-                        <span className="text-white/60 text-base md:text-lg leading-tight">
+                      <div className="flex items-baseline gap-3 sm:gap-6">
+                        <span className="text-cyan-400 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">06+</span>
+                        <span className="text-white/60 text-sm sm:text-base md:text-lg leading-tight">
                           SaaS Projects
                           <br />
                           Completed

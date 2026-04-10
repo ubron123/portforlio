@@ -366,7 +366,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
         >
           {/* Profile Image - Left corner, bottom aligned, behind text */}
           <div className="absolute inset-0 z-0">
-            <div className="absolute left-0 bottom-0 w-[80%] h-[90%] md:w-[65%] md:h-[85%]">
+            <div className="absolute left-0 bottom-0 w-full h-[70%] sm:w-[80%] sm:h-[90%] md:w-[65%] md:h-[85%]">
               <img 
                 src="/profile-about.png" 
                 alt="Norbu Tshering"
@@ -374,28 +374,28 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
               />
             </div>
             {/* Gradient overlay for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/60 sm:from-black/60 sm:via-transparent sm:to-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 sm:from-black/30 sm:to-black/60" />
           </div>
 
           {/* About Title - Animates down on scroll */}
           <h1 
-            className="absolute left-6 md:left-12 text-white text-[15vw] md:text-[12vw] lg:text-[10vw] font-normal leading-none tracking-tight z-20 transition-transform duration-100 ease-out"
+            className="absolute left-4 sm:left-6 md:left-12 text-white text-[18vw] sm:text-[15vw] md:text-[12vw] lg:text-[10vw] font-normal leading-none tracking-tight z-20 transition-transform duration-100 ease-out"
             style={{ 
-              top: `${80 + aboutTextOffset}px`,
+              top: `${60 + aboutTextOffset}px`,
             }}
           >
             About
           </h1>
 
-          {/* Bio Text - Right side */}
-          <div className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-20 w-full md:w-[40%] lg:w-[35%]">
+          {/* Bio Text - Right side on desktop, bottom on mobile */}
+          <div className="absolute left-4 right-4 bottom-8 sm:bottom-auto sm:left-auto sm:right-6 md:right-12 sm:top-1/2 sm:-translate-y-1/2 z-20 sm:w-[50%] md:w-[40%] lg:w-[35%]">
             {/* Bio Paragraphs */}
-            <div className="space-y-6">
-              <p className="text-white/90 text-base md:text-lg leading-relaxed">
+            <div className="space-y-4 sm:space-y-6">
+              <p className="text-white/90 text-sm sm:text-base md:text-lg leading-relaxed">
                 {"I'm Norbu Tshering, a creative full-stack product engineer focused on the intersection of design and technology. Through my work, I explore how thoughtful aesthetics and solid functionality can come together to shape intuitive, meaningful digital experiences."}
               </p>
-              <p className="text-white/80 text-base md:text-lg leading-relaxed">
+              <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed hidden sm:block">
                 Driven by curiosity and a mindset of continuous growth, I craft modern, minimalist, and user-centered solutions that balance visual clarity with technical precision.
               </p>
             </div>
@@ -413,10 +413,10 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           {/* Journey Timeline */}
           <div className="max-w-6xl mx-auto relative z-10">
             {/* Journey Header with locations */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
               {journeyData.map((item, index) => (
                 <div key={index} className="relative">
-                  {/* Arrow between items (hidden on last) */}
+                  {/* Arrow between items (hidden on mobile and last) */}
                   {index < journeyData.length - 1 && (
                     <div className="hidden md:block absolute right-0 top-8 text-white/30">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -427,18 +427,18 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
                   
                   {/* Location dot indicator */}
                   {index === journeyData.length - 1 && (
-                    <div className="absolute right-0 top-2 w-2 h-2 rounded-full bg-white/50" />
+                    <div className="absolute right-0 top-2 w-2 h-2 rounded-full bg-white/50 hidden md:block" />
                   )}
                   
-                  <h3 className="text-cyan-400 text-2xl md:text-3xl font-bold mb-4 leading-tight pr-8">
+                  <h3 className="text-cyan-400 text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 leading-tight pr-8">
                     {item.location}
                   </h3>
                   
-                  <span className="inline-block border border-white/30 text-white/70 text-xs px-3 py-1 mb-4">
+                  <span className="inline-block border border-white/30 text-white/70 text-[10px] sm:text-xs px-2 sm:px-3 py-1 mb-3 sm:mb-4">
                     {item.period}
                   </span>
                   
-                  <p className="text-white/60 text-sm leading-relaxed">
+                  <p className="text-white/60 text-xs sm:text-sm leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -446,7 +446,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
             </div>
 
             {/* Skills Section */}
-            <div className="mt-32 space-y-4">
+            <div className="mt-16 sm:mt-24 md:mt-32 space-y-2 sm:space-y-4">
               {skillsData.map((skill, index) => {
                 const isExpanded = expandedSkill === skill.name
                 
@@ -457,24 +457,24 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
                   >
                     {/* Skill Header - Clickable */}
                     <div 
-                      className="flex items-center justify-between py-6 group cursor-pointer hover:border-white/20 transition-colors"
+                      className="flex items-center justify-between py-4 sm:py-6 group cursor-pointer hover:border-white/20 transition-colors"
                       onClick={() => setExpandedSkill(isExpanded ? null : skill.name)}
                     >
-                      <h4 className="text-white/50 text-2xl md:text-4xl font-light group-hover:text-white/80 transition-colors">
+                      <h4 className="text-white/50 text-lg sm:text-2xl md:text-4xl font-light group-hover:text-white/80 transition-colors">
                         {skill.name}
                       </h4>
                       
-                      <div className="flex items-center gap-4">
-                        <span className="text-white/40 text-xs tracking-wider uppercase">
+                      <div className="flex items-center gap-2 sm:gap-4">
+                        <span className="text-white/40 text-[10px] sm:text-xs tracking-wider uppercase hidden sm:block">
                           {skill.category}
                         </span>
-                        <button className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-all">
+                        <button className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-all">
                           {isExpanded ? (
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-3.5 sm:h-3.5">
                               <path d="M5 12h14" />
                             </svg>
                           ) : (
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-3.5 sm:h-3.5">
                               <path d="M12 5v14M5 12h14" />
                             </svg>
                           )}
@@ -484,22 +484,22 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
                     {/* Expandable Content */}
                     {isExpanded && (
-                      <div className="pb-8 pt-2 animate-in fade-in slide-in-from-top-2 duration-300 mx-auto">
-                        <div className="max-w-2xl mx-auto px-6 md:px-12">
+                      <div className="pb-6 sm:pb-8 pt-2 animate-in fade-in slide-in-from-top-2 duration-300 mx-auto">
+                        <div className="max-w-2xl mx-auto px-2 sm:px-6 md:px-12">
                           {/* Description */}
-                          <p className="text-white/70 text-base leading-relaxed mb-8">
+                          <p className="text-white/70 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
                             {skill.description}
                           </p>
 
                           {/* Subsections for Framework + CMS */}
                           {skill.subsections && (
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
                               {skill.subsections.map((subsection, subIndex) => (
                                 <div key={subIndex}>
-                                  <h5 className="text-black text-xs tracking-wider uppercase mb-3 bg-white inline-block px-3 py-1">
+                                  <h5 className="text-black text-[10px] sm:text-xs tracking-wider uppercase mb-2 sm:mb-3 bg-white inline-block px-2 sm:px-3 py-1">
                                     {subsection.title}
                                   </h5>
-                                  <p className="text-white/60 text-sm leading-relaxed">
+                                  <p className="text-white/60 text-xs sm:text-sm leading-relaxed">
                                     {subsection.items.join(", ")}
                                   </p>
                                 </div>
@@ -519,7 +519,7 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
         {/* ACHIEVEMENTS SECTION */}
         <section 
           ref={achievementsRef}
-          className="relative min-h-screen w-full bg-[#0d0d0d] py-24 px-6 md:px-12 overflow-hidden"
+          className="relative min-h-screen w-full bg-[#0d0d0d] py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 overflow-hidden"
         >
           {/* Glowing blue circle - right side */}
           <div
@@ -531,17 +531,17 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
           />
           <div className="max-w-6xl mx-auto relative z-10">
             {/* Achievements Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 md:gap-16">
               {/* AWARDS Column */}
               <div>
-                <h3 className="text-white/40 text-xs tracking-[0.2em] uppercase mb-8">
+                <h3 className="text-white/40 text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-4 sm:mb-6 md:mb-8">
                   AWARDS
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {achievementsData.awards.map((award, index) => (
-                    <div key={index} className="flex gap-4">
-                      <span className="text-white/30 text-sm">{award.number}</span>
-                      <span className="text-white/80 text-sm uppercase">{award.title}</span>
+                    <div key={index} className="flex gap-3 sm:gap-4">
+                      <span className="text-white/30 text-xs sm:text-sm">{award.number}</span>
+                      <span className="text-white/80 text-xs sm:text-sm uppercase">{award.title}</span>
                     </div>
                   ))}
                 </div>
@@ -549,14 +549,14 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
               {/* CERTIFICATIONS Column */}
               <div>
-                <h3 className="text-white/40 text-xs tracking-[0.2em] uppercase mb-8">
+                <h3 className="text-white/40 text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-4 sm:mb-6 md:mb-8">
                   CERTIFICATIONS
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {achievementsData.certifications.map((cert, index) => (
-                    <div key={index} className="flex gap-4">
-                      <span className="text-white/30 text-sm">{cert.number}</span>
-                      <span className="text-white/80 text-sm uppercase">{cert.title}</span>
+                    <div key={index} className="flex gap-3 sm:gap-4">
+                      <span className="text-white/30 text-xs sm:text-sm">{cert.number}</span>
+                      <span className="text-white/80 text-xs sm:text-sm uppercase">{cert.title}</span>
                     </div>
                   ))}
                 </div>
@@ -564,14 +564,14 @@ export function AboutPage({ isOpen, onClose }: AboutPageProps) {
 
               {/* PARTICIPATION Column */}
               <div>
-                <h3 className="text-white/40 text-xs tracking-[0.2em] uppercase mb-8">
+                <h3 className="text-white/40 text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-4 sm:mb-6 md:mb-8">
                   PARTICIPATION
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {achievementsData.participation.map((part, index) => (
-                    <div key={index} className="flex gap-4">
-                      <span className="text-white/30 text-sm">{part.number}</span>
-                      <span className="text-white/80 text-sm uppercase">{part.title}</span>
+                    <div key={index} className="flex gap-3 sm:gap-4">
+                      <span className="text-white/30 text-xs sm:text-sm">{part.number}</span>
+                      <span className="text-white/80 text-xs sm:text-sm uppercase">{part.title}</span>
                     </div>
                   ))}
                 </div>

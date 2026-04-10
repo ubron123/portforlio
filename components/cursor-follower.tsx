@@ -53,7 +53,7 @@ export function CursorFollower() {
       {!isOverSpline && (
         <>
           <div
-            className="fixed pointer-events-none z-40 transition-all duration-800 ease-out"
+            className="fixed pointer-events-none z-[9999] transition-all duration-800 ease-out"
             style={{
               left: position.x,
               top: position.y,
@@ -76,7 +76,7 @@ export function CursorFollower() {
           </div>
 
           <div
-            className="fixed pointer-events-none z-39 transition-all duration-900 ease-out"
+            className="fixed pointer-events-none z-[9998] transition-all duration-900 ease-out"
             style={{
               left: position.x,
               top: position.y,
@@ -99,7 +99,7 @@ export function CursorFollower() {
           </div>
 
           <div
-            className="fixed pointer-events-none z-38 transition-all duration-1000 ease-out"
+            className="fixed pointer-events-none z-[9997] transition-all duration-1000 ease-out"
             style={{
               left: position.x,
               top: position.y,
@@ -125,7 +125,7 @@ export function CursorFollower() {
 
       {/* Main cursor point */}
       <div
-        className="fixed pointer-events-none z-50 transition-all duration-150 ease-out"
+        className="fixed pointer-events-none z-[10000] transition-all duration-150 ease-out"
         style={{
           left: position.x,
           top: position.y,
@@ -162,7 +162,7 @@ export function CursorFollower() {
       {/* Water drop trail (hidden when over spline) */}
       {!isOverSpline && (
         <div
-          className="fixed pointer-events-none z-35 transition-all duration-800 ease-out"
+          className="fixed pointer-events-none z-[9996] transition-all duration-800 ease-out"
           style={{
             left: position.x,
             top: position.y,

@@ -681,27 +681,27 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
         </section>
       ))}
       {/* Reach Out Section */}
-      <section className="h-[33vh] bg-white flex items-center justify-center">
-        <div className="w-full max-w-6xl px-6 md:px-12 lg:px-20">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-16">
+      <section className="min-h-[40vh] sm:h-[33vh] bg-white flex items-center justify-center py-12 sm:py-0">
+        <div className="w-full max-w-6xl px-4 sm:px-6 md:px-12 lg:px-20">
+          <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-between md:gap-12 lg:gap-16">
             {/* Left Text */}
-            <div className="flex items-baseline gap-6">
-              <span className="text-xl md:text-2xl lg:text-3xl font-light text-black/70">
+            <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-3 sm:gap-6 text-center sm:text-left">
+              <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-black/70">
                 Have a project in mind?
               </span>
               
               {/* REACH OUT with Arrow */}
-              <div className="relative flex flex-col items-start">
-                <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-black leading-none">
+              <div className="relative flex flex-col items-center sm:items-start">
+                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black leading-none">
                   REACH
                 </span>
-                <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-black leading-none">
+                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black leading-none">
                   OUT
                 </span>
                 
-                {/* L-shaped arrow with circle endpoint */}
+                {/* L-shaped arrow with circle endpoint - hidden on mobile */}
                 <svg
-                  className="absolute text-black"
+                  className="absolute text-black hidden md:block"
                   style={{ right: '-200px', top: '50%', width: '280px', height: '90px', marginTop: '-45px' }}
                   viewBox="0 0 280 90"
                   fill="none"
@@ -726,7 +726,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
             </div>
 
             {/* 3D Button with Star Animation */}
-            <div className="relative flex-shrink-0 -ml-40">
+            <div className="relative flex-shrink-0 md:-ml-40">
               {/* Star particles — always animating, centered on button */}
               <div className="absolute pointer-events-none overflow-visible" style={{width: '100px', height: '100px', top: 0, left: 0}}>
                 {/* Star 1 */}
@@ -931,7 +931,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 {/* Overview Content - line handled by SVG now */}
                 <div className="relative pl-8 md:pl-12">
                   <div className="max-w-3xl">
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight mb-8 whitespace-nowrap">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight mb-8">
                       {selectedProject.overview?.headline}
                     </h2>
                     <p className="text-white/60 text-base md:text-lg leading-relaxed">
@@ -969,10 +969,14 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                   <div className="relative pr-8 md:pr-12 max-w-4xl">
                     {/* Role Title */}
                     <div className="mb-8">
-                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight whitespace-nowrap">
+                      <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight">
                         {selectedProject.role?.title}
-                        <span className="text-white mx-3">{"•"}</span>
-                        {selectedProject.role?.subtitle}
+                        {selectedProject.role?.subtitle && (
+                          <>
+                            <span className="text-white mx-2 sm:mx-3">{"•"}</span>
+                            {selectedProject.role?.subtitle}
+                          </>
+                        )}
                       </h2>
                     </div>
                     
@@ -1044,7 +1048,7 @@ export function ProjectDetail({ isOpen, onClose, currentProject }: ProjectDetail
                 {/* Result Content - line handled by SVG now */}
                 <div className="relative pl-8 md:pl-12">
                   <div className="max-w-3xl mb-16">
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight mb-8 whitespace-nowrap">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-white leading-tight mb-8">
                       {selectedProject.result?.headline}
                     </h2>
                     <p className="text-white/60 text-base md:text-lg leading-relaxed">
