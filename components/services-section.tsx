@@ -110,7 +110,7 @@ export function ServicesSection() {
         // Pull cube more towards left when it's on the right side (even services)
         const isEven = closestIndex % 2 === 0
         if (isEven) {
-          cubeLeft -= 80 // Move left by 80px when on right side
+          cubeLeft -= 150 // Move left by 150px when on right side
         }
 
         setCubePosition({
