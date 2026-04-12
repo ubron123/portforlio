@@ -3,29 +3,29 @@
 import { useEffect, useState } from "react"
 
 // Timeline (ms):
-// 0        → letters fly in from scattered positions, converge to center
-// 900      → all letters locked in place (hold phase)
-// 900–2400 → tagline + corner details fade in, name holds
-// 2400     → entire overlay fades out smoothly
-// 3200     → done, unmount
+// 0        → letters rendered at scatter origins (visible, no transition)
+// 80       → phase "arriving" → letters fly to center (transition fires)
+// 1000     → phase "hold"    → letters locked, tagline + details fade in
+// 2600     → phase "fade-out"→ whole overlay fades to nothing
+// 3400     → done, unmount
 
 const LETTERS = ["N", "O", "R", "B", "U"]
 
-// Where each letter originates before converging
 const SCATTER_ORIGINS = [
   { x: "-180%", y: "-120%", rotate: -30 },
-  { x: "-90%",  y: "160%",  rotate: 20  },
-  { x: "0%",    y: "-200%", rotate: -10 },
-  { x: "110%",  y: "150%",  rotate: 25  },
-  { x: "200%",  y: "-100%", rotate: -22 },
+  { x: "-90%",  y:  "160%", rotate:  20 },
+  { x:   "0%",  y: "-200%", rotate: -10 },
+  { x:  "110%", y:  "150%", rotate:  25 },
+  { x:  "200%", y: "-100%", rotate: -22 },
 ]
+
+type Phase = "scatter" | "arriving" | "hold" | "fade-out" | "done"
 
 export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
   const [shouldShow, setShouldShow] = useState<boolean | null>(null)
-  const [phase, setPhase] = useState<"fly-in" | "hold" | "fade-out" | "done">("fly-in")
+  const [phase, setPhase] = useState<Phase>("scatter")
 
   useEffect(() => {
-    // Only show once per browser session
     const seen = sessionStorage.getItem("intro-seen")
     if (seen) {
       setShouldShow(false)
@@ -35,14 +35,18 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
     sessionStorage.setItem("intro-seen", "1")
     setShouldShow(true)
 
-    const t1 = setTimeout(() => setPhase("hold"),     900)
-    const t2 = setTimeout(() => setPhase("fade-out"), 2600)
+    // Short delay so React has painted the scatter positions before we
+    // trigger the fly-in transition
+    const t0 = setTimeout(() => setPhase("arriving"),  80)
+    const t1 = setTimeout(() => setPhase("hold"),      1000)
+    const t2 = setTimeout(() => setPhase("fade-out"),  2600)
     const t3 = setTimeout(() => {
       setPhase("done")
       onComplete()
     }, 3400)
 
     return () => {
+      clearTimeout(t0)
       clearTimeout(t1)
       clearTimeout(t2)
       clearTimeout(t3)
@@ -51,8 +55,13 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
   if (shouldShow === null || !shouldShow || phase === "done") return null
 
-  const isHold    = phase === "hold"
-  const isFadeOut = phase === "fade-out"
+  const isScatter  = phase === "scatter"
+  const isArriving = phase === "arriving"
+  const isHold     = phase === "hold"
+  const isFadeOut  = phase === "fade-out"
+
+  // Letters are at scatter origin while "scatter" or "arriving" (transition fires on "arriving")
+  const lettersAtOrigin = isScatter || isArriving
 
   return (
     <div
@@ -67,13 +76,12 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
-        // Whole overlay fades out in fade-out phase
         opacity: isFadeOut ? 0 : 1,
         transition: isFadeOut ? "opacity 0.8s cubic-bezier(0.76,0,0.24,1)" : "none",
         pointerEvents: isFadeOut ? "none" : "all",
       }}
     >
-      {/* Thin rule that draws in during hold */}
+      {/* Horizontal rule that draws in during hold */}
       <div
         style={{
           position: "absolute",
@@ -81,7 +89,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           left: 0,
           height: "1px",
           background: "rgba(255,255,255,0.07)",
-          width: isHold ? "100%" : "0%",
+          width: isHold || isFadeOut ? "100%" : "0%",
           transition: "width 1s cubic-bezier(0.76,0,0.24,1) 0.1s",
           transform: "translateY(-1px)",
           pointerEvents: "none",
@@ -98,9 +106,8 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
         }}
       >
         {LETTERS.map((letter, i) => {
-          const origin = SCATTER_ORIGINS[i]
-          // Stagger the fly-in: each letter arrives 70ms after the previous
-          const flyInDelay = i * 70
+          const origin    = SCATTER_ORIGINS[i]
+          const flyDelay  = i * 60   // stagger each letter 60ms
 
           return (
             <span
@@ -115,14 +122,15 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
                 lineHeight: 0.9,
                 userSelect: "none",
                 willChange: "transform, opacity",
-                // fly-in: start from scatter origin, arrive at natural position
-                transform: isHold
-                  ? "translate(0%, 0%) rotate(0deg)"
-                  : `translate(${origin.x}, ${origin.y}) rotate(${origin.rotate}deg)`,
-                opacity: isHold ? 1 : 0,
-                transition: isHold
-                  ? `transform 0.75s cubic-bezier(0.16,1,0.3,1) ${flyInDelay}ms,
-                     opacity  0.5s  ease                         ${flyInDelay}ms`
+                // Scatter: placed at origin, fully visible (no transition yet)
+                // Arriving: transition fires from origin → 0,0
+                // Hold/FadeOut: settled at 0,0
+                transform: lettersAtOrigin
+                  ? `translate(${origin.x}, ${origin.y}) rotate(${origin.rotate}deg)`
+                  : "translate(0%, 0%) rotate(0deg)",
+                opacity: 1,
+                transition: isArriving
+                  ? `transform 0.85s cubic-bezier(0.16,1,0.3,1) ${flyDelay}ms`
                   : "none",
               }}
             >
@@ -139,9 +147,9 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           display: "flex",
           alignItems: "center",
           gap: "16px",
-          opacity: isHold ? 1 : 0,
-          transform: isHold ? "translateY(0)" : "translateY(10px)",
-          transition: "opacity 0.6s ease 0.6s, transform 0.6s ease 0.6s",
+          opacity: isHold || isFadeOut ? 1 : 0,
+          transform: isHold || isFadeOut ? "translateY(0)" : "translateY(10px)",
+          transition: "opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s",
         }}
       >
         <span
@@ -174,7 +182,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
         />
       </div>
 
-      {/* Top-left wordmark */}
+      {/* Top-left label */}
       <div
         style={{
           position: "absolute",
@@ -186,15 +194,15 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           color: "rgba(255,255,255,0.18)",
           letterSpacing: "0.25em",
           textTransform: "uppercase",
-          opacity: isHold ? 1 : 0,
-          transition: "opacity 0.5s ease 0.9s",
+          opacity: isHold || isFadeOut ? 1 : 0,
+          transition: "opacity 0.5s ease 0.8s",
           userSelect: "none",
         }}
       >
         Portfolio
       </div>
 
-      {/* Corner year stamp */}
+      {/* Bottom-right year */}
       <div
         style={{
           position: "absolute",
@@ -204,8 +212,8 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           fontSize: "11px",
           color: "rgba(255,255,255,0.18)",
           letterSpacing: "0.15em",
-          opacity: isHold ? 1 : 0,
-          transition: "opacity 0.5s ease 0.9s",
+          opacity: isHold || isFadeOut ? 1 : 0,
+          transition: "opacity 0.5s ease 0.8s",
           userSelect: "none",
         }}
       >
