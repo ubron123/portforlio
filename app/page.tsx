@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { IntroAnimation } from "@/components/intro-animation"
 import { SplineRobot } from "@/components/spline-robot"
 import { ProjectCarousel } from "@/components/project-carousel"
 
@@ -18,6 +19,7 @@ const projectGradients: Record<number, string> = {
 }
 
 export default function Home() {
+  const [introComplete, setIntroComplete] = useState(false)
   const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false)
   const [isAboutPageOpen, setIsAboutPageOpen] = useState(false)
   const [currentProject, setCurrentProject] = useState(1)
@@ -40,6 +42,7 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen w-full overflow-hidden">
+      <IntroAnimation onComplete={() => setIntroComplete(true)} />
       {/* Top Section - Black Background */}
       <section className="h-[50vh] sm:h-[45vh] md:h-[50vh] lg:h-[55vh] bg-black relative flex flex-col">
         {/* Header */}
