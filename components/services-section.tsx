@@ -107,7 +107,7 @@ export function ServicesSection() {
         const sectionRect = sectionRef.current.getBoundingClientRect()
 
         // Align cube top to the very top of the service row (aligned with the number/heading)
-        const cubeTop = serviceRect.top - sectionRect.top - 20
+        const cubeTop = serviceRect.top - sectionRect.top - 80
 
         // Use the slot's exact left position relative to the section container
         let cubeLeft = slotRect.left - sectionRect.left
