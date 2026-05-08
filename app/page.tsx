@@ -58,7 +58,17 @@ export default function Home() {
 
         {/* Main Headline */}
         <div className="absolute inset-0 flex items-center justify-center px-2 sm:px-4 z-20 pointer-events-none">
-          <h1 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black text-center leading-tight tracking-tight max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-4xl">
+          <h1
+            className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black text-center leading-tight tracking-tight max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-4xl pointer-events-auto"
+            onMouseMove={(e) => {
+              // Ensure cursor position is tracked even over the text
+              window.dispatchEvent(new MouseEvent("mousemove", {
+                clientX: e.clientX,
+                clientY: e.clientY,
+                bubbles: true,
+              }))
+            }}
+          >
             GREAT SAAS
             <br />
             PRODUCTS ARE BUILD

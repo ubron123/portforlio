@@ -41,8 +41,9 @@ export function CursorFollower() {
     <>
       {/* Simple blue circle blended with background */}
       <div
-        className="fixed pointer-events-none z-[9999]"
+        className="fixed pointer-events-none"
         style={{
+          zIndex: 99999,
           left: position.x,
           top: position.y,
           transform: "translate(-50%, -50%)",
@@ -52,11 +53,11 @@ export function CursorFollower() {
       >
         <div
           style={{
-            width: "28px",
-            height: "28px",
+            width: "56px",
+            height: "56px",
             borderRadius: "50%",
             background: "radial-gradient(circle, rgba(34,211,238,0.35) 0%, rgba(34,211,238,0.12) 60%, rgba(34,211,238,0) 100%)",
-            boxShadow: "0 0 12px rgba(34,211,238,0.25)",
+            boxShadow: "0 0 20px rgba(34,211,238,0.3)",
             mixBlendMode: "screen",
           }}
         />

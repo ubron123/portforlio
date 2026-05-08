@@ -14,7 +14,7 @@ const services: Service[] = [
     id: 1,
     title: "FRONTEND DEVELOPMENT",
     description: "I specialize in crafting elegant, high-performance user interfaces with modern frameworks like React, Next.js, and Vue.js, delivering pixel-perfect responsive designs that captivate users.",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=400&fit=crop",
+    image: "/images/frontend-dev.jpg",
   },
   {
     id: 2,
@@ -170,7 +170,7 @@ export function ServicesSection() {
       </div>
 
       {/* Header - inside the frame on desktop, plain on mobile */}
-      <div className="relative text-center px-4 md:px-6 pb-6 md:pb-8 md:mx-[6%] md:border-l md:border-r border-cyan-500/30">
+      <div className="relative text-center px-4 md:px-6 pt-8 md:pt-12 pb-6 md:pb-8 md:mx-[6%] md:border-l md:border-r border-cyan-500/30">
         <p className="text-cyan-400 text-sm tracking-[0.3em] uppercase mb-4 md:mb-6">MY SERVICES</p>
         <p className="text-gray-300 text-sm md:text-base lg:text-xl max-w-2xl mx-auto leading-relaxed">
           Engineering component-driven, full-stack products that help SaaS teams build faster, and grow smarter with complete sets of skills

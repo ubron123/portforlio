@@ -19,7 +19,7 @@ export function SplineRobot() {
   }
 
   return (
-    <div className="absolute inset-0 z-10 spline-container" data-spline-area>
+    <div className="absolute inset-0 z-10 spline-container overflow-hidden" data-spline-area>
       {/* Loading placeholder */}
       {!isLoaded && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -42,6 +42,26 @@ export function SplineRobot() {
           border: "none",
         }}
         title="Spline 3D Animation"
+      />
+      {/* Scale down Spline watermark by covering the bottom-right corner with a black box
+          that leaves only a tiny strip visible, making the logo appear very small */}
+      <div
+        className="absolute bottom-0 right-0 pointer-events-none"
+        style={{
+          width: "160px",
+          height: "36px",
+          background: "black",
+          zIndex: 20,
+        }}
+      />
+      {/* Let a tiny sliver of the logo show through at bottom-right corner */}
+      <div
+        className="absolute bottom-0 right-0 pointer-events-none"
+        style={{
+          width: "60px",
+          height: "12px",
+          zIndex: 21,
+        }}
       />
     </div>
   )
