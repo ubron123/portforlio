@@ -312,7 +312,7 @@ function CubeFace({ index, image, size }: { index: number; image: string; size: 
 
   return (
     <div
-      className="absolute inset-0 w-full h-full rounded-xl overflow-hidden border border-cyan-500/30 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
+      className="absolute inset-0 w-full h-full rounded-xl overflow-hidden border border-cyan-500/30 shadow-[0_0_8px_rgba(34,211,238,0.15)]"
       style={{
         transform: transforms[index],
         backfaceVisibility: 'hidden',

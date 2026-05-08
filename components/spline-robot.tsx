@@ -43,24 +43,14 @@ export function SplineRobot() {
         }}
         title="Spline 3D Animation"
       />
-      {/* Scale down Spline watermark by covering the bottom-right corner with a black box
-          that leaves only a tiny strip visible, making the logo appear very small */}
+      {/* Completely hide Spline watermark by covering the entire bottom-right corner */}
       <div
         className="absolute bottom-0 right-0 pointer-events-none"
         style={{
-          width: "160px",
-          height: "36px",
+          width: "200px",
+          height: "50px",
           background: "black",
           zIndex: 20,
-        }}
-      />
-      {/* Let a tiny sliver of the logo show through at bottom-right corner */}
-      <div
-        className="absolute bottom-0 right-0 pointer-events-none"
-        style={{
-          width: "60px",
-          height: "12px",
-          zIndex: 21,
         }}
       />
     </div>
