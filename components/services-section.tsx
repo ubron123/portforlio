@@ -171,7 +171,7 @@ export function ServicesSection() {
 
       {/* Header - inside the frame on desktop, plain on mobile */}
       <div className="relative text-center px-4 md:px-6 pb-6 md:pb-8 md:mx-[6%] md:border-l md:border-r border-cyan-500/30">
-        <p className="text-cyan-400 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 md:mb-6">MY SERVICES</p>
+        <p className="text-cyan-400 text-sm tracking-[0.3em] uppercase mb-4 md:mb-6">MY SERVICES</p>
         <p className="text-gray-300 text-sm md:text-base lg:text-xl max-w-2xl mx-auto leading-relaxed">
           Engineering component-driven, full-stack products that help SaaS teams build faster, and grow smarter with complete sets of skills
         </p>

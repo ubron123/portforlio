@@ -14,6 +14,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
   const isAnimating = useRef(false)
   const scrollCount = useRef(0)
   const lastScrollTime = useRef(0)
+  const hasSeenCertifications = useRef(false)
   const scrollsNeeded = 2
 
   // Shooting star animation - runs after 4 seconds, then loops every 30 seconds
@@ -84,6 +85,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
 
     // Scrolling DOWN while on "certifications" slide - need 2 more scrolls to allow page scroll
     if (e.deltaY > 0 && activeSlide === "certifications") {
+      hasSeenCertifications.current = true
       if (!canScrollPage) {
         e.preventDefault()
         e.stopPropagation()
@@ -129,7 +131,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
 
     // Scrolling UP while on "whoami" slide - allow page scroll (to go back up)
     if (e.deltaY < 0 && activeSlide === "whoami") {
-      // Allow natural page scroll
+      // Allow natural page scroll upward
       return
     }
   }, [activeSlide, canScrollPage])
@@ -146,23 +148,56 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
       setActiveSlide("whoami")
       setCanScrollPage(false)
       scrollCount.current = 0
+      // Keep hasSeenCertifications so the user doesn't have to re-unlock on the way down again
     }
   }, [activeSlide])
+
+  // Block keyboard-driven downward scroll until certifications shown
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (!sectionRef.current) return
+    const downKeys = ["ArrowDown", "PageDown", "Space", " "]
+    if (!downKeys.includes(e.key)) return
+
+    const rect = sectionRef.current.getBoundingClientRect()
+    const viewportHeight = window.innerHeight
+    const stickyVisible = rect.top <= 50 && rect.bottom > viewportHeight + 50
+    if (!stickyVisible) return
+
+    if (activeSlide === "whoami") {
+      e.preventDefault()
+      if (isAnimating.current) return
+      isAnimating.current = true
+      setActiveSlide("certifications")
+      setCanScrollPage(false)
+      scrollCount.current = 0
+      setTimeout(() => { isAnimating.current = false }, 700)
+    } else if (activeSlide === "certifications" && !canScrollPage) {
+      e.preventDefault()
+      hasSeenCertifications.current = true
+      scrollCount.current += 1
+      if (scrollCount.current >= scrollsNeeded) {
+        setCanScrollPage(true)
+        scrollCount.current = 0
+      }
+    }
+  }, [activeSlide, canScrollPage])
 
   useEffect(() => {
     window.addEventListener("wheel", handleWheel, { passive: false })
     window.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener("keydown", handleKeyDown)
     
     return () => {
       window.removeEventListener("wheel", handleWheel)
       window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("keydown", handleKeyDown)
     }
-  }, [handleWheel, handleScroll])
+  }, [handleWheel, handleScroll, handleKeyDown])
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-black min-h-[160vh] pt-16 md:pt-24"
+      className="relative bg-black min-h-[140vh] pt-16 md:pt-20"
     >
       {/* Reflection gradient from projects */}
       <div
@@ -257,7 +292,7 @@ export function AboutSection({ sectionGradient }: AboutSectionProps) {
               
               {/* LEFT SIDE - Always visible, static content, vertically centered */}
               <div className="space-y-4 sm:space-y-6 md:space-y-8 md:pr-8 flex flex-col justify-center">
-                <p className="text-cyan-400 text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase">
+                <p className="text-cyan-400 text-sm tracking-[0.3em] uppercase">
                   A Snapshot of Me
                 </p>
                 <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
