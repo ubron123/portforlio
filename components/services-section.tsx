@@ -98,23 +98,26 @@ export function ServicesSection() {
 
       setActiveService(closestIndex)
 
-      // Position the cube exactly at the active service's image slot position
+      // Position the cube centred on the active service's image slot
       const activeSlot = imageSlotRefs.current[closestIndex]
       if (activeSlot && sectionRef.current) {
         const slotRect = activeSlot.getBoundingClientRect()
         const sectionRect = sectionRef.current.getBoundingClientRect()
 
+        // Align top so the cube is vertically centred inside the slot
+        const cubeTop = slotRect.top - sectionRect.top + (slotRect.height / 2) - (slotRect.height / 2)
+
         // Use the slot's exact left position relative to the section container
         let cubeLeft = slotRect.left - sectionRect.left
-        
+
         // Pull cube more towards left when it's on the right side (even services)
         const isEven = closestIndex % 2 === 0
         if (isEven) {
-          cubeLeft -= 150 // Move left by 150px when on right side
+          cubeLeft -= 150
         }
 
         setCubePosition({
-          top: slotRect.top - sectionRect.top,
+          top: cubeTop,
           left: cubeLeft,
         })
       }
@@ -217,8 +220,7 @@ export function ServicesSection() {
               }`}
             >
               {/* Desktop layout - alternating sides: odd services (1,3,5) = text LEFT/image RIGHT, even services (2,4,6) = image LEFT/text RIGHT */}
-              {/* Using items-end so cube bottom aligns with text bottom (last line of description) */}
-              <div className="hidden md:flex items-end justify-between w-full gap-8">
+              <div className="hidden md:flex items-center justify-between w-full gap-8">
                 {isEven ? (
                   <>
                     {/* Service 1,3,5: Text on LEFT side */}
@@ -291,7 +293,7 @@ export function ServicesSection() {
       </div>
 
       {/* Bottom of frame - lines continue down then fade (desktop only) */}
-      <div className="relative hidden md:block h-20 mx-[6%]">
+      <div className="relative hidden md:block h-32 mx-[6%]">
         <div className="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-cyan-500/30 to-transparent" />
         <div className="absolute right-0 top-0 w-px h-full bg-gradient-to-b from-cyan-500/30 to-transparent" />
       </div>

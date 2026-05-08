@@ -52,7 +52,7 @@ export function CTAFooter() {
   }
 
   return (
-    <footer className="relative bg-black py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12">
+    <footer className="relative bg-black pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 md:px-12">
       <div className="max-w-4xl mx-auto text-center">
         {/* Main headline */}
         <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2">

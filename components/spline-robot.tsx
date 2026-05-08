@@ -40,17 +40,29 @@ export function SplineRobot() {
           opacity: isLoaded ? 1 : 0,
           transition: "opacity 0.5s ease-in-out",
           border: "none",
+          cursor: "none",
         }}
         title="Spline 3D Animation"
       />
-      {/* Completely hide Spline watermark by covering the entire bottom-right corner */}
+      {/* Transparent overlay that keeps the OS cursor hidden while
+          pointer-events: none lets clicks/moves pass through to the iframe */}
       <div
-        className="absolute bottom-0 right-0 pointer-events-none"
+        className="absolute inset-0"
         style={{
-          width: "200px",
-          height: "50px",
+          zIndex: 15,
+          pointerEvents: "none",
+          cursor: "none",
+        }}
+      />
+      {/* Completely hide Spline watermark — covers the full bottom-right badge area */}
+      <div
+        className="absolute bottom-0 right-0"
+        style={{
+          width: "230px",
+          height: "56px",
           background: "black",
           zIndex: 20,
+          pointerEvents: "none",
         }}
       />
     </div>
