@@ -106,8 +106,8 @@ export function ServicesSection() {
         const slotRect = activeSlot.getBoundingClientRect()
         const sectionRect = sectionRef.current.getBoundingClientRect()
 
-        // Align cube top to approximately where the heading is (near the top of the service row)
-        const cubeTop = serviceRect.top - sectionRect.top + 40 // Offset for heading position
+        // Align cube top to the very top of the service row (aligned with the number/heading)
+        const cubeTop = serviceRect.top - sectionRect.top - 20
 
         // Use the slot's exact left position relative to the section container
         let cubeLeft = slotRect.left - sectionRect.left
@@ -217,7 +217,7 @@ export function ServicesSection() {
             <div
               key={service.id}
               ref={el => { serviceRefs.current[index] = el }}
-              className={`relative py-8 sm:py-10 md:py-16 lg:py-24 transition-opacity duration-700 ${
+              className={`relative py-12 sm:py-16 md:py-24 lg:py-32 transition-opacity duration-700 ${
                 isActive ? 'opacity-100' : 'opacity-40'
               }`}
             >
