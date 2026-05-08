@@ -98,14 +98,16 @@ export function ServicesSection() {
 
       setActiveService(closestIndex)
 
-      // Position the cube centred on the active service's image slot
+      // Position the cube aligned to the heading of the active service
+      const activeService = serviceRefs.current[closestIndex]
       const activeSlot = imageSlotRefs.current[closestIndex]
-      if (activeSlot && sectionRef.current) {
+      if (activeService && activeSlot && sectionRef.current) {
+        const serviceRect = activeService.getBoundingClientRect()
         const slotRect = activeSlot.getBoundingClientRect()
         const sectionRect = sectionRef.current.getBoundingClientRect()
 
-        // Align top so the cube is vertically centred inside the slot
-        const cubeTop = slotRect.top - sectionRect.top + (slotRect.height / 2) - (slotRect.height / 2)
+        // Align cube top to approximately where the heading is (near the top of the service row)
+        const cubeTop = serviceRect.top - sectionRect.top + 40 // Offset for heading position
 
         // Use the slot's exact left position relative to the section container
         let cubeLeft = slotRect.left - sectionRect.left
